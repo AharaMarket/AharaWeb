@@ -12,6 +12,7 @@ function GroceryList({ grocerydata }) {
           key={index} // Assuming there's a unique key for each item, otherwise use a unique identifier from the data
           img={item.URL} // Assuming the URL is the image source
           title={item.Name}
+          vendor={item.Vendor}
           star="⭐"
           reviews="100" // Example number of reviews
           prevPrice="" // If no previous price, leave empty

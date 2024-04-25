@@ -8,7 +8,7 @@ const Card = ({ vendor, name, totalPrice, unit, deliveryTime }) => {
         <h3>{vendor}</h3>
       </div>
       <div className="recommendationBody">
-        <p><strong>Name:</strong> {name}</p>
+        {/* <p><strong>Name:</strong> {name}</p> */}
         <p><strong>Total Price:</strong> ${totalPrice}</p>
         <p><strong>Delivery Time:</strong> {deliveryTime}</p>
       </div>
