@@ -1,7 +1,10 @@
 import React, { useState, useMemo } from 'react';
-import Sidebar from '../../Components/MarketComponents/Sidebar/Sidebar';
 import GroceryList from '../../Components/MarketComponents/GroceryList/GroceryList';
 import Sortbar from '../../Components/MarketComponents/Sortbar/Sortbar';
+import MarketStepper from '../../Components/MarketComponents/MarketStepper/MarketStepper'
+import Searchbar from '../../Components/MarketComponents/Searchbar/Searchbar'
+import CartButton from '../../Components/MarketComponents/Cart/CartButton/CartButton'
+
 import products from '../../Data/sampledata';
 import './Market.css';
 
@@ -50,9 +53,19 @@ function Market() {
 
     return (
         <div className="market">
-            <Sidebar onQueryChange={handleQueryChange} />
+            {/* <Sidebar onQueryChange={handleQueryChange} /> */}
+            <div className = "market-title-container">
+            <h2>Ingredient marketplace</h2>
+            </div>
+            <div className = "market-stepper-container">
+            <MarketStepper />
+            </div>
+            <div className = "market-search-container">
+            <Searchbar></Searchbar>
+            <Sortbar onSortChange={handleSortChange} />
+            <CartButton />
+            </div>
             <div className="listings-container">
-                <Sortbar onSortChange={handleSortChange} />
                 <GroceryList grocerydata={filteredAndSortedGroceryData} />
             </div>
         </div>

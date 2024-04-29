@@ -1,11 +1,9 @@
 .search-bar {
-    margin-bottom: 10px;
-    margin-top: 10px;
-    margin-left:50px;
+margin-left: 100px;
   }
   
   input[type="text"] {
-    width: 400px;
+    width: 500px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 20px; /* Rounded border */

@@ -8,13 +8,14 @@ import Market from './Pages/Market/Market';
 import Login from './Pages/Login/Login';
 import Contact from './Pages/Contact/Contact';
 import Ranking from './Pages/Recommendations/Recommendations';
-
+import Orders from './Pages/Orders/Orders'
 
 import {BrowserRouter, Router, Routes, Route, useLocation} from 'react-router-dom'
+import Dashboard from './Pages/Dashboard/Dashboard';
+import OrderConfirmation from './Pages/OrderConfirmation/OrderConfirmation';
 function App() {
 
 
-  // const header = location.pathname === "/market" ? <MarketNavbar /> : <Navbar />;
 
   return (
 
@@ -28,11 +29,16 @@ function App() {
       <Routes>
         <Route path = '/' element={<Home/>}></Route>
         <Route path = '/home' element={<Home/>}></Route>
-        <Route path = '/market' element={<Market/>}></Route>
+        <Route path = '/market' element={<Dashboard/>}></Route>
+        <Route path = '/market/ingredients' element={<Market/>}></Route>
         <Route path = '/about' element={<About/>}></Route>
         <Route path = '/login' element={<Login/>}></Route>
         <Route path = '/contact' element={<Contact/>}></Route>
-        <Route path = '/ranking' element={<Ranking/>}></Route>
+        <Route path = '/market/ranking' element={<Ranking/>}></Route>
+        <Route path = '/market/dashboard' element={<Dashboard/>}></Route>
+        <Route path = '/market/orderconfirmation' element={<OrderConfirmation/>}></Route>
+        <Route path = '/market/orders' element={<Orders/>}></Route>
+
 
       </Routes>
       <Footer/>

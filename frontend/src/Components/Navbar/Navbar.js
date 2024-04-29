@@ -10,7 +10,7 @@ const Navbar = () => {
   const location = useLocation();
   console.log(location.pathname);
 
-  if (location.pathname === "/market"){
+  if (location.pathname.startsWith('/market')) {
     return(
         <MarketNavbar/>
     )
