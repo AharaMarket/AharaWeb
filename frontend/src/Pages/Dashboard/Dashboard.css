@@ -1,49 +1,48 @@
-/* AdminHomepage.css */
+/* styles.css */
 
-.homepageTitle {
-  text-align: center;
-  font-size: 3.6rem; /* Converted from 70px */
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body {
+/* Container to Center and Constrain Width */
+.container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center; /* Center horizontally */
+  /* align-items: center;    Center vertically */
+  /* height: 100vh;          Full viewport height to center vertically */
+  padding: 20px;
 }
 
-.column {
-  flex: 1;
-  padding: 1rem;
-}
-
-.button {
-  background-color: #04AA6D;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
+/* Dashboard Layout */
+.dashboard {
+  display: grid;
+  gap: 20px;
+  max-width: 1200px; /* Constrain the maximum width */
   width: 100%;
+  padding: 40px;
+  grid-template-columns: repeat(4, 1fr); /* Default to 4 columns */
 }
 
-.output-box {
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f5f5f5;
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .dashboard {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
+  }
 }
 
-.button-container {
-  margin-top: 20px;
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+    padding: 20px;
+  }
 }
 
-.chart-container {
-  width: 8%;
-  margin-bottom: 20px;
-}
-
-.chart {
-  height: 300px;
-  border: 1px solid #ddd;
+@media (max-width: 480px) {
+  .dashboard {
+    grid-template-columns: repeat(1, 1fr); /* 1 column for very small screens */
+    gap: 10px;
+  }
 }
