@@ -71,4 +71,22 @@ function MarketRoutes() {
   );
 }
 
+function DashboardRoutes() {
+  return (
+    <ChakraProvider theme={theme}>
+      <React.StrictMode>
+        <ThemeEditorProvider>
+          <HashRouter>
+            <Switch>
+              <Route path={`/auth`} component={AuthLayout} />
+              <Route path={`/admin`} component={AdminLayout} />
+              <Redirect from='/' to='/admin' />
+            </Switch>
+          </HashRouter>
+        </ThemeEditorProvider>
+      </React.StrictMode>
+    </ChakraProvider>
+  );
+}
+
 export default App;
