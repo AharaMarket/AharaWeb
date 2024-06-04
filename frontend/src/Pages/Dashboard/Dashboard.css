@@ -1,0 +1,48 @@
+/* styles.css */
+
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container to Center and Constrain Width */
+.container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  /* align-items: center;    Center vertically */
+  /* height: 100vh;          Full viewport height to center vertically */
+  padding: 20px;
+}
+
+/* Dashboard Layout */
+.dashboard {
+  display: grid;
+  gap: 20px;
+  max-width: 1200px; /* Constrain the maximum width */
+  width: 100%;
+  padding: 40px;
+  grid-template-columns: repeat(4, 1fr); /* Default to 4 columns */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .dashboard {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for small screens */
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    grid-template-columns: repeat(1, 1fr); /* 1 column for very small screens */
+    gap: 10px;
+  }
+}
