@@ -1,31 +1,50 @@
-import React from 'react'
-import logo from '../../Assets/samplelogo.png'
-import cart from '../../Assets/cart.png'
-import Searchbar from '../Searchbar/Searchbar'
-import { Link, useLocation} from 'react-router-dom'
-import './MarketNavbar.css'
+import React from 'react';
+import { AppBar, Toolbar, Typography, Button, IconButton, Badge, Box } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Link } from 'react-router-dom';
+import Searchbar from '../Searchbar/Searchbar'; // Make sure your Searchbar component is compatible with MUI styling
 
 function MarketNavbar() {
     return (
-        <div>
-        <div className='navbar'>
-        <h3><Link className = "home-link" to= "/">Ahara</Link></h3>
-            <ul className='nav-menu'>
-                <li><Link className = 'navbar-link' to= '/market/dashboard'>Dashboard</Link></li>
-                <li><Link className = 'navbar-link' to= '/market/ingredients'>Marketplace</Link></li>
-                <li><Link className = 'navbar-link' to= '/market/orders'>Orders</Link></li>
-            </ul>
-
-           <div className="nav-login-cart">
-            {/* <button>Login</button> */}
-            <Link to="/market/ranking" className="cart-link">
-            <img className="cart" src={cart}></img>
-            </Link>
-            <div className="cart-count">0</div>
-            </div>
-            </div>
-        </div>
-    )
+        <AppBar position="static" color="default" elevation={1}>
+            <Toolbar>
+                <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    sx={{ mr: 2 }}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Typography
+                    variant="h6"
+                    component="div"
+                    sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                >
+                    <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                        Ahara
+                    </Link>
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Button color="inherit" component={Link} to="/market/dashboard">Dashboard</Button>
+                    <Button color="inherit" component={Link} to="/market/importorder">Marketplace</Button>
+                    <Button color="inherit" component={Link} to="/market/orders">Orders</Button>
+                    <Button color="inherit" component={Link} to="/market/login" target="_blank" rel="noopener noreferrer">Login</Button>
+                    <IconButton
+                        component={Link}
+                        to="/market/vendorselection"
+                        color="inherit"
+                    >
+                        <Badge badgeContent={0} color="secondary">
+                            <ShoppingCartIcon />
+                        </Badge>
+                    </IconButton>
+                </Box>
+            </Toolbar>
+        </AppBar>
+    );
 }
 
-export default MarketNavbar
+export default MarketNavbar;

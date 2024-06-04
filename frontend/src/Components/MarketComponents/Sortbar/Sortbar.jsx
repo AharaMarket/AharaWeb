@@ -9,8 +9,7 @@ function Sortbar({ onSortChange }) {
         <div className="sort-by-bar">
             <label htmlFor="sort-by">Sort By:</label>
             <select id="sort-by" onChange={(e) => updateSort(e.target.value)}>
-                <option value="priceLowToHigh">Price Low to High</option>
-                <option value="priceHighToLow">Price High to Low</option>
+                <option value="default">Default</option>
                 <option value="nameAZ">A-Z</option>
                 <option value="nameZA">Z-A</option>
             </select>

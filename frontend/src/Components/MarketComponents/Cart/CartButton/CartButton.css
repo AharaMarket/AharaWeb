@@ -1,13 +1,14 @@
 .cart-button {
-    background-color: #007BFF;
+    background-color: green;
     color: white;
     border: none;
+    height:60px;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     display: flex;
     align-items: center;
-    
+
 }
 
 .cart-icon {

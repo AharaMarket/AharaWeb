@@ -1,32 +1,91 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import * as React from 'react';
+import { Box, Stepper, Step, StepButton, Button, Typography } from '@mui/material';
+import { useNavigate, Route, Routes } from 'react-router-dom';
 import './MarketStepper.css';
 
 const steps = [
-  { name: 'Select Ingredients', path: '/market/ingredients', label: '1' },
-  { name: 'Select Vendor', path: '/market/ranking', label: '2' },
-  { name: 'Order Confirmation', path: '/market/orderconfirmation', label: '3' }
+  { label: 'Import Order (Optional)', path: '/market/importorder', optional: true },
+  { label: 'Ingredient Selection', path: '/market/ingredientmarketplace' },
+  { label: 'Vendor Selection', path: '/market/vendorselection' },
+  { label: 'Order Confirmation', path: '/market/orderconfirmation' }
 ];
 
-function MarketStepper() {
-  const location = useLocation();
-  const currentStepIndex = steps.findIndex(step => location.pathname.startsWith(step.path));
+export default function HorizontalNonLinearStepper() {
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [completed, setCompleted] = React.useState({});
+  const navigate = useNavigate();
+
+  const totalSteps = () => {
+    return steps.length;
+  };
+
+  const completedSteps = () => {
+    return Object.keys(completed).length;
+  };
+
+  const isLastStep = () => {
+    return activeStep === totalSteps() - 1;
+  };
+
+  const allStepsCompleted = () => {
+    return completedSteps() === totalSteps();
+  };
+
+  const handleStep = (step) => () => {
+    setActiveStep(step);
+    navigate(steps[step].path);
+  };
+
+  const handleNext = () => {
+    const newCompleted = completed;
+    // Mark the current step as completed if it's not optional
+    if (!steps[activeStep].optional) {
+      newCompleted[activeStep] = true;
+      setCompleted(newCompleted);
+    }
+    const nextStep = isLastStep() && !allStepsCompleted() ? 
+      steps.findIndex((step, i) => !(i in newCompleted)) : activeStep + 1;
+    setActiveStep(nextStep);
+    navigate(steps[nextStep].path);
+  };
+
+  const handleBack = () => {
+    const prevStep = activeStep - 1 >= 0 ? activeStep - 1 : 0;
+    setActiveStep(prevStep);
+    navigate(steps[prevStep].path);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+    setCompleted({});
+    navigate(steps[0].path);
+  };
 
   return (
-    <div className="stepper-container">
-      <div className="steps">
+    <Box className="stepperContainer">
+      <Stepper nonLinear activeStep={activeStep}>
         {steps.map((step, index) => (
-          <div key={step.name} className={`step-container ${index === currentStepIndex ? 'active' : ''}`}>
-            <Link to={step.path} className={`step ${index === currentStepIndex ? 'active' : ''}`}>
+          <Step key={step.label} completed={completed[index]} optional={step.optional}>
+            <StepButton color="inherit" onClick={handleStep(index)}>
               {step.label}
-            </Link>
-            <div className="step-title">{step.name}</div>
-            {index < steps.length - 1 && <div className="step-line"></div>}
-          </div>
+            </StepButton>
+          </Step>
         ))}
-      </div>
-    </div>
+      </Stepper>
+      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+        <Button color="inherit" disabled={activeStep === 0} onClick={handleBack}>
+          Back
+        </Button>
+        <Box sx={{ flex: '1 1 auto' }} />
+        <Button onClick={handleNext}>
+          {isLastStep() ? 'Finish' : 'Next'}
+        </Button>
+      </Box>
+      <Routes>
+        {steps.map((step, index) => (
+          <Route path={step.path} element={<Typography>Content for {step.label}</Typography>} key={index} />
+        ))}
+      </Routes>
+    </Box>
   );
 }
-
-export default MarketStepper;

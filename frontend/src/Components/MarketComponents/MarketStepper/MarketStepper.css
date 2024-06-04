@@ -1,67 +1,39 @@
-/* MarketStepper.css */
-.stepper-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;  /* Ensure there's space around the stepper */
+/* StepperComponent.css */
+.stepperContainer {
+    width: 85%;
+    margin: 0 auto; /* Centers the stepper in the parent container */
+    margin-top: 50px;
+    margin-bottom: 30px;
+
   }
   
-  .steps {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Center the steps horizontally */
+  /* Style for the MUI Stepper component */
+  .MuiStepIcon-active { /* Styles for active icons */
+    color: green; /* Highlight color for the current active step */
+  }
+
+.MuiStepIcon-root { /* Targeting the icons in the stepper */
+  color: #ccc; /* Color of non-active icons */
+  width: 40px!important; /* Increasing the size of the icons */
+  height: 40px!important; /* Increasing the size of the icons */
+  /* Adjust color and size according to your design */
+}
+  
+  .MuiStepConnector-line {
+    border-top-width: 1.5px; /* Makes the line thicker */
+  }
+
+  .MuiStepLabel-label {
+    font-size: 14px !important;/* Increasing the font size */
   }
   
-  .step-container {
-    display: flex;
-    align-items: center; /* Align items in a flex row correctly */
-    position: relative; /* Needed for absolute positioning of lines */
+  /* Styles for the label when the step is active */
+  .MuiStepLabel-active {
+    color: #0056b3; /* Change color for active label */
+    font-weight: bold; /* Bold for active step labels */
   }
   
-  .step {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width:90px;
-    height: 90px;
-    border-radius: 50%;
-    background-color: #ccc; /* Default non-active color */
-    color: white;
-    text-decoration: none;
-    font-size: 1.5em;
-    cursor: pointer;
-    margin: 0 50px; /* Space around circles */
-    transition: background-color 0.3s;
+  /* Styles for the label when the step is completed */
+  .MuiStepLabel-completed {
+    color: #4caf50; /* Color indicating completion */
   }
-  
-  .step.active {
-    background-color: #007bff; /* Blue for active step */
-  }
-  
-  .step-line {
-    position: absolute; /* Position lines absolute within container */
-    top: 50%; /* Center vertically */
-    left: 60px; /* Start after the circle */
-    height: 2px;
-    width: 190px; /* Length of the line */
-    background-color: #ccc;
-    z-index: -1; /* Ensure lines don't overlap text or interactive elements */
-  }
-  
-  .step-title {
-    position: absolute;
-    top: 110px; /* Position below the circle */
-    right: 18px;
-    text-align: center;
-    font-size: 14px;
-    color: #333;
-    width: 120px; /* Ensure the text doesn't spread too wide */
-  }
-  
-  .stepper-content {
-    flex: 1;
-    padding: 20px;
-    text-align: center;
-  }
-  

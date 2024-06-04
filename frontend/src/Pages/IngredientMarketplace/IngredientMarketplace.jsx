@@ -6,7 +6,8 @@ import Searchbar from '../../Components/MarketComponents/Searchbar/Searchbar'
 import CartButton from '../../Components/MarketComponents/Cart/CartButton/CartButton'
 
 import products from '../../Data/sampledata';
-import './Market.css';
+import './IngredientMarketplace.css';
+import IngredientSelectionTitleBox from '../../Components/MarketComponents/MarketTitleBox/IngredientMarketplaceTitleBox/IngredientSelectionTitleBox';
 
 function Market() {
     const [selectedSort, setSelectedSort] = useState("");
@@ -55,7 +56,8 @@ function Market() {
         <div className="market">
             {/* <Sidebar onQueryChange={handleQueryChange} /> */}
             <div className = "market-title-container">
-            <h2>Ingredient marketplace</h2>
+            {/* <h2>Ingredient marketplace</h2> */}
+            <IngredientSelectionTitleBox/>
             </div>
             <div className = "market-stepper-container">
             <MarketStepper />

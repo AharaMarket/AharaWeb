@@ -1,6 +1,7 @@
 import React from 'react'
 import recommendationdata from '../../../Data/recommendationdata';
 import RecommendationCard from '../RecommendationCard/RecommendationCard'
+import './RecommendationList.css'
 
 function RecommendationList() {
     return (
