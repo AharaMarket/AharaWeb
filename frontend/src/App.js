@@ -11,13 +11,21 @@ import Contact from './Pages/Contact/Contact';
 import Ranking from './Pages/VendorSelection/VendorSelection';
 import Orders from './Pages/Orders/Orders';
 import SmoothScroll from "smooth-scroll";
-import {
-  BrowserRouter, Routes, Route, useLocation
-} from 'react-router-dom';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import OrderConfirmation from './Pages/OrderConfirmation/OrderConfirmation';
 import ImportOrder from './Pages/ImportOrder/ImportOrder';
 import AppAppBar from './Components/HomeComponents/AppAppBar';
+import ReactDOM from 'react-dom';
+import {
+  BrowserRouter, Routes, Route, useLocation, HashRouter
+} from 'react-router-dom';
+import Redirect from 'react-router-dom';
+import 'assets/css/App.css';
+// import AuthLayout from './Layouts/auth';
+import AdminLayout from './Layouts/admin';
+import { ChakraProvider } from '@chakra-ui/react';
+import theme from './theme/theme';
+import { ThemeEditorProvider } from '@hypertheme-editor/chakra-ui';
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -36,6 +44,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/market/*" element={<MarketRoutes />} />
+            <Route path="/dashboard/*" element={<DashboardRoutes />} />
           </Routes>
         </Layout>
       </div>
@@ -77,11 +86,11 @@ function DashboardRoutes() {
       <React.StrictMode>
         <ThemeEditorProvider>
           <HashRouter>
-            <Switch>
-              <Route path={`/auth`} component={AuthLayout} />
+            <Routes>
+              {/* <Route path={`/auth`} component={AuthLayout} /> */}
               <Route path={`/admin`} component={AdminLayout} />
               <Redirect from='/' to='/admin' />
-            </Switch>
+            </Routes>
           </HashRouter>
         </ThemeEditorProvider>
       </React.StrictMode>

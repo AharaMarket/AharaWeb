@@ -32,11 +32,11 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 // Assets
-import Usa from "assets/img/dashboards/usa.png";
+import Usa from "../../Components/Assets/usa.png";
 // Custom components
-import MiniCalendar from "components/calendar/MiniCalendar";
-import MiniStatistics from "components/card/MiniStatistics";
-import IconBox from "components/icons/IconBox";
+import MiniCalendar from "../../Components/Dashboard/calendar/MiniCalendar.js";
+import MiniStatistics from "../../Components/Dashboard/card/MiniStatistics.js";
+import IconBox from "../../Components/Dashboard/icons/IconBox.js";
 import React from "react";
 import {
   MdAddTask,
@@ -44,19 +44,19 @@ import {
   MdBarChart,
   MdFileCopy,
 } from "react-icons/md";
-import CheckTable from "views/admin/default/components/CheckTable";
-import ComplexTable from "views/admin/default/components/ComplexTable";
-import DailyTraffic from "views/admin/default/components/DailyTraffic";
-import PieCard from "views/admin/default/components/PieCard";
-import Tasks from "views/admin/default/components/Tasks";
-import TotalSpent from "views/admin/default/components/TotalSpent";
-import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
+import CheckTable from "../../Components/Dashboard/widgets/CheckTable.js";
+import ComplexTable from "../../Components/Dashboard/widgets/ComplexTable.js";
+import DailyTraffic from "../../Components/Dashboard/widgets/DailyTraffic.js";
+import PieCard from "../../Components/Dashboard/widgets/PieCard.js";
+import Tasks from "../../Components/Dashboard/widgets/Tasks.js";
+import TotalSpent from "../../Components/Dashboard/widgets/TotalSpent.js";
+import WeeklyRevenue from "../../Components/Dashboard/widgets/WeeklyRevenue.js";
 import {
   columnsDataCheck,
   columnsDataComplex,
-} from "views/admin/default/variables/columnsData";
-import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
-import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
+} from "../../Components/Dashboard/data/columnsData";
+import tableDataCheck from "../../Components/Dashboard/data/tableDataCheck.json";
+import tableDataComplex from "../../Components/Dashboard/data/tableDataComplex.json";
 
 export default function UserReports() {
   // Chakra Color Mode
