@@ -15,12 +15,9 @@ import Dashboard from './Pages/Dashboard/Dashboard';
 import OrderConfirmation from './Pages/OrderConfirmation/OrderConfirmation';
 import ImportOrder from './Pages/ImportOrder/ImportOrder';
 import AppAppBar from './Components/HomeComponents/AppAppBar';
-import ReactDOM from 'react-dom';
 import {
-  BrowserRouter, Routes, Route, useLocation, HashRouter
+  BrowserRouter, Routes, Route, useLocation, HashRouter, Navigate
 } from 'react-router-dom';
-import Redirect from 'react-router-dom';
-import 'assets/css/App.css';
 // import AuthLayout from './Layouts/auth';
 import AdminLayout from './Layouts/admin';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -89,7 +86,7 @@ function DashboardRoutes() {
             <Routes>
               {/* <Route path={`/auth`} component={AuthLayout} /> */}
               <Route path={`/admin`} component={AdminLayout} />
-              <Redirect from='/' to='/admin' />
+              <Navigate from='/' to='/admin' />
             </Routes>
           </HashRouter>
         </ThemeEditorProvider>

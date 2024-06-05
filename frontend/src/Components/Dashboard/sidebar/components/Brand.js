@@ -5,7 +5,7 @@ import { Flex, useColorModeValue } from "@chakra-ui/react";
 
 // Custom components
 // import { AharaLogo } from "components/icons/Icons";
-import { HSeparator } from "../separator/Separator";
+import { HSeparator } from "../../separator/Separator";
 
 export function SidebarBrand() {
   //   Chakra color mode

@@ -40,7 +40,7 @@ export function SidebarLinks(props) {
               }}
               pt='18px'
               pb='12px'
-frontend/src/Components/Dashboard/sidebar/components/SidebarCard.js              key={index}>
+              key={index}>
               {route.name}
             </Text>
             {createLinks(route.items)}

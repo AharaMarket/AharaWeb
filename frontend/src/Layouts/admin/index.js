@@ -1,12 +1,12 @@
 // Chakra imports
 import { Portal, Box, useDisclosure } from '@chakra-ui/react';
-import Footer from 'components/footer/FooterAdmin.js';
+import Footer from '../../Components/Dashboard/footer/FooterAdmin';
 // Layout components
-import Navbar from '../Components/Dashboard/navbar/NavbarAdmin.js';
-import Sidebar from '../Components/Dashboard/sidebar/Sidebar.js';
-import { SidebarContext } from 'contexts/SidebarContext';
+import Navbar from '../../Components/Dashboard/navbar/NavbarAdmin';
+import Sidebar from '../../Components/Dashboard/sidebar/Sidebar';
+import { SidebarContext } from '../../Contexts/SidebarContext';
 import React, { useState } from 'react';
-import { Redirect, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import routes from '../../routes.js';
 
 // Custom Chakra theme
@@ -140,7 +140,7 @@ export default function Dashboard(props) {
 							<Box mx='auto' p={{ base: '20px', md: '30px' }} pe='20px' minH='100vh' pt='50px'>
 								<Routes>
 									{getRoutes(routes)}
-									<Redirect from='/' to='/admin/default' />
+									<Navigate from='/' to='/admin/default' />
 								</Routes>
 							</Box>
 						) : null}

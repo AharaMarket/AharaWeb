@@ -20,7 +20,7 @@ import {
 
 // Custom components
 import Card from "../card/Card";
-import Menu from "components/menu/MainMenu";
+import Menu from "../menu/MainMenu";
 export default function CheckTable(props) {
   const { columnsData, tableData } = props;
 

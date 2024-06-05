@@ -13,12 +13,12 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-import Content from "./sidebar/components/Content";
+import Content from "./components/Content";
 import {
   renderThumb,
   renderTrack,
   renderView,
-} from "components/scrollbar/Scrollbar";
+} from "../scrollbar/Scrollbar";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import PropTypes from "prop-types";
 

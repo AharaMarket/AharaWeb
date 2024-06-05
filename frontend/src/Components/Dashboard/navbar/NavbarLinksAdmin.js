@@ -14,16 +14,16 @@ import {
 	useColorModeValue
 } from '@chakra-ui/react';
 // Custom Components
-import { ItemContent } from './menu/ItemContent';
-import { SearchBar } from './navbar/searchBar/SearchBar';
-import { SidebarResponsive } from './sidebar/Sidebar';
+import { ItemContent } from '../menu/ItemContent';
+import { SearchBar } from './searchBar/SearchBar';
+import { SidebarResponsive } from '../sidebar/Sidebar';
 import PropTypes from 'prop-types';
 import React from 'react';
 // Assets
-import navImage from 'assets/img/layout/Navbar.png';
+// import navImage from 'assets/img/layout/Navbar.png';
 import { MdNotificationsNone, MdInfoOutline } from 'react-icons/md';
 import { FaEthereum } from 'react-icons/fa';
-import routes from 'routes.js';
+import routes from '../../../routes.js';
 import { ThemeEditor } from './ThemeEditor';
 export default function HeaderLinks(props) {
 	const { secondary } = props;
@@ -123,7 +123,7 @@ export default function HeaderLinks(props) {
           mt='22px'
           minW={{ base: "unset" }}
           maxW={{ base: "360px", md: "unset" }}>
-          <Image src={navImage} borderRadius='16px' mb='28px' />
+          {/* <Image src={navImage} borderRadius='16px' mb='28px' /> */}
           <Flex flexDirection='column'>
           </Flex>
         </MenuList>
