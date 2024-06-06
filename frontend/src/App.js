@@ -12,12 +12,18 @@ import Ranking from './Pages/VendorSelection/VendorSelection';
 import Orders from './Pages/Orders/Orders';
 import SmoothScroll from "smooth-scroll";
 import {
-  BrowserRouter, Routes, Route, useLocation
+  BrowserRouter, Routes, Route, useLocation, HashRouter, Navigate
 } from 'react-router-dom';
 import Dashboard from './Pages/Dashboard/Dashboard';
 import OrderConfirmation from './Pages/OrderConfirmation/OrderConfirmation';
 import ImportOrder from './Pages/ImportOrder/ImportOrder';
-import AppAppBar from './Components/HomeComponents/AppAppBar';
+import AdminLayout from './Layouts/admin';
+import AppAppBar from './Components/HomeComponents/AppAppBar.js';
+
+// import RtlLayout from './Layouts/rtl';
+import { ChakraProvider } from '@chakra-ui/react';
+import theme from './theme/theme';
+import { ThemeEditorProvider } from '@hypertheme-editor/chakra-ui';
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -36,6 +42,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/market/*" element={<MarketRoutes />} />
+            <Route path="/dashboard/*" element={<DashboardRoutes />} />
           </Routes>
         </Layout>
       </div>
@@ -68,6 +75,19 @@ function MarketRoutes() {
       <Route path="login" element={<Login />} />
       <Route path="importorder" element={<ImportOrder />} />
     </Routes>
+  );
+}
+
+function DashboardRoutes() {
+  return (
+    <HashRouter>
+      <Routes>
+        {/* <Route path={`/auth`} component={AuthLayout} /> */}
+        <Route path={`/admin`} component={AdminLayout} />
+        {/* <Route path={`/rtl`} component={RtlLayout} /> */}
+        <Navigate from='/' to='/admin' />
+      </Routes>
+    </HashRouter>
   );
 }
 
