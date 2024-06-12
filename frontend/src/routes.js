@@ -11,7 +11,7 @@ import {
 } from "react-icons/md";
 
 // Admin Imports
-import MainDashboard from "./Pages/Dashboard/Dashboard.jsx";
+import MainDashboard from "./Pages/RestaurantDashboard/RestaurantDashboard.jsx";
 // import NFTMarketplace from "views/admin/marketplace";
 // import Profile from "views/admin/profile";
 // import DataTables from "views/admin/dataTables";
@@ -28,28 +28,28 @@ const routes = [
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: MainDashboard,
   },
-  // {
-  //   name: "Marketplace",
-  //   layout: "/admin",
-  //   path: "/admin",
-  //   icon: (
-  //     <Icon
-  //       as={MdOutlineShoppingCart}
-  //       width='20px'
-  //       height='20px'
-  //       color='inherit'
-  //     />
-  //   ),
-  //   component: MainDashboard,
-  //   secondary: true,
-  // },
-  // {
-  //   name: "Orders",
-  //   layout: "/admin",
-  //   icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
-  //   path: "/data-tables",
-  //   component: DataTables,
-  // },
+  {
+    name: "Marketplace",
+    layout: "/admin",
+    path: "dashboard",
+    icon: (
+      <Icon
+        as={MdOutlineShoppingCart}
+        width='20px'
+        height='20px'
+        color='inherit'
+      />
+    ),
+    component: MainDashboard,
+    secondary: true,
+  },
+  {
+    name: "Orders",
+    layout: "/admin",
+    icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
+    path: "/data-tables",
+    component: MainDashboard,
+  },
   // {
   //   name: "Dish Analysis",
   //   layout: "/admin",

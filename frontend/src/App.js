@@ -14,16 +14,13 @@ import SmoothScroll from "smooth-scroll";
 import {
   BrowserRouter, Routes, Route, useLocation, HashRouter, Navigate
 } from 'react-router-dom';
-import Dashboard from './Pages/Dashboard/Dashboard';
+import Dashboard from './Pages/RestaurantDashboard/RestaurantDashboard';
 import OrderConfirmation from './Pages/OrderConfirmation/OrderConfirmation';
 import ImportOrder from './Pages/ImportOrder/ImportOrder';
 import AdminLayout from './Layouts/admin';
 import AppAppBar from './Components/HomeComponents/AppAppBar.js';
 
-// import RtlLayout from './Layouts/rtl';
-import { ChakraProvider } from '@chakra-ui/react';
-import theme from './theme/theme';
-import { ThemeEditorProvider } from '@hypertheme-editor/chakra-ui';
+import RtlLayout from './Layouts/rtl';
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -32,8 +29,9 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 
 function App() {
   return (
-    <BrowserRouter>
       <div>
+        {/* <Layout> */}
+        <BrowserRouter>
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -42,21 +40,23 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/market/*" element={<MarketRoutes />} />
-            <Route path="/dashboard/*" element={<DashboardRoutes />} />
+            <Route path={"/dashboard/*"} element={<DashboardRoutes />} />
           </Routes>
-        </Layout>
+          </Layout>
+          </BrowserRouter>
+
       </div>
-    </BrowserRouter>
   );
 }
 
 function Layout({ children }) {
   const location = useLocation();
   const isMarketRoute = location.pathname.startsWith('/market');
+  const isDashboardRoute = location.pathname.startsWith('/dashboard');
 
   return (
     <>
-      {isMarketRoute ? <MarketNavbar /> : <AppAppBar />}
+      {(isMarketRoute || isDashboardRoute) ? <MarketNavbar /> : <AppAppBar />}
       {children}
       <Footer />
     </>
@@ -80,14 +80,14 @@ function MarketRoutes() {
 
 function DashboardRoutes() {
   return (
-    <HashRouter>
+    // <HashRouter>
       <Routes>
         {/* <Route path={`/auth`} component={AuthLayout} /> */}
-        <Route path={`/admin`} component={AdminLayout} />
-        {/* <Route path={`/rtl`} component={RtlLayout} /> */}
-        <Navigate from='/' to='/admin' />
+        <Route path={"/admin"} component={AdminLayout} />
+        <Route pth={"/rtl"} component={RtlLayout} />
+        {/* <Navigate from='/' to='/admin' /> */}
       </Routes>
-    </HashRouter>
+      // </HashRouter>
   );
 }
 
