@@ -1,26 +1,31 @@
-import React from 'react';
-import './App.css';
-import Navbar from './Components/Navbar/Navbar';
-import MarketNavbar from './Components/MarketComponents/MarketNavbar/MarketNavbar';
-import Footer from './Components/Footer/Footer';
-import Home from './Pages/Home/Home';
-import About from './Pages/About/About';
-import Market from './Pages/IngredientMarketplace/IngredientMarketplace';
-import Login from './Pages/Login/Login';
-import Contact from './Pages/Contact/Contact';
-import Ranking from './Pages/VendorSelection/VendorSelection';
-import Orders from './Pages/Orders/Orders';
+import React from "react";
+import "./App.css";
+import Navbar from "./Components/Navbar/Navbar";
+import MarketNavbar from "./Components/MarketComponents/MarketNavbar/MarketNavbar";
+import Footer from "./Components/Footer/Footer";
+import Home from "./Pages/Home/Home";
+import About from "./Pages/About/About";
+import Market from "./Pages/IngredientMarketplace/IngredientMarketplace";
+import Login from "./Pages/Login/Login";
+import Contact from "./Pages/Contact/Contact";
+import Ranking from "./Pages/VendorSelection/VendorSelection";
+import Orders from "./Pages/Orders/Orders";
 import SmoothScroll from "smooth-scroll";
 import {
-  BrowserRouter, Routes, Route, useLocation, HashRouter, Navigate
-} from 'react-router-dom';
-import Dashboard from './Pages/RestaurantDashboard/RestaurantDashboard';
-import OrderConfirmation from './Pages/OrderConfirmation/OrderConfirmation';
-import ImportOrder from './Pages/ImportOrder/ImportOrder';
-import AdminLayout from './Layouts/admin';
-import AppAppBar from './Components/HomeComponents/AppAppBar.js';
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+  HashRouter,
+  Navigate,
+} from "react-router-dom";
+import Dashboard from "./Pages/RestaurantDashboard/RestaurantDashboard";
+import OrderConfirmation from "./Pages/OrderConfirmation/OrderConfirmation";
+import ImportOrder from "./Pages/ImportOrder/ImportOrder";
+import AdminLayout from "./Layouts/admin";
+import AppAppBar from "./Components/HomeComponents/AppAppBar.js";
 
-import RtlLayout from './Layouts/rtl';
+import RtlLayout from "./Layouts/rtl";
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -29,9 +34,9 @@ export const scroll = new SmoothScroll('a[href*="#"]', {
 
 function App() {
   return (
-      <div>
-        {/* <Layout> */}
-        <BrowserRouter>
+    <div>
+      {/* <Layout> */}
+      <BrowserRouter>
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -42,23 +47,24 @@ function App() {
             <Route path="/market/*" element={<MarketRoutes />} />
             <Route path={"/dashboard/*"} element={<DashboardRoutes />} />
           </Routes>
-          </Layout>
-          </BrowserRouter>
-
-      </div>
+        </Layout>
+      </BrowserRouter>
+    </div>
   );
 }
 
 function Layout({ children }) {
   const location = useLocation();
-  const isMarketRoute = location.pathname.startsWith('/market');
-  const isDashboardRoute = location.pathname.startsWith('/dashboard');
+  const isMarketRoute = location.pathname.startsWith("/market");
+  const isDashboardRoute = location.pathname.startsWith("/dashboard");
 
   return (
     <>
-      {(isMarketRoute || isDashboardRoute) ? <MarketNavbar /> : <AppAppBar />}
+      {isMarketRoute || isDashboardRoute ? <MarketNavbar /> : <AppAppBar />}
       {children}
-      <Footer />
+      {!["/market", "/market/"].includes(window.location.pathname) && (
+        <Footer />
+      )}
     </>
   );
 }
@@ -81,13 +87,13 @@ function MarketRoutes() {
 function DashboardRoutes() {
   return (
     // <HashRouter>
-      <Routes>
-        {/* <Route path={`/auth`} component={AuthLayout} /> */}
-        <Route path={"/admin"} component={AdminLayout} />
-        <Route pth={"/rtl"} component={RtlLayout} />
-        {/* <Navigate from='/' to='/admin' /> */}
-      </Routes>
-      // </HashRouter>
+    <Routes>
+      {/* <Route path={`/auth`} component={AuthLayout} /> */}
+      <Route path={"/admin"} element={<AdminLayout />} />
+      <Route pth={"/rtl"} element={<RtlLayout />} />
+      {/* <Navigate from='/' to='/admin' /> */}
+    </Routes>
+    // </HashRouter>
   );
 }
 

@@ -30,7 +30,8 @@ import {
   Select,
   SimpleGrid,
   useColorModeValue,
-  Portal, useDisclosure
+  Portal,
+  useDisclosure,
 } from "@chakra-ui/react";
 // Assets
 import Usa from "../../Components/Assets/usa.png";
@@ -38,7 +39,7 @@ import Usa from "../../Components/Assets/usa.png";
 import MiniCalendar from "../../Components/Dashboard/calendar/MiniCalendar.js";
 import MiniStatistics from "../../Components/Dashboard/card/MiniStatistics.js";
 import IconBox from "../../Components/Dashboard/icons/IconBox.js";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   MdAddTask,
   MdAttachMoney,
@@ -58,138 +59,152 @@ import {
 } from "../../Components/Dashboard/data/columnsData";
 import tableDataCheck from "../../Components/Dashboard/data/tableDataCheck.json";
 import tableDataComplex from "../../Components/Dashboard/data/tableDataComplex.json";
-import { ChakraProvider } from '@chakra-ui/react';
-import theme from '../../theme/theme';
-import { ThemeEditorProvider } from '@hypertheme-editor/chakra-ui';
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "../../theme/theme";
+import { ThemeEditorProvider } from "@hypertheme-editor/chakra-ui";
 import Sidebar from "../../Components/Dashboard/sidebar/Sidebar";
 import routes from "../../routes.js";
-import { SidebarContext } from '../../Contexts/SidebarContext';
-import Navbar from '../../Components/Dashboard/navbar/NavbarAdmin';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import AdminLayout from '../../Layouts/admin'
+import { SidebarContext } from "../../Contexts/SidebarContext";
+import Navbar from "../../Components/Dashboard/navbar/NavbarAdmin";
+import { Navigate, Route, Routes } from "react-router-dom";
+import AdminLayout from "../../Layouts/admin";
+import Footer from "../../Components/Footer/Footer.js";
 
 export default function UserReports() {
   // Chakra Color Mode
-  const [ fixed ] = useState(false);
-	const [ toggleSidebar, setToggleSidebar ] = useState(false);
+  console.log("Dashboard");
+  const [fixed] = useState(false);
+  const [toggleSidebar, setToggleSidebar] = useState(false);
   const { onOpen } = useDisclosure();
-	// functions for changing the states from components
-	const getRoute = () => {
-		return window.location.pathname !== '/admin/full-screen-maps';
-	};
-	const getActiveRoute = (routes) => {
-		let activeRoute = 'Default Brand Text';
-		for (let i = 0; i < routes.length; i++) {
-			if (routes[i].collapse) {
-				let collapseActiveRoute = getActiveRoute(routes[i].items);
-				if (collapseActiveRoute !== activeRoute) {
-					return collapseActiveRoute;
-				}
-			} else if (routes[i].category) {
-				let categoryActiveRoute = getActiveRoute(routes[i].items);
-				if (categoryActiveRoute !== activeRoute) {
-					return categoryActiveRoute;
-				}
-			} else {
-				if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
-					return routes[i].name;
-				}
-			}
-		}
-		return activeRoute;
-	};
-	const getActiveNavbar = (routes) => {
-		let activeNavbar = false;
-		for (let i = 0; i < routes.length; i++) {
-			if (routes[i].collapse) {
-				let collapseActiveNavbar = getActiveNavbar(routes[i].items);
-				if (collapseActiveNavbar !== activeNavbar) {
-					return collapseActiveNavbar;
-				}
-			} else if (routes[i].category) {
-				let categoryActiveNavbar = getActiveNavbar(routes[i].items);
-				if (categoryActiveNavbar !== activeNavbar) {
-					return categoryActiveNavbar;
-				}
-			} else {
-				if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
-					return routes[i].secondary;
-				}
-			}
-		}
-		return activeNavbar;
-	};
-	const getActiveNavbarText = (routes) => {
-		let activeNavbar = false;
-		for (let i = 0; i < routes.length; i++) {
-			if (routes[i].collapse) {
-				let collapseActiveNavbar = getActiveNavbarText(routes[i].items);
-				if (collapseActiveNavbar !== activeNavbar) {
-					return collapseActiveNavbar;
-				}
-			} else if (routes[i].category) {
-				let categoryActiveNavbar = getActiveNavbarText(routes[i].items);
-				if (categoryActiveNavbar !== activeNavbar) {
-					return categoryActiveNavbar;
-				}
-			} else {
-				if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
-					return routes[i].messageNavbar;
-				}
-			}
-		}
-		return activeNavbar;
-	};
-	const getRoutes = (routes) => {
-		return routes.map((prop, key) => {
-			if (prop.layout === '/admin') {
-				return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
-			}
-			if (prop.collapse) {
-				return getRoutes(prop.items);
-			}
-			if (prop.category) {
-				return getRoutes(prop.items);
-			} else {
-				return null;
-			}
-		});
-	};
+  // functions for changing the states from components
+  const getRoute = () => {
+    return window.location.pathname !== "/admin/full-screen-maps";
+  };
+  const getActiveRoute = (routes) => {
+    let activeRoute = "Default Brand Text";
+    for (let i = 0; i < routes.length; i++) {
+      if (routes[i].collapse) {
+        let collapseActiveRoute = getActiveRoute(routes[i].items);
+        if (collapseActiveRoute !== activeRoute) {
+          return collapseActiveRoute;
+        }
+      } else if (routes[i].category) {
+        let categoryActiveRoute = getActiveRoute(routes[i].items);
+        if (categoryActiveRoute !== activeRoute) {
+          return categoryActiveRoute;
+        }
+      } else {
+        if (
+          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+        ) {
+          return routes[i].name;
+        }
+      }
+    }
+    return activeRoute;
+  };
+  const getActiveNavbar = (routes) => {
+    let activeNavbar = false;
+    for (let i = 0; i < routes.length; i++) {
+      if (routes[i].collapse) {
+        let collapseActiveNavbar = getActiveNavbar(routes[i].items);
+        if (collapseActiveNavbar !== activeNavbar) {
+          return collapseActiveNavbar;
+        }
+      } else if (routes[i].category) {
+        let categoryActiveNavbar = getActiveNavbar(routes[i].items);
+        if (categoryActiveNavbar !== activeNavbar) {
+          return categoryActiveNavbar;
+        }
+      } else {
+        if (
+          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+        ) {
+          return routes[i].secondary;
+        }
+      }
+    }
+    return activeNavbar;
+  };
+  const getActiveNavbarText = (routes) => {
+    let activeNavbar = false;
+    for (let i = 0; i < routes.length; i++) {
+      if (routes[i].collapse) {
+        let collapseActiveNavbar = getActiveNavbarText(routes[i].items);
+        if (collapseActiveNavbar !== activeNavbar) {
+          return collapseActiveNavbar;
+        }
+      } else if (routes[i].category) {
+        let categoryActiveNavbar = getActiveNavbarText(routes[i].items);
+        if (categoryActiveNavbar !== activeNavbar) {
+          return categoryActiveNavbar;
+        }
+      } else {
+        if (
+          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+        ) {
+          return routes[i].messageNavbar;
+        }
+      }
+    }
+    return activeNavbar;
+  };
+  const getRoutes = (routes) => {
+    return routes.map((prop, key) => {
+      if (prop.layout === "/admin") {
+        return (
+          <Route
+            path={prop.layout + prop.path}
+            component={prop.component}
+            key={key}
+          />
+        );
+      }
+      if (prop.collapse) {
+        return getRoutes(prop.items);
+      }
+      if (prop.category) {
+        return getRoutes(prop.items);
+      } else {
+        return null;
+      }
+    });
+  };
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   return (
-    <ChakraProvider theme={theme} >
-    <React.StrictMode>
-      <ThemeEditorProvider>
-    <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      {/* <SimpleGrid columns={2}  gap='20px'> */}
-    {/* <SimpleGrid columns={{ base: 1, md: 2 }} gap='20px' mb='20px'>
+    <ChakraProvider theme={theme}>
+      <React.StrictMode>
         <Box>
           <Box>
             <SidebarContext.Provider
-              value={{
-                // toggleSidebar,
-                // setToggleSidebar
-              }}>
+              value={
+                {
+                  // toggleSidebar,
+                  // setToggleSidebar
+                }
+              }
+            >
               <Sidebar routes={routes} />
               <Box
-                float='right'
-                minHeight='100vh'
-                height='100%'
-                overflow='auto'
-                position='relative'
-                maxHeight='100%'
-                w={{ base: '100%', xl: 'calc( 100% - 290px )' }}
-                maxWidth={{ base: '100%', xl: 'calc( 100% - 290px )' }}
-                transition='all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)'
-                transitionDuration='.2s, .2s, .35s'
-                transitionProperty='top, bottom, width'
-                transitionTimingFunction='linear, linear, ease'>
+                float="right"
+                minHeight="100vh"
+                height="100%"
+                overflow="auto"
+                position="relative"
+                maxHeight="100%"
+                w={{ base: "100%", xl: "calc( 100% - 290px )" }}
+                maxWidth={{ base: "100%", xl: "calc( 100% - 290px )" }}
+                transition="all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
+                transitionDuration=".2s, .2s, .35s"
+                transitionProperty="top, bottom, width"
+                transitionTimingFunction="linear, linear, ease"
+              >
                 <Portal>
                   <Box>
                     <Navbar
                       onOpen={onOpen}
-                      logoText={'Ahara PRO'}
+                      logoText={"Ahara PRO"}
                       // brandText={getActiveRoute(routes)}
                       // secondary={getActiveNavbar(routes)}
                       // message={getActiveNavbarText(routes)}
@@ -198,130 +213,158 @@ export default function UserReports() {
                     />
                   </Box>
                 </Portal>
+                <SimpleGrid
+                  columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
+                  gap="20px"
+                  mb="20px"
+                  mt="60px"
+                  p="20px"
+                >
+                  <MiniStatistics
+                    startContent={
+                      <IconBox
+                        w="56px"
+                        h="56px"
+                        bg={boxBg}
+                        icon={
+                          <Icon
+                            w="32px"
+                            h="32px"
+                            as={MdAttachMoney}
+                            color={brandColor}
+                          />
+                        }
+                      />
+                    }
+                    name="Total Saved This Month"
+                    value="$350.4"
+                  />
+                  <MiniStatistics
+                    startContent={
+                      <IconBox
+                        w="56px"
+                        h="56px"
+                        bg={boxBg}
+                        icon={
+                          <Icon
+                            w="32px"
+                            h="32px"
+                            as={MdAttachMoney}
+                            color={brandColor}
+                          />
+                        }
+                      />
+                    }
+                    name="Total Spend this month"
+                    value="$642.39"
+                  />
+                  <MiniStatistics
+                    growth="+23%"
+                    name="Total Orders"
+                    value="14"
+                  />
+                  <MiniStatistics
+                    endContent={
+                      <Flex me="-16px" mt="10px">
+                        <FormLabel htmlFor="balance">
+                          <Avatar src={Usa} />
+                        </FormLabel>
+                        <Select
+                          id="balance"
+                          variant="mini"
+                          mt="5px"
+                          me="0px"
+                          defaultValue="usd"
+                        >
+                          <option value="usd">USD</option>
+                          <option value="eur">EUR</option>
+                          <option value="gba">GBA</option>
+                        </Select>
+                      </Flex>
+                    }
+                    name="Credit balance"
+                    value="$1,000"
+                  />
+                  <MiniStatistics
+                    startContent={
+                      <IconBox
+                        w="56px"
+                        h="56px"
+                        bg="linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)"
+                        icon={
+                          <Icon
+                            w="28px"
+                            h="28px"
+                            as={MdAddTask}
+                            color="white"
+                          />
+                        }
+                      />
+                    }
+                    name="Distributor Partners"
+                    value="4"
+                  />
+                  <MiniStatistics
+                    startContent={
+                      <IconBox
+                        w="56px"
+                        h="56px"
+                        bg={boxBg}
+                        icon={
+                          <Icon
+                            w="32px"
+                            h="32px"
+                            as={MdFileCopy}
+                            color={brandColor}
+                          />
+                        }
+                      />
+                    }
+                    name="Total Dishes"
+                    value="45"
+                  />
+                </SimpleGrid>
 
-                {getRoute() ? (
-                  <Box mx='auto' p={{ base: '20px', md: '30px' }} pe='20px' minH='100vh' pt='50px'>
-                    <Routes>
-                      {getRoutes(routes)}
-                    </Routes>
-                  </Box>
-                ) : null}
+                <SimpleGrid
+                  columns={{ base: 1, md: 2, xl: 1 }}
+                  gap="20px"
+                  mb="20px"
+                  p="20px"
+                >
+                  <TotalSpent />
+                  <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
+                    {/* <DailyTraffic /> */}
+                    <MiniCalendar h="100%" minW="100%" selectRange={false} />
+                    <PieCard />
+                  </SimpleGrid>
+                  <WeeklyRevenue />
+                  <ComplexTable
+                    columnsData={columnsDataComplex}
+                    tableData={tableDataComplex}
+                  />
+                </SimpleGrid>
+                <Box p="20px">
+                  <Footer />
+                </Box>
               </Box>
             </SidebarContext.Provider>
           </Box>
         </Box>
-          </SimpleGrid> */}
-      <SimpleGrid
-        columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
-        gap='20px'
-        mb='20px'>
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
-                <Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />
-              }
-            />
-          }
-          name='Total Saved This Month'
-          value='$350.4'
-        />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
-                <Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />
-              }
-            />
-          }
-          name='Total Spend this month'
-          value='$642.39'
-        />
-        <MiniStatistics growth='+23%' name='Total Orders' value='14' />
-        <MiniStatistics
-          endContent={
-            <Flex me='-16px' mt='10px'>
-              <FormLabel htmlFor='balance'>
-                <Avatar src={Usa} />
-              </FormLabel>
-              <Select
-                id='balance'
-                variant='mini'
-                mt='5px'
-                me='0px'
-                defaultValue='usd'>
-                <option value='usd'>USD</option>
-                <option value='eur'>EUR</option>
-                <option value='gba'>GBA</option>
-              </Select>
-            </Flex>
-          }
-          name='Credit balance'
-          value='$1,000'
-        />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'
-              icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}
-            />
-          }
-          name='Distributor Partners'
-          value='4'
-        />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
-                <Icon w='32px' h='32px' as={MdFileCopy} color={brandColor} />
-              }
-            />
-          }
-          name='Total Dishes'
-          value='45'
-        />
-      </SimpleGrid>
-
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-        <TotalSpent />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          {/* <DailyTraffic /> */}
-          <MiniCalendar h='100%' minW='100%' selectRange={false} />
-          <PieCard />
-        </SimpleGrid>
-        <WeeklyRevenue />
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        />
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-      </SimpleGrid>
-      {/* </SimpleGrid> */}
-    </Box>
-    {/* </div> */}
-    </ThemeEditorProvider>
       </React.StrictMode>
     </ChakraProvider>
   );
 }
 
-
 const getRoutes = (routes) => {
   return routes.map((prop, key) => {
-    if (prop.layout === '/admin') {
-      return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
+    if (prop.layout === "/admin") {
+      return (
+        <Route
+          path={prop.layout + prop.path}
+          component={prop.component}
+          key={key}
+        />
+      );
     }
     if (prop.collapse) {
       return getRoutes(prop.items);

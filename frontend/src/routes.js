@@ -25,7 +25,7 @@ const routes = [
     name: "Main Dashboard",
     layout: "/admin",
     path: "/default",
-    icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: MainDashboard,
   },
   {
@@ -35,9 +35,9 @@ const routes = [
     icon: (
       <Icon
         as={MdOutlineShoppingCart}
-        width='20px'
-        height='20px'
-        color='inherit'
+        width="20px"
+        height="20px"
+        color="inherit"
       />
     ),
     component: MainDashboard,
@@ -46,7 +46,9 @@ const routes = [
   {
     name: "Orders",
     layout: "/admin",
-    icon: <Icon as={MdAttachMoney} width='20px' height='20px' color='inherit' />,
+    icon: (
+      <Icon as={MdAttachMoney} width="20px" height="20px" color="inherit" />
+    ),
     path: "/data-tables",
     component: MainDashboard,
   },
