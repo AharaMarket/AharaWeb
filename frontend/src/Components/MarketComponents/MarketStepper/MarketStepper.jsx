@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Box, Stepper, Step, StepButton, Button, Typography } from '@mui/material';
-import { useNavigate, Route, Routes } from 'react-router-dom';
+// import { Box, Stepper, Step, StepButton, Button, Typography } from '@mui/material';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import './MarketStepper.css';
 
 const steps = [
@@ -13,7 +13,7 @@ const steps = [
 export default function HorizontalNonLinearStepper() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
-  const navigate = useNavigate();
+  const navigate = Navigate();
 
   const totalSteps = () => {
     return steps.length;
@@ -62,30 +62,31 @@ export default function HorizontalNonLinearStepper() {
   };
 
   return (
-    <Box className="stepperContainer">
-      <Stepper nonLinear activeStep={activeStep}>
-        {steps.map((step, index) => (
-          <Step key={step.label} completed={completed[index]} optional={step.optional}>
-            <StepButton color="inherit" onClick={handleStep(index)}>
-              {step.label}
-            </StepButton>
-          </Step>
-        ))}
-      </Stepper>
-      <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-        <Button color="inherit" disabled={activeStep === 0} onClick={handleBack}>
-          Back
-        </Button>
-        <Box sx={{ flex: '1 1 auto' }} />
-        <Button onClick={handleNext}>
-          {isLastStep() ? 'Finish' : 'Next'}
-        </Button>
-      </Box>
-      <Routes>
-        {steps.map((step, index) => (
-          <Route path={step.path} element={<Typography>Content for {step.label}</Typography>} key={index} />
-        ))}
-      </Routes>
-    </Box>
+    <h1></h1>
+    // <Box className="stepperContainer">
+    //   <Stepper nonLinear activeStep={activeStep}>
+    //     {steps.map((step, index) => (
+    //       <Step key={step.label} completed={completed[index]} optional={step.optional}>
+    //         <StepButton color="inherit" onClick={handleStep(index)}>
+    //           {step.label}
+    //         </StepButton>
+    //       </Step>
+    //     ))}
+    //   </Stepper>
+    //   <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+    //     <Button color="inherit" disabled={activeStep === 0} onClick={handleBack}>
+    //       Back
+    //     </Button>
+    //     <Box sx={{ flex: '1 1 auto' }} />
+    //     <Button onClick={handleNext}>
+    //       {isLastStep() ? 'Finish' : 'Next'}
+    //     </Button>
+    //   </Box>
+    //   <Routes>
+    //     {steps.map((step, index) => (
+    //       <Route path={step.path} element={<Typography>Content for {step.label}</Typography>} key={index} />
+    //     ))}
+    //   </Routes>
+    // </Box>
   );
 }
