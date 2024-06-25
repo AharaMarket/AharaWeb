@@ -35,11 +35,11 @@ import {
 } from "@chakra-ui/react";
 // Assets
 import Usa from "../../Components/Assets/usa.png";
-
+import axios from 'axios';
 import MiniCalendar from "../../Components/Dashboard/calendar/MiniCalendar.js";
 import MiniStatistics from "../../Components/Dashboard/card/MiniStatistics.js";
 import IconBox from "../../Components/Dashboard/icons/IconBox.js";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   MdAddTask,
   MdAttachMoney,
@@ -72,16 +72,56 @@ import Footer from "../../Components/Footer/Footer.js";
 
 export default function UserReports() {
   // Chakra Color Mode
-  console.log("Dashboard");
   const [fixed] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const { onOpen } = useDisclosure();
+
+
+  // new state hooks
+  const [totalSaved, setTotalSaved] = useState(0);
+  const [totalSpent, setTotalSpent] = useState(0);
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [creditBalance, setCreditBalance] = useState(0);
+  const [distributorPartners, setDistributorPartners] = useState(0);
+  const [totalDishes, setTotalDishes] = useState(0);
+
+  //modifying the use effect such that it will change the current value into the new values
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5050/restaurants');
+        console.log("response");
+        console.log(response.data[0]);
+        console.log("monthSaved");
+        setTotalSaved(response.data[0].monthSaved);
+        setTotalSpent(response.data[0].monthSpent);
+        setTotalOrders(response.data[0].orders);
+        setCreditBalance(response.data[0].creditBalance);
+        setDistributorPartners(response.data[0].distributorPartners);
+        setTotalDishes(response.data[0].totalDishes);
+        console.log("totalSaved variable:")
+        console.log(totalSaved);
+        console.log("totalSaved manually:")
+        console.log(response.data[0].monthSaved)
+        /*console.log(totalSaved);
+        console.log(totalSpent);
+        console.log(totalOrders);
+        console.log(creditBalance);
+        console.log(distributorPartners);*/
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
   // functions for changing the states from components
   const getRoute = () => {
-    return window.location.pathname !== "/admin/full-screen-maps";
+    return window.location.pathname !== '/admin/full-screen-maps';
   };
   const getActiveRoute = (routes) => {
-    let activeRoute = "Default Brand Text";
+    let activeRoute = 'Default Brand Text';
     for (let i = 0; i < routes.length; i++) {
       if (routes[i].collapse) {
         let collapseActiveRoute = getActiveRoute(routes[i].items);
@@ -94,9 +134,7 @@ export default function UserReports() {
           return categoryActiveRoute;
         }
       } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
+        if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
           return routes[i].name;
         }
       }
@@ -117,9 +155,7 @@ export default function UserReports() {
           return categoryActiveNavbar;
         }
       } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
+        if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
           return routes[i].secondary;
         }
       }
@@ -140,9 +176,7 @@ export default function UserReports() {
           return categoryActiveNavbar;
         }
       } else {
-        if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
-        ) {
+        if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
           return routes[i].messageNavbar;
         }
       }
@@ -151,14 +185,8 @@ export default function UserReports() {
   };
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            key={key}
-          />
-        );
+      if (prop.layout === '/admin') {
+        return <Route path={prop.layout + prop.path} component={prop.component} key={key} />;
       }
       if (prop.collapse) {
         return getRoutes(prop.items);
