@@ -13,12 +13,11 @@ export default function MiniCalendar(props) {
   const [value, onChange] = useState(new Date());
   return (
     <Card
-      align='center'
       direction='column'
       w='100%'
-      maxW='max-content'
-      p='20px 15px'
-      h='max-content'
+      maxW='auto'
+      px='20%'
+      h='100%'
       {...rest}>
       <Calendar
         onChange={onChange}
@@ -28,6 +27,7 @@ export default function MiniCalendar(props) {
         tileContent={<Text color='brand.500'></Text>}
         prevLabel={<Icon as={MdChevronLeft} w='24px' h='24px' mt='4px' />}
         nextLabel={<Icon as={MdChevronRight} w='24px' h='24px' mt='4px' />}
+        style={{ width: '100%', height: '100%' }}
       />
     </Card>
   );

@@ -37,7 +37,7 @@ export default function Dashboard(props) {
         }
       } else {
         if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+          window.location.href.indexOf(routes[i].path) !== -1
         ) {
           return routes[i].name;
         }
@@ -60,7 +60,7 @@ export default function Dashboard(props) {
         }
       } else {
         if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+          window.location.href.indexOf(routes[i].path) !== -1
         ) {
           return routes[i].secondary;
         }
@@ -83,7 +83,7 @@ export default function Dashboard(props) {
         }
       } else {
         if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+          window.location.href.indexOf(routes[i].path) !== -1
         ) {
           return routes[i].messageNavbar;
         }

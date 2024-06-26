@@ -360,12 +360,12 @@ export default function UserReports() {
                   p="20px"
                 >
                   <TotalSpent />
-                  <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
+                  <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px">
                     {/* <DailyTraffic /> */}
                     <MiniCalendar h="100%" minW="100%" selectRange={false} />
                     <PieCard />
+                    <WeeklyRevenue />
                   </SimpleGrid>
-                  <WeeklyRevenue />
                   <ComplexTable
                     columnsData={columnsDataComplex}
                     tableData={tableDataComplex}

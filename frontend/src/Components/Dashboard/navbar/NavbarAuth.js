@@ -137,7 +137,7 @@ export default function AuthNavbar(props) {
       return (
         <NavLink
           key={key}
-          to={link.layout + link.path}
+          to={link.path}
           style={{ maxWidth: "max-content", marginLeft: "40px" }}>
           <Text color='gray.400' fontSize='sm' fontWeight='normal'>
             {link.name}
@@ -151,7 +151,7 @@ export default function AuthNavbar(props) {
       return (
         <NavLink
           key={key}
-          to={link.layout + link.path}
+          to={link.path}
           style={{ maxWidth: "max-content", marginLeft: "40px" }}>
           <Text color='gray.400' fontSize='sm' fontWeight='normal'>
             {link.name}
@@ -193,7 +193,7 @@ export default function AuthNavbar(props) {
         return (
           <NavLink
             key={key}
-            to={link.layout + link.path}
+            to={link.path}
             style={{ maxWidth: "max-content", marginLeft: "40px" }}>
             <Text color='gray.400' fontSize='sm' fontWeight='normal'>
               {link.name}
@@ -237,7 +237,7 @@ export default function AuthNavbar(props) {
         return (
           <NavLink
             key={key}
-            to={link.layout + link.path}
+            to={link.path}
             style={{ maxWidth: "max-content", marginLeft: "40px" }}>
             <Text color='gray.400' fontSize='sm' fontWeight='normal'>
               {link.name}
