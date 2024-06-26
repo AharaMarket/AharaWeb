@@ -45,7 +45,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/market/*" element={<MarketRoutes />} />
-            <Route path={"/dashboard/*"} element={<DashboardRoutes />} />
+            <Route path="/dashboard/*" element={<DashboardRoutes />} />
           </Routes>
         </Layout>
       </BrowserRouter>
@@ -56,11 +56,12 @@ function App() {
 function Layout({ children }) {
   const location = useLocation();
   const isMarketRoute = location.pathname.startsWith("/market");
-  const isDashboardRoute = location.pathname.startsWith("/dashboard");
+  const isDashboardRoute = location.pathname.endsWith("/ingredientmarketplace");
 
   return (
     <>
-      {isMarketRoute || isDashboardRoute ? <MarketNavbar /> : <AppAppBar />}
+      
+      {(isDashboardRoute) ? <MarketNavbar /> : null}
       {children}
       {!["/market", "/market/"].includes(window.location.pathname) && (
         <Footer />
@@ -89,8 +90,7 @@ function DashboardRoutes() {
     // <HashRouter>
     <Routes>
       {/* <Route path={`/auth`} component={AuthLayout} /> */}
-      <Route path={"/admin"} element={<AdminLayout />} />
-      <Route pth={"/rtl"} element={<RtlLayout />} />
+      <Route index element={<Dashboard />} />
       {/* <Navigate from='/' to='/admin' /> */}
     </Routes>
     // </HashRouter>

@@ -50,48 +50,48 @@ export default function AdminNavbar(props) {
   };
 
   return (
-    <Box
-      position={navbarPosition}
-      boxShadow={navbarShadow}
-      bg={navbarBg}
-      borderColor={navbarBorder}
-      filter={navbarFilter}
-      backdropFilter={navbarBackdrop}
-      backgroundPosition="center"
-      backgroundSize="cover"
-      borderRadius="16px"
-      borderWidth="1.5px"
-      borderStyle="solid"
-      transitionDelay="0s, 0s, 0s, 0s"
-      transitionDuration=" 0.25s, 0.25s, 0.25s, 0s"
-      transition-property="box-shadow, background-color, filter, border"
-      transitionTimingFunction="linear, linear, linear, linear"
-      alignItems={{ xl: "center" }}
-      display={secondary ? "block" : "flex"}
-      minH="75px"
-      justifyContent={{ xl: "center" }}
-      lineHeight="25.6px"
-      mx="auto"
-      mt={secondaryMargin}
-      pb="8px"
-      right={{ base: "12px", md: "30px", lg: "30px", xl: "30px" }}
-      px={{
-        sm: paddingX,
-        md: "10px",
-      }}
-      ps={{
-        xl: "12px",
-      }}
-      pt="8px"
-      top={{ base: "12px", md: "16px", lg: "20px", xl: "20px" }}
-      w={{
-        base: "calc(100vw - 6%)",
-        md: "calc(100vw - 8%)",
-        lg: "calc(100vw - 6%)",
-        xl: "calc(100vw - 350px)",
-        "2xl": "calc(100vw - 365px)",
-      }}
-    >
+    // <Box
+    //   position={navbarPosition}
+    //   boxShadow={navbarShadow}
+    //   bg={navbarBg}
+    //   borderColor={navbarBorder}
+    //   filter={navbarFilter}
+    //   backdropFilter={navbarBackdrop}
+    //   backgroundPosition="center"
+    //   backgroundSize="cover"
+    //   borderRadius="16px"
+    //   borderWidth="1.5px"
+    //   borderStyle="solid"
+    //   transitionDelay="0s, 0s, 0s, 0s"
+    //   transitionDuration=" 0.25s, 0.25s, 0.25s, 0s"
+    //   transition-property="box-shadow, background-color, filter, border"
+    //   transitionTimingFunction="linear, linear, linear, linear"
+    //   alignItems={{ xl: "center" }}
+    //   display={secondary ? "block" : "flex"}
+    //   minH="75px"
+    //   justifyContent={{ xl: "center" }}
+    //   lineHeight="25.6px"
+    //   mx="auto"
+    //   mt={secondaryMargin}
+    //   pb="8px"
+    //   right={{ base: "12px", md: "30px", lg: "30px", xl: "30px" }}
+    //   px={{
+    //     sm: paddingX,
+    //     md: "10px",
+    //   }}
+    //   ps={{
+    //     xl: "12px",
+    //   }}
+    //   pt="8px"
+    //   top={{ base: "12px", md: "16px", lg: "20px", xl: "20px" }}
+    //   w={{
+    //     base: "calc(100vw - 6%)",
+    //     md: "calc(100vw - 8%)",
+    //     lg: "calc(100vw - 6%)",
+    //     xl: "calc(100vw - 350px)",
+    //     "2xl": "calc(100vw - 365px)",
+    //   }}
+    // >
       <Flex
         w="100%"
         flexDirection={{
@@ -102,7 +102,7 @@ export default function AdminNavbar(props) {
         mb={gap}
       >
         <Box mb={{ sm: "8px", md: "0px" }}>
-          <Breadcrumb>
+          {/* <Breadcrumb>
             <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
               <BreadcrumbLink href="#" color={secondaryText}>
                 Pages
@@ -114,7 +114,7 @@ export default function AdminNavbar(props) {
                 {brandText}
               </BreadcrumbLink>
             </BreadcrumbItem>
-          </Breadcrumb>
+          </Breadcrumb> */}
           {/* Here we create navbar brand, based on route name */}
           <Link
             color={mainText}
@@ -146,8 +146,8 @@ export default function AdminNavbar(props) {
           />
         </Box>
       </Flex>
-      {secondary ? <Text color="white">{message}</Text> : null}
-    </Box>
+      // {secondary ? <Text color="white">{message}</Text> : null}
+    // </Box>
   );
 }
 

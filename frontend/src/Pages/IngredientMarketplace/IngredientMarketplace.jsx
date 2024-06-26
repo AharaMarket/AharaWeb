@@ -71,9 +71,9 @@ function Market() {
         {/* <h2>Ingredient marketplace</h2> */}
         <IngredientSelectionTitleBox />
       </div>
-      <div className="market-stepper-container">
+      {/* <div className="market-stepper-container">
         <MarketStepper />
-      </div>
+      </div> */}
       <div className="market-search-container">
         <Searchbar></Searchbar>
         <Sortbar onSortChange={handleSortChange} />

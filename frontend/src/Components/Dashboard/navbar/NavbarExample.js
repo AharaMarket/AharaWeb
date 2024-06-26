@@ -204,7 +204,7 @@ export default function AuthNavbar(props) {
       } else {
         if (link.component) {
           return (
-            <NavLink to={link.layout + link.path}>
+            <NavLink to={link.path}>
               <MenuItem
                 ps='36px'
                 py='0px'
@@ -226,7 +226,7 @@ export default function AuthNavbar(props) {
   const createExtraLinks = (routes) => {
     return routes.map((link) => {
       return (
-        <NavLink to={link.layout + link.path}>
+        <NavLink to={link.path}>
           <MenuItem
             ps='36px'
             py='0px'
@@ -270,7 +270,7 @@ export default function AuthNavbar(props) {
         );
       } else {
         return (
-          <NavLink to={link.layout + link.path}>
+          <NavLink to={link.path}>
             <Text color='red' fontSize='sm' fontWeight='normal'>
               {link.name}
             </Text>
@@ -283,7 +283,7 @@ export default function AuthNavbar(props) {
   const createApplicationLinks = (routes) => {
     return routes.map((link) => {
       return (
-        <NavLink to={link.layout + link.path}>
+        <NavLink to={link.path}>
           <Stack direction='row' spacing='12px' align='center' cursor='pointer'>
             <IconBox bg='blue.500' color='white' h='30px' w='30px'>
               {link.authIcon}
@@ -321,7 +321,7 @@ export default function AuthNavbar(props) {
       } else {
         if (link.component) {
           return (
-            <NavLink to={link.layout + link.path}>
+            <NavLink to={link.path}>
               <MenuItem
                 ps='36px'
                 py='0px'
