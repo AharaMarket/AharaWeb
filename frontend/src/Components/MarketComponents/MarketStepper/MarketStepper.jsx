@@ -1,92 +1,44 @@
-import * as React from 'react';
-// import { Box, Stepper, Step, StepButton, Button, Typography } from '@mui/material';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import './MarketStepper.css';
+import React from 'react'
+import Iconify from '../../ui/iconify'
+import H4 from '../../ui/typography/h4'
+import H3 from '../../ui/typography/h3'
+
+function Stepper({ currentStep }) {
+    return (
+        <div className='flex justify-center items-center border-b border-grey'>
+            <ol className="flex items-center justify-between px-4 md:px-7 py-5 w-full md:w-4/5 xl:w-2/5 text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
+                {steps.map((step, index) => (
+                    <li key={index} className={`flex w-full items-center ${index < steps.length - 1 ? 'text-blue-600 dark:text-blue-500 md:after:content-[""] after:w-full after:h-[1.5px] after:border-b after:border-grey-200 after:bg-gray-200 after:inline-block after:mx-0 after:xl:mx-1.5 dark:after:border-grey-700' : ''}`}>
+                        <div className='flex flex-col justify-center items-center w-full'>
+                            {
+                                currentStep > index + 1 ? (
+                                    <>
+                                        <span className='flex justify-center items-center rounded-full w-9 h-9 bg-green mb-2 sm:mb-1'>
+                                            <Iconify iconName={'ph:check-bold'} className={'!w-5'} />
+                                        </span>
+                                        <H4 className='!font-medium !text-green sm:!text-nowrap mt-1'>{step.title}</H4>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span className={`flex justify-center items-center rounded-full w-9 h-9 mb-2 sm:mb-1 ${currentStep === index + 1 ? 'bg-light-purple' : 'bg-extra-light-purple opacity-40'}`}>
+                                            <H3 className="!text-white">{index + 1}</H3>
+                                        </span>
+                                        <H4 className='!font-medium sm:!text-nowrap mt-1'>{step.title}</H4>
+                                    </>
+                                )
+                            }
+                        </div>
+                    </li>
+                ))}
+            </ol>
+        </div>
+    );
+}
 
 const steps = [
-  { label: 'Import Order (Optional)', path: '/market/importorder', optional: true },
-  { label: 'Ingredient Selection', path: '/market/ingredientmarketplace' },
-  { label: 'Vendor Selection', path: '/market/vendorselection' },
-  { label: 'Order Confirmation', path: '/market/orderconfirmation' }
+    { title: 'Select Ingredients' },
+    { title: 'Select Vendor' },
+    { title: 'Order Confirmation' }
 ];
 
-export default function HorizontalNonLinearStepper() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [completed, setCompleted] = React.useState({});
-  const navigate = Navigate();
-
-  const totalSteps = () => {
-    return steps.length;
-  };
-
-  const completedSteps = () => {
-    return Object.keys(completed).length;
-  };
-
-  const isLastStep = () => {
-    return activeStep === totalSteps() - 1;
-  };
-
-  const allStepsCompleted = () => {
-    return completedSteps() === totalSteps();
-  };
-
-  const handleStep = (step) => () => {
-    setActiveStep(step);
-    navigate(steps[step].path);
-  };
-
-  const handleNext = () => {
-    const newCompleted = completed;
-    // Mark the current step as completed if it's not optional
-    if (!steps[activeStep].optional) {
-      newCompleted[activeStep] = true;
-      setCompleted(newCompleted);
-    }
-    const nextStep = isLastStep() && !allStepsCompleted() ? 
-      steps.findIndex((step, i) => !(i in newCompleted)) : activeStep + 1;
-    setActiveStep(nextStep);
-    navigate(steps[nextStep].path);
-  };
-
-  const handleBack = () => {
-    const prevStep = activeStep - 1 >= 0 ? activeStep - 1 : 0;
-    setActiveStep(prevStep);
-    navigate(steps[prevStep].path);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
-    navigate(steps[0].path);
-  };
-
-  return (
-    <h1></h1>
-    // <Box className="stepperContainer">
-    //   <Stepper nonLinear activeStep={activeStep}>
-    //     {steps.map((step, index) => (
-    //       <Step key={step.label} completed={completed[index]} optional={step.optional}>
-    //         <StepButton color="inherit" onClick={handleStep(index)}>
-    //           {step.label}
-    //         </StepButton>
-    //       </Step>
-    //     ))}
-    //   </Stepper>
-    //   <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-    //     <Button color="inherit" disabled={activeStep === 0} onClick={handleBack}>
-    //       Back
-    //     </Button>
-    //     <Box sx={{ flex: '1 1 auto' }} />
-    //     <Button onClick={handleNext}>
-    //       {isLastStep() ? 'Finish' : 'Next'}
-    //     </Button>
-    //   </Box>
-    //   <Routes>
-    //     {steps.map((step, index) => (
-    //       <Route path={step.path} element={<Typography>Content for {step.label}</Typography>} key={index} />
-    //     ))}
-    //   </Routes>
-    // </Box>
-  );
-}
+export default Stepper;

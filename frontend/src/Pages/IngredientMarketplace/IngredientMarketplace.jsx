@@ -4,10 +4,12 @@ import Sortbar from "../../Components/MarketComponents/Sortbar/Sortbar";
 import MarketStepper from "../../Components/MarketComponents/MarketStepper/MarketStepper";
 import Searchbar from "../../Components/MarketComponents/Searchbar/Searchbar";
 import CartButton from "../../Components/MarketComponents/Cart/CartButton/CartButton";
-
+import ContinueButton from "../../Components/MarketComponents/Continue/Continue";
 import products from "../../Data/sampledata";
 import "./IngredientMarketplace.css";
 import IngredientSelectionTitleBox from "../../Components/MarketComponents/MarketTitleBox/IngredientMarketplaceTitleBox/IngredientSelectionTitleBox";
+import SolidButton from '../../Components/ui/buttons/solid-button';
+import {Link} from 'react-router-dom';
 
 function Market() {
   const [selectedSort, setSelectedSort] = useState("");
@@ -71,6 +73,7 @@ function Market() {
         {/* <h2>Ingredient marketplace</h2> */}
         <IngredientSelectionTitleBox />
       </div>
+      <MarketStepper currentStep={1} />
       {/* <div className="market-stepper-container">
         <MarketStepper />
       </div> */}
@@ -81,6 +84,11 @@ function Market() {
       </div>
       <div className="listings-container">
         <GroceryList grocerydata={filteredAndSortedGroceryData} />
+      </div>
+      <div className="continue-button">
+        <Link to="/market/vendorselection">
+        <SolidButton>Continue</SolidButton>
+        </Link>
       </div>
     </div>
   );
