@@ -74,6 +74,7 @@ function MarketRoutes() {
     <Routes>
       <Route index element={<Dashboard />} />
       <Route path="ingredientmarketplace" element={<Market />} />
+      <Route path="ingredientmarketplace/:id" element={<ProductDetail /> } />
       <Route path="vendorselection" element={<Ranking />} />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="orderconfirmation" element={<OrderConfirmation />} />
