@@ -14,6 +14,22 @@
     "prettier": "^3.3.2"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx lint-staged",
+      "commit-msg": "npx --no-install commitlint --edit $HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false
   }
 }
