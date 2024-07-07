@@ -6,11 +6,11 @@ const RegistrationForm = () => {
     let navigate = useNavigate();
 
     const handleRestaurantClick = () => {
-        navigate('/restaurant');
+        navigate('/market/restaurant-registration');
     };
 
     const handleDistributorClick = () => {
-        navigate('/distributor');
+        navigate('/market/distributor-registration');
     };
 
     return (

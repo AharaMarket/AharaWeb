@@ -11,6 +11,10 @@ import Contact from "./Pages/Contact/Contact";
 import Ranking from "./Pages/VendorSelection/VendorSelection";
 import Orders from "./Pages/Orders/Orders";
 import CheckOuts from "./Pages/OrderCheckOut/index.jsx";
+import Register from "./Pages/Registration/Register"
+import RestaurantRegistration from "./Pages/Registration/RestaurantRegistration/RestaurantRegistration"
+import DistributorRegistration from "./Pages/Registration/DistributorRegistration/DistributorRegistration"
+
 import SmoothScroll from "smooth-scroll";
 import {
   BrowserRouter,
@@ -24,7 +28,7 @@ import Dashboard from "./Pages/RestaurantDashboard/RestaurantDashboard";
 import OrderConfirmation from "./Pages/OrderConfirmation/OrderConfirmation";
 import ImportOrder from "./Pages/ImportOrder/ImportOrder";
 import AdminLayout from "./Layouts/admin";
-import AppAppBar from "./Components/HomeComponents/AppAppBar.js";
+import AppAppBar from "./Components/HomeComponents/AppAppBar.jsx";
 
 import RtlLayout from "./Layouts/rtl";
 import Header from "./Components/Vendor/Header/index.jsx";
@@ -44,10 +48,11 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
+            {/* <Route path="/login" element={<Login />} /> */}
             <Route path="/contact" element={<Contact />} />
             <Route path="/market/*" element={<MarketRoutes />} />
             <Route path="/dashboard/*" element={<DashboardRoutes />} />
+
             {/* <Route path="/ingredientMarketplace2" element={<IngredientMarketPlace2 />} /> */}
             {/* <Route path="/checkout" element={<CheckOuts />} /> */}
           </Routes>
@@ -88,6 +93,12 @@ function MarketRoutes() {
       <Route path="orders" element={<Orders />} />
       <Route path="login" element={<Login />} />
       <Route path="importorder" element={<ImportOrder />} />
+      <Route path="register" element={<Register />} />
+      <Route path="restaurant-registration" element={<RestaurantRegistration />} />
+      <Route path="distributor-registration" element={<DistributorRegistration />} />
+
+
+
     </Routes>
   );
 }
