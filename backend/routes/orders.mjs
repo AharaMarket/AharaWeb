@@ -14,48 +14,49 @@ ordersrouter.get("/", async (req, res) => {
   res.send(results).status(200);
 });
 
+// Add a new order for a user
 ordersrouter.put("/addOrder", async (req, res) => {
-    const { userid, newOrder } = req.body; // Extract userid and newOrder from the request body
-  
-    if (!userid || !newOrder) {
-      return res.status(400).send({ message: "User ID and new order details are required." });
-    }
-  
-    let collection = await db.collection("ahara-orders");
-  
-    // Find the user's order by userid and update it by adding the new order
-    let updateResult = await collection.updateOne(
-      { userId: userid }, // Filter document by userid
-      { $push: { orders: newOrder } } // Push the new order into the orders array
-    );
-  
-    if (updateResult.modifiedCount === 0) {
-      console.log(`No orders updated for user ${userid}`);
-      return res.status(404).send({ message: "User not found or no changes made." });
-    }
-  
-    console.log(`Order added for user ${userid}:`, newOrder);
-    res.status(200).send({ message: "Order added successfully", orderDetails: newOrder });
-  });
+  const { userId, newOrder } = req.body; // Extract userId and newOrder from the request body
 
-  //get orders for a particular user
-  ordersrouter.get("/:userId", async (req, res) => {
-    try {
-      const collection = await db.collection("ahara-orders");
-      const userId = req.params.userId;  // Retrieve the user ID from URL parameter
-  
-      // Query to find orders by user ID
-      const results = await collection.find({ userId: userId }).limit(50).toArray();
-  
-      if (results.length === 0) {
-        res.status(404).send("No orders found for this user.");
-      } else {
-        res.status(200).send(results);
-      }
-    } catch (error) {
-      console.error("Error retrieving orders:", error);
-      res.status(500).send("Failed to retrieve orders.");
+  if (!userId || !newOrder) {
+    return res.status(400).send({ message: "User ID and new order details are required." });
+  }
+
+  let collection = await db.collection("ahara-orders");
+
+  // Find the user's order by userId and update it by adding the new order
+  let updateResult = await collection.updateOne(
+    { userId: userId }, // Filter document by userId
+    { $push: { orders: newOrder } } // Push the new order into the orders array
+  );
+
+  if (updateResult.modifiedCount === 0) {
+    console.log(`No orders updated for user ${userId}`);
+    return res.status(404).send({ message: "User not found or no changes made." });
+  }
+
+  console.log(`Order added for user ${userId}:`, newOrder);
+  res.status(200).send({ message: "Order added successfully", orderDetails: newOrder });
+});
+
+// Get orders for a particular user
+ordersrouter.get("/user/:userId", async (req, res) => {
+  try {
+    const collection = await db.collection("ahara-orders");
+    const userId = req.params.userId;  // Retrieve the user ID from URL parameter
+
+    // Query to find orders by user ID
+    const results = await collection.find({ userId: userId }).limit(50).toArray();
+
+    if (results.length === 0) {
+      res.status(404).send("No orders found for this user.");
+    } else {
+      res.status(200).send(results);
     }
-  });
-  
+  } catch (error) {
+    console.error("Error retrieving orders:", error);
+    res.status(500).send("Failed to retrieve orders.");
+  }
+});
+
 export default ordersrouter;
