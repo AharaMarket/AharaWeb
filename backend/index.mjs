@@ -6,6 +6,7 @@ import ingredients from "./routes/ingredients.mjs";
 import users from "./routes/users.mjs";
 import orders from "./routes/orders.mjs";
 import distributors from "./routes/distributors.mjs";
+import restaurants from "./routes/restaurants.mjs";
 import carts from "./routes/carts.mjs";
 
 // import distributors from "./routes/distributors.mjs";
@@ -20,6 +21,7 @@ app.use("/ingredients", ingredients);
 app.use("/users", users);
 app.use("/orders", orders);
 app.use("/distributors", distributors);
+app.use("/restaurants", restaurants);
 app.use("/carts", carts);
 
 // Global error handling

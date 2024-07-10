@@ -2,12 +2,30 @@ import express from "express";
 import db from "../db/conn.mjs";
 import { ObjectId } from "mongodb";
 import bcrypt from "bcrypt";
+import mongoose from 'mongoose';
 
 const restaurantrouter = express.Router();
 
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  restaurantName: { type: String, required: true },
+  password: { type: String, required: true },
+  orders: { type: Number, default: 0 },
+  creditBalance: { type: Number, default: 0 },
+  distributorPartners: { type: Number, default: 0 },
+  monthSaved: { type: Number, default: 0 },
+  monthSpent: { type: Number, default: 0 },
+  totalDishes: { type: Number, default: 0 }
+});
+
+// Create a user model
+const User = mongoose.model('User', userSchema);
+
+
 // Get a list of 50 posts
 restaurantrouter.get("/", async (req, res) => {
-  let collection = await db.collection("ahara-users");
+  let collection = await db.collection("ahara-restaurants");
   let results = await collection.find({})
     .limit(50)
     .toArray();
@@ -16,17 +34,56 @@ restaurantrouter.get("/", async (req, res) => {
 });
 
 
-restaurantrouter.post("/register", async (req, res) => {
-  try {
-    const { username, password, role } = req.body;
-    const collection = db.collection("ahara-users");
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await collection.insertOne({ username, password: hashedPassword, role });
-    res.status(201).send({ success: true, message: 'User created', userId: newUser.insertedId });
-  } catch (error) {
-    console.error("Registration error:", error);
-    res.status(500).send({ success: false, message: 'Error creating user' });
+restaurantrouter.post('/register', async (req, res) => {
+  const { name, email, restaurantName, password } = req.body;
+
+  // Basic validation
+  if (!name || !email || !restaurantName || !password) {
+      return res.status(400).json({ message: 'All fields are required.' });
   }
+
+  // Further email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Invalid email format.' });
+  }
+
+  // Password validation (example: at least 6 characters)
+  if (password.length < 6) {
+      return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+  }
+
+  try {
+      // Hash the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      // Initialize the values and create a new user instance
+      const newUser = new User({
+          name,
+          email,
+          restaurantName,
+          password: hashedPassword,  // Store the hashed password
+          orders: 0,
+          creditBalance: 0,
+          distributorPartners: 0,
+          monthSaved: 0,
+          monthSpent: 0,
+          totalDishes: 0
+      });
+
+      // Save the new user to the database
+      const collection = db.collection('ahara-restaurants');
+
+        await collection.insertOne(newUser);
+
+        res.status(201).json({ message: 'User registered successfully!', user: newUser });
+    } catch (error) {
+        // Check if email is already taken
+        if (error.code === 11000) {
+            return res.status(400).json({ message: 'Email already exists.' });
+        }
+        res.status(500).json({ message: 'Server error, please try again later.' });
+    }
 });
 
 // Login endpoint

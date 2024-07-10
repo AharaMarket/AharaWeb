@@ -8,7 +8,21 @@ function RestaurantRegistrationForm() {
     const onSubmit = data => console.log(data);
   
     const password = watch('password');
-  
+    
+    // const fetchProduct = async () => {
+    //     try {
+    //         const response = await axios.get(`http://localhost:5050/ingredients/${id}`);
+    //         setProduct(response.data);
+    //         if (response.data.images && response.data.images.length > 0) {
+    //             setMainImage(response.data.images[0]);
+    //         } else {
+    //             setMainImage('https://t4.ftcdn.net/jpg/02/32/98/31/360_F_232983161_9lmUyHKnWbLW0vQPvWCrp5R5DSpexhbx.jpg');
+    //         }
+    //     } catch (error) {
+    //         console.error('Error fetching product:', error);
+    //     }
+    // };
+
     return (
       <Container className="registrationcontainer">
         <Card className="registrationcard">
