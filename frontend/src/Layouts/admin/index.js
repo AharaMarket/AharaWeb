@@ -4,7 +4,7 @@ import Footer from "../../Components/Dashboard/footer/FooterAdmin";
 // Layout components
 import Navbar from "../../Components/Dashboard/navbar/NavbarAdmin";
 import Sidebar from "../../Components/Dashboard/sidebar/Sidebar";
-import { SidebarContext } from "../../Contexts/SidebarContext";
+import { SidebarContext } from "../../Context/SidebarContext";
 import React, { useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import routes from "../../routes.js";

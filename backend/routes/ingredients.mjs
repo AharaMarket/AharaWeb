@@ -15,6 +15,16 @@ ingredientsrouter.get("/", async (req, res) => {
 });
 
 
+// Get a list of product specifications
+ingredientsrouter.get("/product-specifications", async (req, res) => {
+  let collection = await db.collection("ahara-collection");
+  let results = await collection.find({})
+    .limit(50)
+    .toArray();
+  console.log(results);
+  res.send(results).status(200);
+});
+
 // Get a single ingredient
 ingredientsrouter.get("/:id", async (req, res) => {
   let collection = await db.collection("ahara-collection");

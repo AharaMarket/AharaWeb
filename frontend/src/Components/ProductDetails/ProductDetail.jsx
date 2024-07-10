@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './ProductDetail.css'; 
-import OrderConfirmation from '../../Pages/OrderConfirmation/OrderConfirmation';
 import axios from 'axios';
 
 const ProductDetail = () => {

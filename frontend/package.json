@@ -17,11 +17,13 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "framer-motion": "^11.1.7",
+    "mdb-react-ui-kit": "^8.0.0",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-calendar": "^5.0.0",
     "react-custom-scrollbars-2": "^4.5.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.52.1",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.23.1",
     "react-scripts": "^5.0.1",
@@ -37,12 +39,6 @@
     "eject": "react-scripts eject",
     "prepare": "husky"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -57,12 +53,11 @@
   },
   "devDependencies": {
     "@iconify/react": "^5.0.1",
-    "tailwindcss": "^3.4.4",
     "husky": "^7.0.0",
+    "jest": "^26.0.0",
     "lint-staged": "^11.0.0",
-    "eslint": "^7.0.0",
     "prettier": "^2.0.0",
-    "jest": "^26.0.0"
+    "tailwindcss": "^3.4.4"
   },
   "husky": {
     "hooks": {
@@ -72,10 +67,10 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
       "prettier --write"
     ],
     "*.{js,jsx,ts,tsx,json,css,md}": [
-      "prettier --write"    ]
+      "prettier --write"
+    ]
   }
 }

@@ -64,7 +64,7 @@ import theme from "../../theme/theme";
 import { ThemeEditorProvider } from "@hypertheme-editor/chakra-ui";
 import Sidebar from "../../Components/Dashboard/sidebar/Sidebar";
 import routes from "../../routes.js";
-import { SidebarContext } from "../../Contexts/SidebarContext";
+import { SidebarContext } from "../../Context/SidebarContext";
 import Navbar from "../../Components/Dashboard/navbar/NavbarAdmin";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AdminLayout from "../../Layouts/admin";

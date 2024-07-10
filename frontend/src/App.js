@@ -14,7 +14,7 @@ import CheckOuts from "./Pages/OrderCheckOut/index.jsx";
 import Register from "./Pages/Registration/Register"
 import RestaurantRegistration from "./Pages/Registration/RestaurantRegistration/RestaurantRegistration"
 import DistributorRegistration from "./Pages/Registration/DistributorRegistration/DistributorRegistration"
-
+// import ProductDetail from "./Components/ProductDetails/ProductDetail"
 import SmoothScroll from "smooth-scroll";
 import {
   BrowserRouter,
@@ -89,7 +89,7 @@ function MarketRoutes() {
       <Route path="vendorselection" element={<Ranking />} />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="orderconfirmation" element={<OrderConfirmation />} />
-      <Route path="ingredientmarketplace/:id" element={<ProductDetail /> } />
+      {/* <Route path="ingredientmarketplace/:id" element={<ProductDetail /> } /> */}
       <Route path="ordercheckout" element={<CheckOuts />} />
       <Route path="orders" element={<Orders />} />
       <Route path="login" element={<Login />} />

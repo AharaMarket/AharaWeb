@@ -28,6 +28,7 @@ function Market() {
     }
   };
 
+  
   const filteredAndSortedGroceryData = useMemo(() => {
     let filteredData = products.filter((item) => {
       const price = parseFloat(item.Price.replace(/[^0-9.-]+/g, ""));

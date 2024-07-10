@@ -1,6 +1,6 @@
 import React from 'react'
-import '../../Components/RegistrationForm/RegistrationForm'
-import RegistrationForm from '../../Components/RegistrationForm/RegistrationForm'
+import '../../Components/RegistrationForms/RegistrationForm'
+import RegistrationForm from '../../Components/RegistrationForms/RegistrationForm'
 function Register() {
     return (
         <div>
