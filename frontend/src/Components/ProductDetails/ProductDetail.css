@@ -58,25 +58,26 @@ body {
 
 .option img:hover {
     transform: scale(1.1);
-    border-color: #800080; /* Purple color for hover border */
+    border-color: #5667FF; /* Purple color for hover border */
 }
 
 .right {
     padding: 20px 30px;
 }
 
+h3, h4 {
+    color: #5667FF; /* Purple color for headings */
+    margin-bottom: 10px;
+}
+
 h3 {
-    color: #333;
-    margin-bottom: 20px;
     font-size: 28px;
     font-weight: 700;
 }
 
 h4 {
-    color: #800080; /* Purple color for heading */
     font-size: 24px;
     font-weight: 600;
-    margin-bottom: 10px;
 }
 
 p {
@@ -101,14 +102,14 @@ p {
 
 .product-price {
     font-size: 24px;
-    color: #800080; /* Purple color for price */
+    color: #5667FF; /* Purple color for price */
     font-weight: 600;
 }
 
 .add-cart-btn {
     padding: 10px 20px;
     border: none;
-    background: #800080; /* Purple color for button */
+    background: #5667FF; /* Purple color for button */
     color: white;
     border-radius: 30px;
     font-size: 18px;
@@ -117,7 +118,7 @@ p {
 }
 
 .add-cart-btn:hover {
-    background: #6a006a; /* Darker purple for hover effect */
+    background: #5667FF; /* Darker purple for hover effect */
 }
 
 .add {
@@ -126,23 +127,23 @@ p {
     margin-bottom: 20px;
 }
 
-.add span, .add label {
-    width: 50px;
-    height: 30px;
-    background: none;
-    border: 1px solid #800080; /* Purple color for border */
-    color: #800080; /* Purple color for text */
-    text-align: center;
-    line-height: 30px;
-    margin: 10px 5px;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s;
+.quantity-input {
+    padding: 8px;
+    padding-left: -calc(300px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 300px;
 }
 
-.add span:hover {
-    background: #800080; /* Purple color for hover background */
-    color: white;
+.quantity-select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: -280px;
 }
+
 
 .add label {
     padding: 0 20px;
@@ -159,7 +160,7 @@ button {
     padding: 15px 30px;
     border: none;
     outline: none;
-    background: #800080; /* Purple color for button */
+    background: #5667FF; /* Purple color for button */
     color: white;
     border-radius: 30px;
     font-size: 18px;
@@ -169,7 +170,7 @@ button {
 }
 
 button:hover {
-    background: #6a006a; /* Darker purple for hover effect */
+    background: #5667FF; /* Darker purple for hover effect */
 }
 
 @media only screen and (max-width: 768px) {
