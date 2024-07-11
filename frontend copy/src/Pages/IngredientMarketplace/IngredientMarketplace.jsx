@@ -34,7 +34,7 @@ function Market() {
       return (
         (vendor
           ? item.Vendor.trim().replace(/\s+/g, "").toLowerCase() ===
-            vendor.trim().replace(/\s+/g, "").toLowerCase()
+          vendor.trim().replace(/\s+/g, "").toLowerCase()
           : true) &&
         price >= priceRange.min &&
         price <= priceRange.max
@@ -79,13 +79,13 @@ function Market() {
       <div className="market-search-container">
         <Searchbar></Searchbar>
         <Sortbar onSortChange={handleSortChange} />
-        
+
         {/* <CartButton /> */}
       </div>
       <div className="listings-container">
         <GroceryList grocerydata={filteredAndSortedGroceryData} />
       </div>
-      <ContinueButton/>
+      <ContinueButton />
     </div>
   );
 }

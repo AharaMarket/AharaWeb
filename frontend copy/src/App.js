@@ -1,15 +1,15 @@
 import React from "react";
 import "./App.css";
-import Navbar from "./Components/Navbar/Navbar";
-import MarketNavbar from "./Components/MarketComponents/MarketNavbar/MarketNavbar";
-import Footer from "./Components/Footer/Footer";
-import Home from "./Pages/Home/Home";
-import About from "./Pages/About/About";
-import Market from "./Pages/IngredientMarketplace/IngredientMarketplace";
-import Login from "./Pages/Login/Login";
-import Contact from "./Pages/Contact/Contact";
-import Ranking from "./Pages/VendorSelection/VendorSelection";
-import Orders from "./Pages/Orders/Orders";
+import Navbar from "./Components/Navbar/Navbar.js";
+import MarketNavbar from "./Components/MarketComponents/MarketNavbar/MarketNavbar.jsx";
+import Footer from "./Components/Footer/Footer.js";
+import Home from "./Pages/Home/Home.jsx";
+import About from "./Pages/About/About.jsx";
+import Market from "./Pages/IngredientMarketplace/IngredientMarketplace.jsx";
+import Login from "./Pages/Login/Login.jsx";
+import Contact from "./Pages/Contact/Contact.jsx";
+import Ranking from "./Pages/VendorSelection/VendorSelection.jsx";
+import Orders from "./Pages/Orders/Orders.jsx";
 import SmoothScroll from "smooth-scroll";
 import {
   BrowserRouter,
@@ -19,13 +19,13 @@ import {
   HashRouter,
   Navigate,
 } from "react-router-dom";
-import Dashboard from "./Pages/RestaurantDashboard/RestaurantDashboard";
-import OrderConfirmation from "./Pages/OrderConfirmation/OrderConfirmation";
-import ImportOrder from "./Pages/ImportOrder/ImportOrder";
-import AdminLayout from "./Layouts/admin";
+import Dashboard from "./Pages/RestaurantDashboard/RestaurantDashboard.jsx";
+import OrderConfirmation from "./Pages/OrderConfirmation/OrderConfirmation.jsx";
+import ImportOrder from "./Pages/ImportOrder/ImportOrder.jsx";
+import AdminLayout from "./Layouts/admin/index.js";
 import AppAppBar from "./Components/HomeComponents/AppAppBar.js";
 
-import RtlLayout from "./Layouts/rtl";
+import RtlLayout from "./Layouts/rtl/index.js";
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -60,7 +60,7 @@ function Layout({ children }) {
 
   return (
     <>
-      
+
       {(isDashboardRoute) ? <MarketNavbar /> : null}
       {children}
       {!["/market", "/market/"].includes(window.location.pathname) && (

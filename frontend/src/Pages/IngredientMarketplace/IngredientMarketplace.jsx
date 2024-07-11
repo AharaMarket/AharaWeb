@@ -1,20 +1,33 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import GroceryList from "../../Components/MarketComponents/GroceryList/GroceryList";
 import Sortbar from "../../Components/MarketComponents/Sortbar/Sortbar";
 import MarketStepper from "../../Components/MarketComponents/MarketStepper/MarketStepper";
 import Searchbar from "../../Components/MarketComponents/Searchbar/Searchbar";
 import CartButton from "../../Components/MarketComponents/Cart/CartButton/CartButton";
 import ContinueButton from "../../Components/MarketComponents/Continue/Continue";
-import products from "../../Data/sampledata";
+import fetchData from "../../Data/sampledata";
 import "./IngredientMarketplace.css";
 import IngredientSelectionTitleBox from "../../Components/MarketComponents/MarketTitleBox/IngredientMarketplaceTitleBox/IngredientSelectionTitleBox";
 import SolidButton from '../../Components/ui/buttons/solid-button';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Market() {
+  const [products, setProducts] = useState([]);
   const [selectedSort, setSelectedSort] = useState("");
   const [vendor, setVendor] = useState("");
   const [priceRange, setPriceRange] = useState({ min: 0, max: Infinity }); // Default to no price filter
+
+
+  // new useEffect
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await fetchData();
+      console.log('Fetched data:', data);
+      setProducts(data);
+    };
+    fetchProducts();
+  }, []);
+
 
   const handleSortChange = (sortOption) => {
     setSelectedSort(sortOption);
@@ -34,7 +47,7 @@ function Market() {
       return (
         (vendor
           ? item.Vendor.trim().replace(/\s+/g, "").toLowerCase() ===
-            vendor.trim().replace(/\s+/g, "").toLowerCase()
+          vendor.trim().replace(/\s+/g, "").toLowerCase()
           : true) &&
         price >= priceRange.min &&
         price <= priceRange.max
@@ -64,7 +77,7 @@ function Market() {
       });
     }
     return filteredData;
-  }, [vendor, priceRange, selectedSort]);
+  }, [vendor, priceRange, selectedSort, products]);
 
   return (
     <div className="market">
@@ -87,7 +100,7 @@ function Market() {
       </div>
       <div className="continue-button">
         <Link to="/market/vendorselection">
-        <SolidButton>Continue</SolidButton>
+          <SolidButton>Continue</SolidButton>
         </Link>
       </div>
     </div>

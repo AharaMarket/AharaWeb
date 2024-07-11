@@ -14,9 +14,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 // Custom Components
-import { ItemContent } from "../menu/ItemContent";
-import { SearchBar } from "./searchBar/SearchBar";
-import { SidebarResponsive } from "../sidebar/Sidebar";
+import { ItemContent } from "../menu/ItemContent.js";
+import { SearchBar } from "./searchBar/SearchBar.js";
+import { SidebarResponsive } from "../sidebar/Sidebar.js";
 import PropTypes from "prop-types";
 import React from "react";
 // Assets
@@ -24,7 +24,7 @@ import React from "react";
 import { MdNotificationsNone, MdInfoOutline } from "react-icons/md";
 import { FaEthereum } from "react-icons/fa";
 import routes from "../../../routes.js";
-import { ThemeEditor } from "./ThemeEditor";
+import { ThemeEditor } from "./ThemeEditor.js";
 export default function HeaderLinks(props) {
   const { secondary } = props;
   // Chakra Color Mode

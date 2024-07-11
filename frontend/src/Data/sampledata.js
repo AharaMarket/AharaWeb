@@ -1,5 +1,5 @@
-const grocerydata = [
-  { "Name": "Yellow Onion", "Price": "16.59", "Unit": "25 lbs", "URL": "https://www.chefstore.com/p/yellow-onions-25-lb_1015965/" },
+/*const grocerydata = [
+  { "Name": "Yellow Onion", "Price": "16.53", "Unit": "25 lbs", "URL": "https://www.chefstore.com/p/yellow-onions-25-lb_1015965/" },
   { "Name": "Peeled Garlic", "Price": "89.29", "Unit": "20 lbs", "URL": "https://www.chefstore.com/p/california-peeled-garlic-5-lb_3617665/" },
   { "Name": "Cilantro", "Price": "51.45", "Unit": "5 dozen", "URL": "https://www.chefstore.com/p/river-fresh-farms-bunch-cilantro_3389241/" },
   { "Name": "Red Onion", "Price": "17.99", "Unit": "25 lbs", "URL": "https://www.chefstore.com/p/jumbo-red-onions_6431738/" },
@@ -48,8 +48,10 @@ const grocerydata = [
   { "Name": "Fry Oil", "Price": "31.99", "Unit": "560 fl oz", "URL": "https://www.chefstore.com/p/harvest-value-canola-liquid-frying-oil_3327053/" },
   { "Name": "Whole Peeled Tomato", "Price": "37.59", "Unit": "6 pc", "URL": "https://www.chefstore.com/p/san-benito-whole-peeled-pear-tomatoes-with-basil_8493694/" }
 ];
+grocerydata.forEach(item => {
+  console.log("hii!" + item);
+});
 
-  
 
 const vendors = ["Restaurant Depot", "Chef Store", "Cheetah", "S&J"];
 
@@ -61,3 +63,73 @@ const grocerydatavendor = grocerydata.map((item, index) => {
 });
 
 export default grocerydatavendor;
+*/
+
+
+// sampledata.js
+
+/*
+import fetch from 'node-fetch';
+
+async function fetchData() {
+  try {
+    const response = await fetch('http://127.0.0.1:5050/product_specs');
+    const data = await response.json();
+
+    const transformedData = data.map(item => ({
+      Name: item["Product-Specification"],
+      Price: item["Price-Range"],
+      Unit: item.details[0].Unit, // Assuming the unit is the same across all details
+      URL: `path/to/images/${item["Product-Specification"]}.jpg`, // Adjust image path as necessary
+      Vendor: item.details[0].Distributor // Example: Use the first distributor's name
+    }));
+
+    console.log("Transformed Data:", JSON.stringify(transformedData, null, 2));
+    return transformedData;
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    return [];
+  }
+}
+
+fetchData().then(grocerydata => {
+  console.log("HIII!", JSON.stringify(grocerydata, null, 2));
+  // Normally you would export the data here, but since fetching is async,
+  // we just log it for debugging purposes.
+});
+
+const grocerydata = await fetchData();
+
+export default grocerydata;
+*/
+
+
+import axios from 'axios';
+
+async function fetchData() {
+  try {
+    const response = await axios.get('http://127.0.0.1:5050/product_specs');
+    const data = response.data;
+
+    const transformedData = data.map(item => ({
+      Name: item["Product-Specification"],
+      Price: item["Price-Range"],
+      Unit: "NA", // Assuming the unit is the same across all details
+      URL: "NA", // Adjust image path as necessary
+      Vendor: "NA" // Example: Use the first distributor's name
+    }));
+
+    return transformedData;
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    return [];
+  }
+}
+
+fetchData().then(grocerydata => {
+  console.log("HIII!", grocerydata);
+  // Normally you would export the data here, but since fetching is async,
+  // we just log it for debugging purposes.
+});
+
+export default fetchData;

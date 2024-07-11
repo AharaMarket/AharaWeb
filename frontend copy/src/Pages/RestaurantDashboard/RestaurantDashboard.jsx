@@ -56,18 +56,18 @@ import WeeklyRevenue from "../../Components/Dashboard/widgets/WeeklyRevenue.js";
 import {
   columnsDataCheck,
   columnsDataComplex,
-} from "../../Components/Dashboard/data/columnsData";
+} from "../../Components/Dashboard/data/columnsData.js";
 import tableDataCheck from "../../Components/Dashboard/data/tableDataCheck.json";
 import tableDataComplex from "../../Components/Dashboard/data/tableDataComplex.json";
 import { ChakraProvider } from "@chakra-ui/react";
-import theme from "../../theme/theme";
+import theme from "../../theme/theme.js";
 import { ThemeEditorProvider } from "@hypertheme-editor/chakra-ui";
-import Sidebar from "../../Components/Dashboard/sidebar/Sidebar";
+import Sidebar from "../../Components/Dashboard/sidebar/Sidebar.js";
 import routes from "../../routes.js";
-import { SidebarContext } from "../../Contexts/SidebarContext";
-import Navbar from "../../Components/Dashboard/navbar/NavbarAdmin";
+import { SidebarContext } from "../../Contexts/SidebarContext.js";
+import Navbar from "../../Components/Dashboard/navbar/NavbarAdmin.js";
 import { Navigate, Route, Routes } from "react-router-dom";
-import AdminLayout from "../../Layouts/admin";
+import AdminLayout from "../../Layouts/admin/index.js";
 import Footer from "../../Components/Footer/Footer.js";
 
 export default function UserReports() {
@@ -237,7 +237,7 @@ export default function UserReports() {
                       // secondary={getActiveNavbar(routes)}
                       // message={getActiveNavbarText(routes)}
                       fixed={fixed}
-                      // {...rest}
+                    // {...rest}
                     />
                   </Box>
                 </Portal>

@@ -9,12 +9,12 @@ import {
 } from "@chakra-ui/react";
 import Card from "../card/Card.js";
 // Custom components
-import BarChart from "../charts/BarChart";
+import BarChart from "../charts/BarChart.js";
 import React from "react";
 import {
   barChartDataConsumption,
   barChartOptionsConsumption,
-} from "../variables/charts";
+} from "../variables/charts.js";
 import { MdBarChart } from "react-icons/md";
 
 export default function WeeklyRevenue(props) {

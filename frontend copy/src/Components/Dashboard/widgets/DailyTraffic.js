@@ -2,14 +2,14 @@ import React from "react";
 
 // Chakra imports
 import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
-import BarChart from "../charts/BarChart";
+import BarChart from "../charts/BarChart.js";
 
 // Custom components
 import Card from "../card/Card.js";
 import {
   barChartDataDailyTraffic,
   barChartOptionsDailyTraffic,
-} from "../variables/charts";
+} from "../variables/charts.js";
 
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
