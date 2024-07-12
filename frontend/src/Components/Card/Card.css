@@ -113,16 +113,16 @@
 
 .card-price {
   position: absolute;
-  bottom: 80px;
-  width: 100%;
+  bottom: 60px;
+  width: 85%;
   text-align: center;
 }
 
 .price {
-  font-size: 1.1rem;
-  color: #2d87f0;
-  font-weight: 550;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  border: 1px solid #DED7EA;
+  font-size: 17px;
+  color: #5d6169;
+  font-weight: 500;
   /* Add a subtle background color */
   padding: 5px;
   border-radius: 8px;

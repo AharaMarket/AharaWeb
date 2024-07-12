@@ -37,6 +37,7 @@ product_spec.get("/", async (req, res) => {
       return {
         'Product-Specification': product._id,
         'Price-Range': `${minPrice.toFixed(2)} - $${maxPrice.toFixed(2)}`,
+        'URL': 'https://ingredient-photos.s3.us-east-2.amazonaws.com/' + product._id.toLowerCase() + '.jpg',
         details: product.details
       };
     });

@@ -115,7 +115,7 @@ async function fetchData() {
       Name: item["Product-Specification"],
       Price: item["Price-Range"],
       Unit: "NA", // Assuming the unit is the same across all details
-      URL: "NA", // Adjust image path as necessary
+      URL: item["URL"], // Adjust image path as necessary
       Vendor: "NA" // Example: Use the first distributor's name
     }));
 
