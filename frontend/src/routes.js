@@ -12,6 +12,8 @@ import {
 
 // Admin Imports
 import MainDashboard from "./Pages/RestaurantDashboard/RestaurantDashboard.jsx";
+import MarketPlace from "./Pages/IngredientMarketplace/IngredientMarketplace.jsx";
+import Orders from "./Pages/Orders/Orders.jsx";
 // import NFTMarketplace from "views/admin/marketplace";
 // import Profile from "views/admin/profile";
 // import DataTables from "views/admin/dataTables";
@@ -24,14 +26,14 @@ const routes = [
   {
     name: "Main Dashboard",
     layout: "/admin",
-    path: "/default",
+    path: "/market",
     icon: <Icon as={MdHome} width="20px" height="20px" color="inherit" />,
     component: MainDashboard,
   },
   {
     name: "Marketplace",
     layout: "/admin",
-    path: "dashboard",
+    path: "/market/ingredientmarketplace",
     icon: (
       <Icon
         as={MdOutlineShoppingCart}
@@ -40,7 +42,7 @@ const routes = [
         color="inherit"
       />
     ),
-    component: MainDashboard,
+    component: MarketPlace,
     secondary: true,
   },
   {
@@ -49,8 +51,8 @@ const routes = [
     icon: (
       <Icon as={MdAttachMoney} width="20px" height="20px" color="inherit" />
     ),
-    path: "/data-tables",
-    component: MainDashboard,
+    path: "/market/orders",
+    component: Orders,
   },
   // {
   //   name: "Dish Analysis",

@@ -10,6 +10,7 @@ import Login from "./Pages/Login/Login";
 import Contact from "./Pages/Contact/Contact";
 import Ranking from "./Pages/VendorSelection/VendorSelection";
 import Orders from "./Pages/Orders/Orders";
+import CheckOuts from "./Pages/OrderCheckOut/index.jsx";
 import SmoothScroll from "smooth-scroll";
 import {
   BrowserRouter,
@@ -26,6 +27,7 @@ import AdminLayout from "./Layouts/admin";
 import AppAppBar from "./Components/HomeComponents/AppAppBar.js";
 
 import RtlLayout from "./Layouts/rtl";
+import Header from "./Components/Vendor/Header/index.jsx";
 
 export const scroll = new SmoothScroll('a[href*="#"]', {
   speed: 1000,
@@ -45,7 +47,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/market/*" element={<MarketRoutes />} />
-            <Route path={"/dashboard/*"} element={<DashboardRoutes />} />
+            <Route path="/dashboard/*" element={<DashboardRoutes />} />
+            {/* <Route path="/ingredientMarketplace2" element={<IngredientMarketPlace2 />} /> */}
+            {/* <Route path="/checkout" element={<CheckOuts />} /> */}
           </Routes>
         </Layout>
       </BrowserRouter>
@@ -56,14 +60,17 @@ function App() {
 function Layout({ children }) {
   const location = useLocation();
   const isMarketRoute = location.pathname.startsWith("/market");
-  const isDashboardRoute = location.pathname.startsWith("/dashboard");
-
+  const isDashboardRoute = location.pathname.endsWith("/ingredientmarketplace");
+  const ingredientMarketplace2 = location.pathname.startsWith('/ingredientMarketplace2')
+  const orderPlace = location.pathname.startsWith('/orderPlace')
+  const checkOut = location.pathname.startsWith('/checkout')
   return (
     <>
-      {isMarketRoute || isDashboardRoute ? <MarketNavbar /> : <AppAppBar />}
+
+      {(isMarketRoute) ? <MarketNavbar /> : ingredientMarketplace2 || orderPlace || checkOut ? <Header /> : null}
       {children}
       {!["/market", "/market/"].includes(window.location.pathname) && (
-        <Footer />
+        ingredientMarketplace2 || orderPlace || checkOut ? null : <Footer />
       )}
     </>
   );
@@ -77,6 +84,7 @@ function MarketRoutes() {
       <Route path="vendorselection" element={<Ranking />} />
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="orderconfirmation" element={<OrderConfirmation />} />
+      <Route path="ordercheckout" element={<CheckOuts />} />
       <Route path="orders" element={<Orders />} />
       <Route path="login" element={<Login />} />
       <Route path="importorder" element={<ImportOrder />} />
@@ -89,8 +97,7 @@ function DashboardRoutes() {
     // <HashRouter>
     <Routes>
       {/* <Route path={`/auth`} component={AuthLayout} /> */}
-      <Route path={"/admin"} element={<AdminLayout />} />
-      <Route pth={"/rtl"} element={<RtlLayout />} />
+      <Route index element={<Dashboard />} />
       {/* <Navigate from='/' to='/admin' /> */}
     </Routes>
     // </HashRouter>

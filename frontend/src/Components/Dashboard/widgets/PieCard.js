@@ -50,7 +50,7 @@ export default function Conversion(props) {
         bg={cardColor}
         flexDirection='row'
         boxShadow={cardShadow}
-        w='100%'
+        w='max-content'
         p='15px'
         px='20px'
         mt='15px'

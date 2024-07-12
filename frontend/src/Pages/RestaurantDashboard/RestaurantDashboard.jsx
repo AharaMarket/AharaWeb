@@ -237,7 +237,7 @@ export default function UserReports() {
                       // secondary={getActiveNavbar(routes)}
                       // message={getActiveNavbarText(routes)}
                       fixed={fixed}
-                      // {...rest}
+                    // {...rest}
                     />
                   </Box>
                 </Portal>
@@ -265,7 +265,7 @@ export default function UserReports() {
                       />
                     }
                     name="Total Saved This Month"
-                    value="$350.4"
+                    value={"$" + totalSaved}
                   />
                   <MiniStatistics
                     startContent={
@@ -284,12 +284,12 @@ export default function UserReports() {
                       />
                     }
                     name="Total Spend this month"
-                    value="$642.39"
+                    value={"$" + totalSpent}
                   />
                   <MiniStatistics
                     growth="+23%"
                     name="Total Orders"
-                    value="14"
+                    value={totalOrders}
                   />
                   <MiniStatistics
                     endContent={
@@ -330,7 +330,7 @@ export default function UserReports() {
                       />
                     }
                     name="Distributor Partners"
-                    value="4"
+                    value={distributorPartners}
                   />
                   <MiniStatistics
                     startContent={
@@ -349,7 +349,7 @@ export default function UserReports() {
                       />
                     }
                     name="Total Dishes"
-                    value="45"
+                    value={totalDishes}
                   />
                 </SimpleGrid>
 
@@ -360,12 +360,12 @@ export default function UserReports() {
                   p="20px"
                 >
                   <TotalSpent />
-                  <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
+                  <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px">
                     {/* <DailyTraffic /> */}
                     <MiniCalendar h="100%" minW="100%" selectRange={false} />
                     <PieCard />
+                    <WeeklyRevenue />
                   </SimpleGrid>
-                  <WeeklyRevenue />
                   <ComplexTable
                     columnsData={columnsDataComplex}
                     tableData={tableDataComplex}
