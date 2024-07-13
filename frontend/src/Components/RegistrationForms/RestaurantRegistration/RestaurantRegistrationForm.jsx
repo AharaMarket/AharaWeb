@@ -25,10 +25,10 @@ function RestaurantRegistrationForm() {
     };
 
     return (
-      <Container className="registrationcontainer">
-        <Card className="registrationcard">
+      <Container className="registrationformcontainer">
+        <Card className="registrationformcard">
           <CardContent>
-            <Typography variant="h4" component="h2" className="registrationtitle">
+            <Typography variant="h4" component="h2" className="registrationformtitle">
               Sign Up
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -78,7 +78,7 @@ function RestaurantRegistrationForm() {
                 error={!!errors.confirmPassword}
                 helperText={errors.confirmPassword?.message}
               />
-              <Box className="registrationbutton">
+              <Box className="registrationformbutton">
                 <Button type="submit" variant="contained" color="primary" fullWidth>
                   Register
                 </Button>

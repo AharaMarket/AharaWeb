@@ -87,7 +87,7 @@ function Market() {
 
   const handleAddToCart = (productSpecification, quantity) => {
       console.log(user,productSpecification, quantity );
-    addItemToCart(user.email, productSpecification, quantity);
+    addItemToCart(user, productSpecification, quantity);
   };
 
   return (

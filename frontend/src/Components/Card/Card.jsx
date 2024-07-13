@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { BsFillBagFill } from "react-icons/bs";
 import './Card.css';
 
-const Card = ({ img, title, star, vendor, reviews, prevPrice, newPrice, onAddToCart }) => {
+const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleAddToCart = () => {
-    const productSpecification = `${title} - ${vendor}`;
+    const productSpecification = `${title}`;
     onAddToCart(productSpecification, quantity);
   };
 

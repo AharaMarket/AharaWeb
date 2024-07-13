@@ -49,8 +49,7 @@ cartsrouter.post('/add', async (req, res) => {
     }
 
     const itemIndex = cart.items.findIndex(item => 
-      item.productSpecification.name === productSpecification.name &&
-      item.productSpecification.distributor === productSpecification.distributor
+      item.productSpecification === productSpecification
     );
 
     if (itemIndex > -1) {

@@ -6,13 +6,13 @@ function RegistrationForm() {
   let navigate = useNavigate();
 
   return (
-    <div className="container">
-      <h1 className="title">Register Your Account</h1>
-      <div className="buttons"> {/* Container for buttons */}
-        <button className="button" onClick={() => navigate('/market/distributor-registration')}>
+    <div className="registrationcontainer">
+      <h1 className="registrationtitle">Register Your Account</h1>
+      <div className="registrationbuttons"> {/* Container for buttons */}
+        <button className="registrationbutton" onClick={() => navigate('/market/distributor-registration')}>
           Register as Distributor
         </button>
-        <button className="button" onClick={() => navigate('/market/restaurant-registration')}>
+        <button className="registrationbutton" onClick={() => navigate('/market/restaurant-registration')}>
           Register as Restaurant
         </button>
       </div>

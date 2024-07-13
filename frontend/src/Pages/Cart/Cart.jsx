@@ -8,6 +8,7 @@ const Cart = () => {
   const { cart, fetchCart, updateCartItem, removeItemFromCart } = useContext(CartContext);
 
   useEffect(() => {
+    console.log(user)
     if (user) {
       fetchCart(user);
     }
