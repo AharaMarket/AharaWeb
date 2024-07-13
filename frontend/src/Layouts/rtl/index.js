@@ -5,7 +5,7 @@ import { Portal, Box, useDisclosure } from "@chakra-ui/react";
 import Navbar from "../../Components/Dashboard/navbar/NavbarRTL.js";
 import Sidebar from "../../Components/Dashboard/navbar/NavbarRTL.js";
 import { RtlProvider } from "../../Components/Dashboard/rtlProvider/RtlProvider";
-import { SidebarContext } from "../../Contexts/SidebarContext";
+import { SidebarContext } from "../../Context/SidebarContext";
 import React, { useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import routes from "../../routes.js";

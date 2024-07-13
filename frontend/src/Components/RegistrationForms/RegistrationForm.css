@@ -1,0 +1,39 @@
+/* src/RegistrationPage.css */
+.registrationcontainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align items at the top */
+    height: 100vh; /* Full height of the viewport */
+    width: 100vw; /* Full width of the viewport */
+    padding-top: 40px; /* Add top padding to move content higher */
+    font-family: Arial, sans-serif;
+}
+
+.registrationtitle {
+    color: black;
+    margin-bottom: 20px;
+    font-size: 2.5rem; /* Increased font size */
+}
+
+.registrationbuttons { /* Class for the buttons container */
+    display: flex; /* Displaying buttons in a row */
+    justify-content: center; /* Centering buttons horizontally */
+    gap: 20px; /* Space between buttons */
+}
+
+.registrationbutton {
+    padding: 15px 30px; /* Increased padding */
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: blue;
+    font-size: 1.5rem; /* Increased font size */
+    cursor: pointer;
+    outline: none;
+    transition: transform 0.2s ease-in-out;
+}
+
+.registrationbutton:hover {
+    transform: scale(1.1);
+}
