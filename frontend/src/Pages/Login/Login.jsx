@@ -1,4 +1,6 @@
-import * as React from 'react';
+// src/Pages/Login/Login.js
+import React, { useContext, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,32 +14,46 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-// TODO remove, this demo shouldn't need to reset the theme.
+import axios from 'axios';
+import  Alert  from '../../Components/Alerts/Alert';
+import { UserContext } from '../../Context/User/UserContext';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const defaultTheme = createTheme();
 
 export default function Login() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { setUser } = useContext(UserContext);
+  const [alert, setAlert] = useState({ show: false, message: '', variant: '' });
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const credentials = {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+
+    try {
+      console.log(credentials)
+      const response = await axios.post('http://localhost:5050/restaurants/login', credentials);
+      console.log(response)
+      if (response.data.success) {
+        console.log("hello")
+        console.log(response.data.user)
+        setUser(response.data.user); // Set the logged-in user
+        setAlert({ show: true, message: 'Login successful!', variant: 'success' });
+        setTimeout(() => {
+          const { from } = location.state || { from: { pathname: '/market' } };
+          navigate(from);
+        }, 2000);
+      } else {
+        setAlert({ show: true, message: 'Invalid credentials', variant: 'danger' });
+      }
+    } catch (error) {
+      setAlert({ show: true, message: 'Error during login. Please try again.', variant: 'danger' });
+    }
   };
 
   return (
@@ -52,12 +68,14 @@ export default function Login() {
             alignItems: 'center',
           }}
         >
-          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar> */}
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {alert.show && (
+            <Alert variant={alert.variant} onClose={() => setAlert({ show: false, message: '', variant: '' })} dismissible>
+              {alert.message}
+            </Alert>
+          )}
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
@@ -105,7 +123,6 @@ export default function Login() {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
         <br></br>
       </Container>
     </ThemeProvider>

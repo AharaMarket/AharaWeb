@@ -24,7 +24,7 @@ function MarketNavbar() {
                     <Button color="inherit" component={Link} to="/market/login" target="_blank" rel="noopener noreferrer">Login</Button>
                     <IconButton
                         component={Link}
-                        to="/market/vendorselection"
+                        to="/market/cart"
                         color="inherit"
                     >
                         <Badge badgeContent={0} color="secondary">

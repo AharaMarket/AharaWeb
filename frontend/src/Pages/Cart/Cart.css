@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.cart-container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+.cart-header {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.5em;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.empty-cart-message {
+  text-align: center;
+  font-size: 1.5em;
+  color: #666;
+  margin-top: 40px;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.item-details {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.item-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.item-name {
+  display: block;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #333;
+}
+
+.item-distributor {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.item-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity-button {
+  background: #ddd;
+  border: none;
+  padding: 8px 12px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.quantity-button:hover {
+  background: #ccc;
+}
+
+.quantity {
+  font-size: 1.1em;
+  color: #333;
+}
+
+.remove-button {
+  background: #ff4d4d;
+  border: none;
+  padding: 8px 12px;
+  font-size: 1em;
+  cursor: pointer;
+  color: white;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+
+.remove-button:hover {
+  background: #ff1a1a;
+}

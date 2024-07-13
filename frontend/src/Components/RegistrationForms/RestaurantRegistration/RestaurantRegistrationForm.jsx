@@ -1,27 +1,28 @@
 import React from 'react';
 import './RestaurantRegistrationForm.css'
 import { useForm } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
 import { Container, TextField, Button, Card, CardContent, Typography, Box } from '@mui/material';
+import axios from 'axios';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 function RestaurantRegistrationForm() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
   
     const password = watch('password');
     
-    // const fetchProduct = async () => {
-    //     try {
-    //         const response = await axios.get(`http://localhost:5050/ingredients/${id}`);
-    //         setProduct(response.data);
-    //         if (response.data.images && response.data.images.length > 0) {
-    //             setMainImage(response.data.images[0]);
-    //         } else {
-    //             setMainImage('https://t4.ftcdn.net/jpg/02/32/98/31/360_F_232983161_9lmUyHKnWbLW0vQPvWCrp5R5DSpexhbx.jpg');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error fetching product:', error);
-    //     }
-    // };
+    const onSubmit = async (data) => {
+        try {
+            const response = await axios.post('http://localhost:5050/restaurants/register', data);
+            toast.success('Registration successful!');
+            setTimeout(() => {
+                window.location.href = '/market';  // Redirect to dashboard
+            }, 2000);
+        } catch (error) {
+            toast.error('Error during registration. Please try again.');
+        }
+    };
 
     return (
       <Container className="registrationcontainer">

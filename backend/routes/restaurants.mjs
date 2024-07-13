@@ -87,20 +87,59 @@ restaurantrouter.post('/register', async (req, res) => {
 });
 
 // Login endpoint
-restaurantrouter.post("/login", async (req, res) => {
+restaurantrouter.post('/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    const collection = db.collection("ahara-users");
-    const user = await collection.findOne({ username });
-    if (user && await bcrypt.compare(password, user.password)) {
-      res.json({ success: true, role: user.role });
-    } else {
-      res.status(401).json({ success: false, message: 'Invalid credentials' });
-    }
+      const { email, password } = req.body;
+      if (!email || !password) {
+          return res.status(400).json({ success: false, message: 'Email and password are required' });
+      }
+      
+      const collection = db.collection('ahara-restaurants');
+      const user = await collection.findOne({ email });
+      console.log(email)
+      console.log("_________________")
+      console.log(user)
+      if (user && user.password) {
+          const isMatch = await bcrypt.compare(password, user.password);
+          if (isMatch) {
+            return res.json({ success: true, user: email });
+          } else {
+              return res.status(401).json({ success: false, message: 'Invalid credentials' });
+          }
+      } else {
+          return res.status(401).json({ success: false, message: 'Invalid credentials' });
+      }
   } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ success: false, message: 'Server error' });
+      console.error("Login error:", error);
+      res.status(500).json({ success: false, message: 'Server error' });
   }
 });
+
+restaurantrouter.get('/restaurantinfo', async (req, res) => {
+  try {
+      const email = req.query.email;
+      if (!email) {
+          return res.status(400).json({ success: false, message: 'Email is required' });
+      }
+
+      const collection = db.collection('ahara-restaurants');
+      console.log(`Searching for restaurant information with email: ${email}`);
+      const restaurantInfo = await collection.findOne({ email });
+
+      if (restaurantInfo) {
+          // Exclude the password from the response
+          const { password, ...rest } = restaurantInfo;
+          return res.json({ success: true, data: rest });
+      } else {
+          console.log(`Restaurant information not found for email: ${email}`);
+          return res.status(404).json({ success: false, message: 'Restaurant information not found' });
+      }
+  } catch (error) {
+      console.error("Error fetching restaurant information:", error);
+      res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+
 
 export default restaurantrouter;
