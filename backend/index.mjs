@@ -9,6 +9,7 @@ import distributors from "./routes/distributors.mjs";
 import carts from "./routes/carts.mjs";
 import restaurants_router from "./routes/restaurants.mjs";
 import product_spec from "./routes/product_specs.mjs";
+import tablerouter from "./routes/product_specs_table.mjs";
 
 // import distributors from "./routes/distributors.mjs";
 const PORT = process.env.PORT || 5050;
@@ -25,6 +26,7 @@ app.use("/distributors", distributors);
 app.use("/carts", carts);
 app.use("/restaurants", restaurants_router);
 app.use("/product_specs", product_spec);
+app.use("/table", tablerouter);
 
 // Global error handling
 app.use((err, _req, res, next) => {
