@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './ProductDetail.css'; 
-import OrderConfirmation from '../../Pages/OrderConfirmation/OrderConfirmation';
 import axios from 'axios';
 
 const ProductDetail = () => {
@@ -9,7 +8,6 @@ const ProductDetail = () => {
     const [product, setProduct] = useState(null);
     const [mainImage, setMainImage] = useState('');
     const [quantity, setQuantity] = useState(1);
-    const [weight, setWeight] = useState('lb');
     const navigate = useNavigate();
 
     const fetchProduct = async () => {
@@ -33,7 +31,7 @@ const ProductDetail = () => {
     }, [id]);
 
     const handleAddToBag = () => {
-        alert(`Added  ${product.Name} of ${quantity} ${weight} added to the bag.`);
+        alert(`Added  ${product.Name} of quantity ${quantity} to the bag.`);
       
     };
 
@@ -69,25 +67,21 @@ const ProductDetail = () => {
                 <div className="right">
                     <h3>{product.Name}</h3>
                     <h4>{product.Price}</h4>
-                  
+                    <p>Distributor: {product.Distributor}</p>
+                    <div className="color flex1">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <h5>Quantity</h5>
                     <div className="add flex1">
-    <input
-        // min="1" 
-        className="quantity-input"
-        value={quantity}
-        onChange={(e) => setQuantity(e.target.value)}
-    />
-    <select
-        className="quantity-select"
-        value={weight}
-        onChange={(e) => setWeight(e.target.value)}
-    >
-        <option value="lb" selected >lb</option>
-        <option value="pc">per pc</option>
-    </select>
-</div>
-
-
+                        <span className="quantity-btn" onClick={decreaseQuantity}>-</span>
+                        <label>{quantity}</label>
+                        <span className="quantity-btn" onClick={increaseQuantity}>+</span>
+                    </div>
                     <button onClick={handleAddToBag}>Add to Bag</button>
                 </div>
             </div>

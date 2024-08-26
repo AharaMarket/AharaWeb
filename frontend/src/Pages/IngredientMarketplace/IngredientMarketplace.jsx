@@ -1,18 +1,36 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useContext } from "react";
+import Fuse from "fuse.js";
 import GroceryList from "../../Components/MarketComponents/GroceryList/GroceryList";
 import Sortbar from "../../Components/MarketComponents/Sortbar/Sortbar";
 import MarketStepper from "../../Components/MarketComponents/MarketStepper/MarketStepper";
 import Searchbar from "../../Components/MarketComponents/Searchbar/Searchbar";
 import CartButton from "../../Components/MarketComponents/Cart/CartButton/CartButton";
-
-import products from "../../Data/sampledata";
+import fetchData from "../../Data/sampledata";
 import "./IngredientMarketplace.css";
 import IngredientSelectionTitleBox from "../../Components/MarketComponents/MarketTitleBox/IngredientMarketplaceTitleBox/IngredientSelectionTitleBox";
+import SolidButton from '../../Components/ui/buttons/solid-button';
+import { Link } from 'react-router-dom';
+import { CartContext } from '../../Context/Cart/CartContext';
+import { UserContext } from '../../Context/User/UserContext';
 
 function Market() {
+  const [products, setProducts] = useState([]);
   const [selectedSort, setSelectedSort] = useState("");
   const [vendor, setVendor] = useState("");
-  const [priceRange, setPriceRange] = useState({ min: 0, max: Infinity }); // Default to no price filter
+  const [priceRange, setPriceRange] = useState({ min: 0, max: Infinity });
+  const [searchTerm, setSearchTerm] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  const { user } = useContext(UserContext);
+  const { addItemToCart, cartItems = [] } = useContext(CartContext); // Default to empty array
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const data = await fetchData();
+      setProducts(data);
+    };
+    fetchProducts();
+  }, []);
 
   const handleSortChange = (sortOption) => {
     setSelectedSort(sortOption);
@@ -22,8 +40,30 @@ function Market() {
     if (type === "vendor") {
       setVendor(value);
     } else if (type === "price") {
-      setPriceRange(value); // Expecting value to be an object {min, max}
+      setPriceRange(value);
     }
+  };
+
+  const handleSearchChange = (query) => {
+    setSearchTerm(query);
+
+    const fuse = new Fuse(products, {
+      keys: ["Name"],
+      threshold: 0.9, 
+    });
+
+    if (query) {
+      const result = fuse.search(query);
+      const filteredSuggestions = result.map(({ item }) => item.Name);
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setSearchTerm(suggestion);
+    setSuggestions([]);
   };
 
   const filteredAndSortedGroceryData = useMemo(() => {
@@ -35,8 +75,9 @@ function Market() {
             vendor.trim().replace(/\s+/g, "").toLowerCase()
           : true) &&
         price >= priceRange.min &&
-        price <= priceRange.max
-      ); // Adjusted to use min and max
+        price <= priceRange.max &&
+        item.Name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     });
 
     if (selectedSort) {
@@ -62,25 +103,43 @@ function Market() {
       });
     }
     return filteredData;
-  }, [vendor, priceRange, selectedSort]);
+  }, [vendor, priceRange, selectedSort, searchTerm, products]);
+
+  const filteredCartItems = useMemo(() => {
+    if (!searchTerm) return [];
+    return cartItems.filter((item) =>
+      item.Name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [searchTerm, cartItems]);
+
+  const handleAddToCart = (productSpecification, quantity) => {
+    addItemToCart(user, productSpecification, quantity);
+  };
 
   return (
     <div className="market">
-      {/* <Sidebar onQueryChange={handleQueryChange} /> */}
       <div className="market-title-container">
-        {/* <h2>Ingredient marketplace</h2> */}
         <IngredientSelectionTitleBox />
       </div>
-      <div className="market-stepper-container">
-        <MarketStepper />
-      </div>
+      <MarketStepper currentStep={1} />
       <div className="market-search-container">
-        <Searchbar></Searchbar>
+        <Searchbar
+          handleSearch={handleSearchChange}
+          searchTerm={searchTerm}
+          suggestions={suggestions}
+          onSuggestionClick={handleSuggestionClick}
+          cartItems={filteredCartItems}
+        />
         <Sortbar onSortChange={handleSortChange} />
         <CartButton />
       </div>
       <div className="listings-container">
-        <GroceryList grocerydata={filteredAndSortedGroceryData} />
+        <GroceryList grocerydata={filteredAndSortedGroceryData} onAddToCart={handleAddToCart} />
+      </div>
+      <div className="continue-button">
+        <Link to="/market/vendorselection">
+          <SolidButton>Continue</SolidButton>
+        </Link>
       </div>
     </div>
   );

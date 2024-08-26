@@ -11,7 +11,7 @@ const recommendationdata = [
       "Name": "Peeled Garlic",
       "TotalPrice": (Math.random() * (100 - 10) + 10).toFixed(2),
       "Unit": "20 lbs",
-      "DeliveryTime": "3 days"
+      "DeliveryTime": "3 days" 
     },
     {
       "Vendor": "Chef Store",

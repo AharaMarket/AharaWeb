@@ -3,7 +3,7 @@ import Card from '../../Card/Card'
 import './GroceryList.css'
 
 // renders all cards
-function GroceryList({ grocerydata }) {
+const GroceryList = ({ grocerydata, onAddToCart }) => {
 
     return (
     <div className="grocery-list">
@@ -13,10 +13,11 @@ function GroceryList({ grocerydata }) {
           img={item.URL} // Assuming the URL is the image source
           title={item.Name}
           vendor={item.Vendor}
-          star="⭐"
           reviews="100" // Example number of reviews
           prevPrice="" // If no previous price, leave empty
           newPrice={item.Price}
+          onAddToCart={onAddToCart}
+
         />
       ))}
     </div>

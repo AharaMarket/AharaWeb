@@ -39,7 +39,7 @@ import axios from 'axios';
 import MiniCalendar from "../../Components/Dashboard/calendar/MiniCalendar.js";
 import MiniStatistics from "../../Components/Dashboard/card/MiniStatistics.js";
 import IconBox from "../../Components/Dashboard/icons/IconBox.js";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 import {
   MdAddTask,
   MdAttachMoney,
@@ -64,11 +64,12 @@ import theme from "../../theme/theme";
 import { ThemeEditorProvider } from "@hypertheme-editor/chakra-ui";
 import Sidebar from "../../Components/Dashboard/sidebar/Sidebar";
 import routes from "../../routes.js";
-import { SidebarContext } from "../../Contexts/SidebarContext";
+import { SidebarContext } from "../../Context/SidebarContext";
 import Navbar from "../../Components/Dashboard/navbar/NavbarAdmin";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AdminLayout from "../../Layouts/admin";
 import Footer from "../../Components/Footer/Footer.js";
+import { UserContext } from '../../Context/User/UserContext'; 
 
 export default function UserReports() {
   // Chakra Color Mode
@@ -76,6 +77,7 @@ export default function UserReports() {
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const { onOpen } = useDisclosure();
 
+  const { user } = useContext(UserContext);
 
   // new state hooks
   const [totalSaved, setTotalSaved] = useState(0);
@@ -85,35 +87,27 @@ export default function UserReports() {
   const [distributorPartners, setDistributorPartners] = useState(0);
   const [totalDishes, setTotalDishes] = useState(0);
 
-  //modifying the use effect such that it will change the current value into the new values
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5050/restaurants');
-        console.log("response");
-        console.log(response.data[0]);
-        console.log("monthSaved");
-        setTotalSaved(response.data[0].monthSaved);
-        setTotalSpent(response.data[0].monthSpent);
-        setTotalOrders(response.data[0].orders);
-        setCreditBalance(response.data[0].creditBalance);
-        setDistributorPartners(response.data[0].distributorPartners);
-        setTotalDishes(response.data[0].totalDishes);
-        console.log("totalSaved variable:")
-        console.log(totalSaved);
-        console.log("totalSaved manually:")
-        console.log(response.data[0].monthSaved)
-        /*console.log(totalSaved);
-        console.log(totalSpent);
-        console.log(totalOrders);
-        console.log(creditBalance);
-        console.log(distributorPartners);*/
+        if (user) {
+          const response = await axios.get(`http://localhost:5050/restaurants/restaurantinfo?email=${encodeURIComponent(user)}`);
+          console.log(response);
+          const data = response.data.data;
+          setTotalSaved(data.monthSaved);
+          setTotalSpent(data.monthSpent);
+          setTotalOrders(data.orders);
+          setCreditBalance(data.creditBalance);
+          setDistributorPartners(data.distributorPartners);
+          setTotalDishes(data.totalDishes);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
-  }, []);
+  }, [user]);
+
 
 
   // functions for changing the states from components
@@ -237,7 +231,7 @@ export default function UserReports() {
                       // secondary={getActiveNavbar(routes)}
                       // message={getActiveNavbarText(routes)}
                       fixed={fixed}
-                      // {...rest}
+                    // {...rest}
                     />
                   </Box>
                 </Portal>
@@ -265,7 +259,7 @@ export default function UserReports() {
                       />
                     }
                     name="Total Saved This Month"
-                    value="$350.4"
+                    value={"$" + totalSaved}
                   />
                   <MiniStatistics
                     startContent={
@@ -284,12 +278,12 @@ export default function UserReports() {
                       />
                     }
                     name="Total Spend this month"
-                    value="$642.39"
+                    value={"$" + totalSpent}
                   />
                   <MiniStatistics
                     growth="+23%"
                     name="Total Orders"
-                    value="14"
+                    value={totalOrders}
                   />
                   <MiniStatistics
                     endContent={
@@ -330,7 +324,7 @@ export default function UserReports() {
                       />
                     }
                     name="Distributor Partners"
-                    value="4"
+                    value={distributorPartners}
                   />
                   <MiniStatistics
                     startContent={
@@ -349,7 +343,7 @@ export default function UserReports() {
                       />
                     }
                     name="Total Dishes"
-                    value="45"
+                    value={totalDishes}
                   />
                 </SimpleGrid>
 
@@ -360,12 +354,12 @@ export default function UserReports() {
                   p="20px"
                 >
                   <TotalSpent />
-                  <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
+                  <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px">
                     {/* <DailyTraffic /> */}
                     <MiniCalendar h="100%" minW="100%" selectRange={false} />
                     <PieCard />
+                    <WeeklyRevenue />
                   </SimpleGrid>
-                  <WeeklyRevenue />
                   <ComplexTable
                     columnsData={columnsDataComplex}
                     tableData={tableDataComplex}

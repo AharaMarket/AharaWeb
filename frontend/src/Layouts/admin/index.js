@@ -4,7 +4,7 @@ import Footer from "../../Components/Dashboard/footer/FooterAdmin";
 // Layout components
 import Navbar from "../../Components/Dashboard/navbar/NavbarAdmin";
 import Sidebar from "../../Components/Dashboard/sidebar/Sidebar";
-import { SidebarContext } from "../../Contexts/SidebarContext";
+import { SidebarContext } from "../../Context/SidebarContext";
 import React, { useState } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import routes from "../../routes.js";
@@ -37,7 +37,7 @@ export default function Dashboard(props) {
         }
       } else {
         if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+          window.location.href.indexOf(routes[i].path) !== -1
         ) {
           return routes[i].name;
         }
@@ -60,7 +60,7 @@ export default function Dashboard(props) {
         }
       } else {
         if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+          window.location.href.indexOf(routes[i].path) !== -1
         ) {
           return routes[i].secondary;
         }
@@ -83,7 +83,7 @@ export default function Dashboard(props) {
         }
       } else {
         if (
-          window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
+          window.location.href.indexOf(routes[i].path) !== -1
         ) {
           return routes[i].messageNavbar;
         }

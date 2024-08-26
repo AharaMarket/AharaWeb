@@ -8,7 +8,21 @@
     margin-top: 30px;
 }
 
-.market-search-container{
+.market-search-container {
     margin-top: 30px;
-    display: inline-flex;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 98%;
+}
+
+.market-search-container .component {
+    margin: 0 8px; /* Adjust this value to control the spacing */
+}
+
+.continue-button{
+    justify-content: flex-end;
+    display: flex;
+    margin-right: 40px;
+    margin-bottom: 40px;
 }
