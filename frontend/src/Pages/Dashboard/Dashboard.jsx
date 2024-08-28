@@ -153,7 +153,7 @@ export default function UserReports() {
           <MiniCalendar h='100%' minW='100%' selectRange={false} />
           <PieCard />
         </SimpleGrid>
-        {/* <WeeklyRevenue /> */}
+        <WeeklyRevenue />
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
       <ComplexTable

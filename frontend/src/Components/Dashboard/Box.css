@@ -1,6 +1,5 @@
-/* box.css */
+/* box.css
 
-/* Box Style */
 .box {
     display: flex;
     align-items: center;
@@ -13,17 +12,16 @@
     text-align: center;
     cursor: pointer;
     transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
   .box:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: translateY(-5px); /* Slight lift on hover */
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* More prominent shadow */
+    background-color: #0056b3;
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); 
   }
   
-  /* Optional: Media Queries for Responsiveness */
   @media (max-width: 768px) {
     .box {
       width: 120px;
@@ -38,4 +36,4 @@
       height: 100px;
       font-size: 0.8rem;
     }
-  }
+  } */

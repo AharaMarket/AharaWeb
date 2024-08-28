@@ -25,7 +25,7 @@ import React from "react";
 import { AiFillStar } from "react-icons/ai";
 import { GoChevronDown, GoChevronRight } from "react-icons/go";
 import { NavLink } from "react-router-dom";
-import { SidebarContext } from "contexts/SidebarContext";
+import { SidebarContext } from "../../../Contexts/SidebarContext";
 import routes from "routes.js";
 
 export default function AuthNavbar(props) {

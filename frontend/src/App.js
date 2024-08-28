@@ -14,12 +14,14 @@ import SmoothScroll from "smooth-scroll";
 import Dashboard from './Pages/Dashboard/Dashboard';
 import OrderConfirmation from './Pages/OrderConfirmation/OrderConfirmation';
 import ImportOrder from './Pages/ImportOrder/ImportOrder';
-import AppAppBar from './Components/HomeComponents/AppAppBar';
+// import AppAppBar from './Components/HomeComponents/AppAppBar';
 import {
-  BrowserRouter, Routes, Route, useLocation, HashRouter, Navigate
+  BrowserRouter, Switch, Route, useLocation, HashRouter, Redirect
 } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 // import AuthLayout from './Layouts/auth';
 import AdminLayout from './Layouts/admin';
+// import RtlLayout from './Layouts/rtl';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme/theme';
 import { ThemeEditorProvider } from '@hypertheme-editor/chakra-ui';
@@ -34,7 +36,7 @@ function App() {
     <BrowserRouter>
       <div>
         <Layout>
-          <Routes>
+          <Switch>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
@@ -42,7 +44,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/market/*" element={<MarketRoutes />} />
             <Route path="/dashboard/*" element={<DashboardRoutes />} />
-          </Routes>
+          </Switch>
         </Layout>
       </div>
     </BrowserRouter>
@@ -55,7 +57,7 @@ function Layout({ children }) {
 
   return (
     <>
-      {isMarketRoute ? <MarketNavbar /> : <AppAppBar />}
+      <MarketNavbar /> 
       {children}
       <Footer />
     </>
@@ -64,7 +66,7 @@ function Layout({ children }) {
 
 function MarketRoutes() {
   return (
-    <Routes>
+    <Switch>
       <Route index element={<Dashboard />} />
       <Route path="ingredientmarketplace" element={<Market />} />
       <Route path="vendorselection" element={<Ranking />} />
@@ -73,7 +75,7 @@ function MarketRoutes() {
       <Route path="orders" element={<Orders />} />
       <Route path="login" element={<Login />} />
       <Route path="importorder" element={<ImportOrder />} />
-    </Routes>
+    </Switch>
   );
 }
 
@@ -83,11 +85,12 @@ function DashboardRoutes() {
       <React.StrictMode>
         <ThemeEditorProvider>
           <HashRouter>
-            <Routes>
+            <Switch>
               {/* <Route path={`/auth`} component={AuthLayout} /> */}
               <Route path={`/admin`} component={AdminLayout} />
-              <Navigate from='/' to='/admin' />
-            </Routes>
+  						{/* <Route path={`/rtl`} component={RtlLayout} /> */}
+              <Redirect from='/' to='/admin' />
+            </Switch>
           </HashRouter>
         </ThemeEditorProvider>
       </React.StrictMode>

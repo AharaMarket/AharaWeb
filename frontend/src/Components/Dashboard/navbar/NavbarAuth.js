@@ -23,8 +23,8 @@ import {
 
 // Custom components
 import IconBox from "./icons/IconBox";
-import { SidebarResponsive } from "components/sidebar/Sidebar";
-import { SidebarContext } from "contexts/SidebarContext";
+import { SidebarResponsive } from "../sidebar/Sidebar";
+import { SidebarContext } from "../../../Contexts/SidebarContext";
 
 // Assets
 import { GoChevronDown, GoChevronRight } from "react-icons/go";
