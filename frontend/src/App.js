@@ -63,7 +63,7 @@ function Layout({ children }) {
       {isMarketRoute ? <MarketNavbar /> : vendorselection || orderPlace || checkOut ? <Header /> : null}
       {children}
       {!["/market", "/market/"].includes(window.location.pathname) && (
-        vendorselection || orderPlace || checkOut ? null : <Footer />
+        vendorselection || orderPlace || checkOut ? null : null
       )}
     </>
   );
