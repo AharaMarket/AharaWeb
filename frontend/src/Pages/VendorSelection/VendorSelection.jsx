@@ -68,8 +68,8 @@ const VendorSelection = () => {
     <div className="vendor-selection-container">
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <div className="filter-section">
-        <h3>Filters</h3>
+      {/* <div className="filter-section"> */}
+        {/* <h3>Filters</h3>
         <div className="filter-item">
           <label htmlFor="max-price">Max Total Price: ${maxTotal}</label>
           <input
@@ -81,7 +81,7 @@ const VendorSelection = () => {
             onChange={handleFilterChange}
           />
         </div>
-      </div>
+      </div> */}
 
       <div className="vendor-list-section">
         {filteredVendors ? (
