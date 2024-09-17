@@ -2,7 +2,7 @@ import axios from 'axios';
 
 async function fetchData() {
   try {
-    const response = await axios.get('http://127.0.0.1:5050/product_specs');
+    const response = await axios.get('http://127.0.0.1:5050/ingredients/products');
     const data = response.data;
 
     const transformedData = data.map(item => ({
@@ -21,7 +21,7 @@ async function fetchData() {
 }
 
 fetchData().then(grocerydata => {
-  console.log("HIII!", grocerydata);
+  console.log("grocerydata!", grocerydata);
   // Normally you would export the data here, but since fetching is async,
   // we just log it for debugging purposes.
 });

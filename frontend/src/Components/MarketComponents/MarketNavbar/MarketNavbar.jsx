@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useContext } from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton, Badge, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../../Context/User/UserContext';
 
 function MarketNavbar() {
+    const { user, setUser } = useContext(UserContext);
+    
+    const logout = () => {
+        setUser(null); // Call the logout function from context
+    };
+
     return (
         <AppBar position="static" sx={{ backgroundColor: '#5667FF', color: 'white', boxShadow: 'none' }}>
             <Toolbar>
@@ -21,7 +28,24 @@ function MarketNavbar() {
                     <Button color="inherit" component={Link} to="/market">Dashboard</Button>
                     <Button color="inherit" component={Link} to="/market/ingredientmarketplace">Marketplace</Button>
                     <Button color="inherit" component={Link} to="/market/orders">Orders</Button>
-                    <Button color="inherit" component={Link} to="/market/login" target="_blank" rel="noopener noreferrer">Login</Button>
+                    {
+                        user ? (
+                            <>
+                            <Button color="inherit" component={Link} to="/market/account">
+                                    Account
+                            </Button>
+
+                            <Button color="inherit" onClick={logout}>
+                                Logout
+                            </Button>
+                            </>
+                            
+                        ) : (
+                            <Button color="inherit" component={Link} to="/market/login" target="_blank" rel="noopener noreferrer">
+                                Login
+                            </Button>
+                        )
+                    }
                     <IconButton
                         component={Link}
                         to="/market/cart"

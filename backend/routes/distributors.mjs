@@ -4,7 +4,7 @@ import { ObjectId } from "mongodb";
 
 const distributorsrouter = express.Router();
 
-// Get a list of 50 posts
+// Get a list of 50 distributors
 distributorsrouter.get("/", async (req, res) => {
   let collection = await db.collection("ahara-distributors");
   let results = await collection.find({})

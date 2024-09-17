@@ -16,9 +16,9 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const addItemToCart = async (email, productSpecification, quantity) => {
+  const addItemToCart = async (email, productSpecification, quantity, imageurl) => {
     try {
-      const response = await axios.post('http://localhost:5050/carts/add', { email, productSpecification, quantity });
+      const response = await axios.post('http://localhost:5050/carts/add', { email, productSpecification, quantity, imageurl });
       setCart(response.data.cart.items);
     } catch (error) {
       console.error('Error adding item to cart:', error);

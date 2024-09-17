@@ -3,7 +3,7 @@ import db from "../db/conn.mjs";
 
 const cartsrouter = express.Router();
 
-// Get a list of 50 posts
+// Get a list of 50 carts
 cartsrouter.get("/", async (req, res) => {
   let collection = await db.collection("ahara-restaurant-carts");
   let results = await collection.find({})
@@ -35,7 +35,7 @@ cartsrouter.get("/user", async (req, res) => {
 
 // Add an item to the cart
 cartsrouter.post('/add', async (req, res) => {
-  const { email, productSpecification, quantity } = req.body;
+  const { email, productSpecification, quantity, imageurl } = req.body;
   let collection = await db.collection("ahara-restaurant-carts");
 
   if (!email || !productSpecification || !quantity) {
@@ -55,7 +55,7 @@ cartsrouter.post('/add', async (req, res) => {
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity += quantity;
     } else {
-      cart.items.push({ productSpecification, quantity });
+      cart.items.push({ productSpecification, quantity, imageurl });
     }
 
     await collection.updateOne(

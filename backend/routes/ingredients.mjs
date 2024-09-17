@@ -4,25 +4,50 @@ import { ObjectId } from "mongodb";
 
 const ingredientsrouter = express.Router();
 
-// Get a list of 50 posts
-ingredientsrouter.get("/", async (req, res) => {
-  let collection = await db.collection("ahara-collection");
-  let results = await collection.find({})
-    .limit(50)
-    .toArray();
-  console.log(results);
-  res.send(results).status(200);
-});
+//get all ingredient product specifications
+ingredientsrouter.get("/products", async (req, res) => {
+  let collection = await db.collection("ahara-product-specs");
+  try {
+    const products = await collection.aggregate([
+      {
+        $group: {
+          _id: '$Product-Specification',
+          // array called details
+          details: {
+            $push: {
+              Price: '$Price',
+              Unit: '$Unit',
+              Distributor: '$Distributor'
+            }
+          }
+        }
+      }
+    ]).toArray();
 
+    // removes $ sign and comma. it makes a price stirng into a floating point number
+    const extractPrice = (priceStr) => {
+      return parseFloat(priceStr.replace('$', '').replace(',', ''));
+    };
 
-// Get a list of product specifications
-ingredientsrouter.get("/product-specifications", async (req, res) => {
-  let collection = await db.collection("ahara-collection");
-  let results = await collection.find({})
-    .limit(50)
-    .toArray();
-  console.log(results);
-  res.send(results).status(200);
+    // make into JSON
+    // map applies a function to each element in original array
+    const transformedData = products.map(product => {
+      const prices = product.details.map(detail => extractPrice(detail.Price));
+      const minPrice = Math.min(...prices);
+      const maxPrice = Math.max(...prices);
+      return {
+        'Product-Specification': product._id,
+        'Price-Range': `${minPrice.toFixed(2)} - $${maxPrice.toFixed(2)}`,
+        'URL': 'https://ingredient-photos.s3.us-east-2.amazonaws.com/' + product._id.toLowerCase() + '.jpg',
+        details: product.details
+      };
+    });
+
+    res.status(200).json(transformedData);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching product specifications');
+  }
 });
 
 // Get a single ingredient
@@ -99,7 +124,7 @@ ingredientsrouter.get("/cheapest/:productSpecification", async (req, res) => {
   }
 });
 
-
+//find the cheapest order package given list of ingredients 
 ingredientsrouter.post("/cheapest-order-package", async (req, res) => {
   try {
     const db = await getDb();

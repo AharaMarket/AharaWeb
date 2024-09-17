@@ -91,7 +91,8 @@ export default function UserReports() {
     const fetchData = async () => {
       try {
         if (user) {
-          const response = await axios.get(`http://localhost:5050/restaurants/restaurantinfo?email=${encodeURIComponent(user)}`);
+          console.log(user)
+          const response = await axios.get(`http://localhost:5050/restaurants/dashboard?email=${encodeURIComponent(user)}`);
           console.log(response);
           const data = response.data.data;
           setTotalSaved(data.monthSaved);

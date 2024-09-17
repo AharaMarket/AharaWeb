@@ -7,7 +7,7 @@ const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
 
   const handleAddToCart = () => {
     const productSpecification = `${title}`;
-    onAddToCart(productSpecification, quantity);
+    onAddToCart(productSpecification, quantity, img);
   };
 
   return (

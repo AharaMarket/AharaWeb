@@ -8,9 +8,9 @@ const Cart = () => {
   const { cart, fetchCart, updateCartItem, removeItemFromCart } = useContext(CartContext);
 
   useEffect(() => {
-    console.log(user)
     if (user) {
       fetchCart(user);
+      console.log(cart)
     }
   }, [user, fetchCart]);
 
@@ -34,12 +34,11 @@ const Cart = () => {
       ) : (
         <div className="cart-items">
           {cart.map(item => (
-            <div key={`${item.productSpecification.name}-${item.productSpecification.distributor}`} className="cart-item">
+            <div key={`${item.productSpecification}`} className="cart-item">
               <div className="item-details">
-                <img src={item.productSpecification.image} alt={item.productSpecification.name} className="item-image" />
+                <img src={item.imageurl} alt={item.productSpecification.name} className="item-image" />
                 <div>
-                  <span className="item-name">{item.productSpecification.name}</span>
-                  <span className="item-distributor">from {item.productSpecification.distributor}</span>
+                  <span className="item-name">{item.productSpecification}</span>
                 </div>
               </div>
               <div className="item-actions">

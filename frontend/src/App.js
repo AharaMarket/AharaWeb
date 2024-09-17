@@ -7,8 +7,9 @@ import Home from "./Pages/Home/Home";
 import About from "./Pages/About/About";
 import Market from "./Pages/IngredientMarketplace/IngredientMarketplace";
 import Login from "./Pages/Login/Login";
+import Account from "./Pages/Account/Account";
 import Contact from "./Pages/Contact/Contact";
-import Ranking from "./Pages/VendorSelection/VendorSelection";
+import VendorSelection from "./Pages/VendorSelection/VendorSelection";
 import Orders from "./Pages/Orders/Orders";
 import CheckOuts from "./Pages/OrderCheckOut/index.jsx";
 import Register from "./Pages/Registration/Register";
@@ -54,15 +55,15 @@ function App() {
 function Layout({ children }) {
   const location = useLocation();
   const isMarketRoute = location.pathname.startsWith("/market");
-  const ingredientMarketplace2 = location.pathname.startsWith('/ingredientMarketplace2');
+  const vendorselection = location.pathname.startsWith('/vendorselection');
   const orderPlace = location.pathname.startsWith('/orderPlace');
   const checkOut = location.pathname.startsWith('/checkout');
   return (
     <>
-      {isMarketRoute ? <MarketNavbar /> : ingredientMarketplace2 || orderPlace || checkOut ? <Header /> : null}
+      {isMarketRoute ? <MarketNavbar /> : vendorselection || orderPlace || checkOut ? <Header /> : null}
       {children}
       {!["/market", "/market/"].includes(window.location.pathname) && (
-        ingredientMarketplace2 || orderPlace || checkOut ? null : <Footer />
+        vendorselection || orderPlace || checkOut ? null : <Footer />
       )}
     </>
   );
@@ -73,12 +74,13 @@ function MarketRoutes() {
     <Routes>
       <Route index element={<ProtectedRoute element={Dashboard} />} />
       <Route path="ingredientmarketplace" element={<ProtectedRoute element={Market} />} />
-      <Route path="vendorselection" element={<ProtectedRoute element={Ranking} />} />
+      <Route path="vendorselection" element={<ProtectedRoute element={VendorSelection} />} />
       <Route path="dashboard" element={<ProtectedRoute element={Dashboard} />} />
       <Route path="orderconfirmation" element={<ProtectedRoute element={OrderConfirmation} />} />
       <Route path="ordercheckout" element={<ProtectedRoute element={CheckOuts} />} />
       <Route path="orders" element={<ProtectedRoute element={Orders} />} />
       <Route path="login" element={<Login />} />
+      <Route path="account" element={<Account />} />
       <Route path="importorder" element={<ProtectedRoute element={ImportOrder} />} />
       <Route path="cart" element={<Cart />} />
       <Route path="register" element={<Register />} />

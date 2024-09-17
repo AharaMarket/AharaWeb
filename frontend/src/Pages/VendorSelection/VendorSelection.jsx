@@ -1,96 +1,120 @@
-import React from 'react';
-import Vendors from '../../Components/Vendor/vendors';
-import Image from '../../Components/Assets/image.png'
-import MarketStepper from "../../Components/MarketComponents/MarketStepper/MarketStepper";
+import React, { useContext, useEffect, useState } from 'react';
+import { CartContext } from '../../Context/Cart/CartContext';
+import { UserContext } from '../../Context/User/UserContext';
+import './VendorSelection.css'; // Custom styles for improved design
 
+const VendorSelection = () => {
+  const { user } = useContext(UserContext);
+  const { cart, fetchCart } = useContext(CartContext);
+  const [error, setError] = useState(null);
+  const [vendorData, setVendorData] = useState(null);
+  const [filteredVendors, setFilteredVendors] = useState(null); // For filtered vendor data
+  const [maxTotal, setMaxTotal] = useState(100); // Example filter by max total price
 
-const IngredientMarketPlace2 = () => {
-  const initialVendors = [
-    {
-      id: '1',
-      img: Image,
-      name: 'Vendor 1',
-      price: 179.49,
-      deliveryTime: '1 Week - 2 Weeks',
-      deliveryDate: 'April 31, 2024',
-      phone: '(123) 456-7890',
-      location: 'Pleasanton, CA',
-      recommended: true,
-      fastest: false,
-      priceDetails: [
-        { item: 'Apple: Akane', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Carrot: Mixed Variety', quantity: 25, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Cilantro', quantity: 5, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Yellow Onions', quantity: 15, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Zucchini', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-      ]
-    },
-    {
-      id: '2',
-      img: Image,
-      name: 'Vendor 2',
-      price: 250.42,
-      deliveryTime: '1 Day - 3 Days',
-      deliveryDate: 'April 25, 2024',
-      phone: '(123) 456-7890',
-      location: 'Pleasanton, CA',
-      recommended: false,
-      fastest: true,
-      priceDetails: [
-        { item: 'Apple: Akane', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Carrot: Mixed Variety', quantity: 25, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Cilantro', quantity: 5, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Yellow Onions', quantity: 15, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Zucchini', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-      ]
-    },
-    {
-      id: '3',
-      img: Image,
-      name: 'Vendor 3',
-      price: 250.42,
-      deliveryTime: '1 Day - 3 Days',
-      deliveryDate: 'April 25, 2024',
-      phone: '(123) 456-7890',
-      location: 'Pleasanton, CA',
-      recommended: false,
-      fastest: false,
-      priceDetails: [
-        { item: 'Apple: Akane', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Carrot: Mixed Variety', quantity: 25, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Cilantro', quantity: 5, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Yellow Onions', quantity: 15, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Zucchini', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-      ]
-    },
-    {
-      id: '4',
-      img: Image,
-      name: 'Vendor 4',
-      price: 250.42,
-      deliveryTime: '1 Day - 3 Days',
-      deliveryDate: 'April 25, 2024',
-      phone: '(123) 456-7890',
-      location: 'Pleasanton, CA',
-      recommended: false,
-      fastest: false,
-      priceDetails: [
-        { item: 'Apple: Akane', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Carrot: Mixed Variety', quantity: 25, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Cilantro', quantity: 5, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Yellow Onions', quantity: 15, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-        { item: 'Zucchini', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-      ]
-    },
-  ];
+  useEffect(() => {
+    if (user) {
+      fetchCart(user);
+    }
+  }, [user, fetchCart]);
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      fetchVendorData(); // Fetch vendor data when cart is loaded
+    }
+  }, [cart]);
+
+  const formatCartData = () => {
+    return cart.map(item => {
+      return [item.quantity.toString(), item.productSpecification];
+    });
+  };
+
+  const fetchVendorData = async () => {
+    const cartData = formatCartData();
+    try {
+      const response = await fetch('http://localhost:5050/vendorselection', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ products: cartData }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch vendor data');
+      }
+
+      const data = await response.json();
+      setVendorData(data);
+      setFilteredVendors(data); // Set filtered data initially to all vendors
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
+  // Handle filtering by maximum total price
+  const handleFilterChange = (event) => {
+    const value = event.target.value;
+    setMaxTotal(value);
+    const filtered = Object.keys(vendorData).filter(vendor => vendorData[vendor].total <= value);
+    const filteredData = {};
+    filtered.forEach(vendor => {
+      filteredData[vendor] = vendorData[vendor];
+    });
+    setFilteredVendors(filteredData);
+  };
 
   return (
-    <div className=''>
+    <div className="vendor-selection-container">
+      {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <MarketStepper currentStep={2} />
-      <Vendors initialVendors={initialVendors} />
+      <div className="filter-section">
+        <h3>Filters</h3>
+        <div className="filter-item">
+          <label htmlFor="max-price">Max Total Price: ${maxTotal}</label>
+          <input
+            type="range"
+            id="max-price"
+            min="0"
+            max="150"
+            value={maxTotal}
+            onChange={handleFilterChange}
+          />
+        </div>
+      </div>
+
+      <div className="vendor-list-section">
+        {filteredVendors ? (
+          <div className="vendor-container-vertical">
+            {Object.keys(filteredVendors).map((vendorName, index) => (
+              <div key={index} className="vendor-card-vertical">
+                <h2>{vendorName}</h2>
+                <p><strong>Total: ${vendorData[vendorName].total}</strong></p>
+                <div className="dropdown-container">
+  <label htmlFor={`cart-${vendorName}`}>Cart</label>
+  <select id={`cart-${vendorName}`} defaultValue="">
+    <option value="" disabled>
+      Items:
+    </option>
+    {Object.keys(vendorData[vendorName])
+      .filter(key => key !== 'total') // Exclude "total" from the dropdown
+      .map((ingredient, i) => (
+        <option key={i} value={ingredient}>
+          {ingredient}: ${vendorData[vendorName][ingredient]}
+        </option>
+      ))}
+  </select>
+</div>
+
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>Loading vendor data...</p>
+        )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default IngredientMarketPlace2;
+export default VendorSelection;
