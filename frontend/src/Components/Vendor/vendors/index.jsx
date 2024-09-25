@@ -37,7 +37,7 @@ const Vendors = ({ initialVendors }) => {
 
     // UseEffects 
     useEffect(() => {
-        applyFilters();
+        // applyFilters();
     }, [filters]);
 
     useEffect(() => {
@@ -53,34 +53,34 @@ const Vendors = ({ initialVendors }) => {
         };
     }, []);
 
-    const applyFilters = () => {
-        let filteredVendors = initialVendors;
+    // const applyFilters = () => {
+    //     let filteredVendors = initialVendors;
 
-        if (filters.vendor.length > 0) {
-            filteredVendors = filteredVendors.filter(vendor => filters.vendor.includes(vendor.name));
-        }
+    //     if (filters.vendor.length > 0) {
+    //         filteredVendors = filteredVendors.filter(vendor => filters.vendor.includes(vendor.name));
+    //     }
 
-        if (filters.price.length > 0) {
-            filteredVendors = filteredVendors.filter(vendor => filters.price.some(priceRange => {
-                const [min, max] = priceRange.split('-').map(Number);
-                if (max) {
-                    return vendor.price >= min && vendor.price <= max;
-                }
-                return vendor.price >= min;
-            }));
-        }
+    //     if (filters.price.length > 0) {
+    //         filteredVendors = filteredVendors.filter(vendor => filters.price.some(priceRange => {
+    //             const [min, max] = priceRange.split('-').map(Number);
+    //             if (max) {
+    //                 return vendor.price >= min && vendor.price <= max;
+    //             }
+    //             return vendor.price >= min;
+    //         }));
+    //     }
 
-        if (filters.deliveryTime.length > 0) {
-            filteredVendors = filteredVendors.filter(vendor => filters.deliveryTime.includes(vendor.deliveryTime));
-        }
+    //     if (filters.deliveryTime.length > 0) {
+    //         filteredVendors = filteredVendors.filter(vendor => filters.deliveryTime.includes(vendor.deliveryTime));
+    //     }
 
-        setVendors(filteredVendors);
-        if (filters.vendor.length === 0 && filters.price.length === 0 && filters.deliveryTime.length === 0) {
-            setFilteredVendorIds([]);
-        } else {
-            setFilteredVendorIds(filteredVendors.map(vendor => vendor.id));
-        }
-    };
+    //     setVendors(filteredVendors);
+    //     if (filters.vendor.length === 0 && filters.price.length === 0 && filters.deliveryTime.length === 0) {
+    //         setFilteredVendorIds([]);
+    //     } else {
+    //         setFilteredVendorIds(filteredVendors.map(vendor => vendor.id));
+    //     }
+    // };
 
     return (
         <div className='lg:px-7 flex flex-col lg:flex-row '>
