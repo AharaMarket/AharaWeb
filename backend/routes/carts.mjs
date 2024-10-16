@@ -123,9 +123,8 @@ cartsrouter.post('/remove', async (req, res) => {
 
     // Ensure you correctly match productSpecification by comparing fields explicitly
     cart.items = cart.items.filter(item => 
-      item.productSpecification.name !== productSpecification.name ||
-      item.productSpecification.distributor !== productSpecification.distributor
-    );
+      item.productSpecification.name !== productSpecification
+       );
 
     await collection.updateOne(
       { email },

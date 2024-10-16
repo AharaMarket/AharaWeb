@@ -10,7 +10,7 @@ const Cart = () => {
   useEffect(() => {
     if (user) {
       fetchCart(user);
-      console.log(cart)
+      // console.log(cart)
     }
   }, [user, fetchCart]);
 
@@ -22,6 +22,7 @@ const Cart = () => {
 
   const handleRemoveItem = (productSpecification) => {
     if (user) {
+      console.log(user,productSpecification);
       removeItemFromCart(user, productSpecification);
     }
   };
