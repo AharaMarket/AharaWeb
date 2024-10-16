@@ -121,20 +121,22 @@ cartsrouter.post('/remove', async (req, res) => {
       return res.status(404).json({ success: false, message: 'Cart not found' });
     }
 
+    // Ensure you correctly match productSpecification by comparing fields explicitly
     cart.items = cart.items.filter(item => 
-      !(item.productSpecification.name === productSpecification.name &&
-      item.productSpecification.distributor === productSpecification.distributor)
-    );
+      item.productSpecification.name !== productSpecification
+       );
 
     await collection.updateOne(
       { email },
       { $set: { items: cart.items } }
     );
+
     res.status(200).json({ success: true, cart });
   } catch (error) {
     console.error('Error removing item from cart:', error);
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
+
 
 export default cartsrouter;

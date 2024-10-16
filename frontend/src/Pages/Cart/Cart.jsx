@@ -23,6 +23,7 @@ const Cart = () => {
 
   const handleRemoveItem = (productSpecification) => {
     if (user) {
+      console.log(user,productSpecification);
       removeItemFromCart(user, productSpecification);
     }
   };

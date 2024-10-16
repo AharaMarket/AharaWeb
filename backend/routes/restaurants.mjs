@@ -35,47 +35,49 @@ restaurantrouter.get("/", async (req, res) => {
 
 
 restaurantrouter.post('/register', async (req, res) => {
-  const { name, email, restaurantName, password } = req.body;
-
-  // Basic validation
-  if (!name || !email || !restaurantName || !password) {
-      return res.status(400).json({ message: 'All fields are required.' });
-  }
-
-  // Further email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-      return res.status(400).json({ message: 'Invalid email format.' });
-  }
-
-  // Password validation (example: at least 6 characters)
-  if (password.length < 6) {
-      return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
-  }
-
-  try {
-      // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Initialize the values and create a new user instance
-      const newUser = new User({
-          name,
-          email,
-          restaurantName,
-          password: hashedPassword,  // Store the hashed password
-          orders: 0,
-          creditBalance: 0,
-          distributorPartners: 0,
-          monthSaved: 0,
-          monthSpent: 0,
-          totalDishes: 0
-      });
-
-      // Save the new user to the database
-      const collection = db.collection('ahara-restaurants');
-
+    const { name, email, restaurantName, password, address, latitude, longitude } = req.body;
+  
+    // Basic validation
+    if (!name || !email || !restaurantName || !password || !address) {
+        return res.status(400).json({ message: 'All fields are required.' });
+    }
+  
+    // Further email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.status(400).json({ message: 'Invalid email format.' });
+    }
+  
+    // Password validation (example: at least 6 characters)
+    if (password.length < 6) {
+        return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+    }
+  
+    try {
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+  
+        // Initialize the values and create a new user instance
+        const newUser = {
+            name,
+            email,
+            restaurantName,
+            address, // Store the address
+            latitude: latitude || null, // Optional, only if provided
+            longitude: longitude || null, // Optional, only if provided
+            password: hashedPassword,  // Store the hashed password
+            orders: 0,
+            creditBalance: 0,
+            distributorPartners: 0,
+            monthSaved: 0,
+            monthSpent: 0,
+            totalDishes: 0
+        };
+  
+        // Save the new user to the database
+        const collection = db.collection('ahara-restaurants');
         await collection.insertOne(newUser);
-
+  
         res.status(201).json({ message: 'User registered successfully!', user: newUser });
     } catch (error) {
         // Check if email is already taken
@@ -84,7 +86,8 @@ restaurantrouter.post('/register', async (req, res) => {
         }
         res.status(500).json({ message: 'Server error, please try again later.' });
     }
-});
+  });
+  
 
 // Login endpoint
 restaurantrouter.post('/login', async (req, res) => {

@@ -41,6 +41,7 @@ const VendorSelection = () => {
 
   const fetchVendorData = async () => {
     const cartData = formatCartData();
+    console.log(cartData)
     console.log("vendorList: " + vendorList)
     if (vendorList == null ) {
       try {

@@ -9,6 +9,8 @@ import distributors from "./routes/distributors.mjs";
 import restaurants from "./routes/restaurants.mjs";
 import carts from "./routes/carts.mjs";
 import vendorselection from "./routes/vendorselection.mjs";
+import geolocation from "./routes/geolocation.mjs";
+
 
 // import distributors from "./routes/distributors.mjs";
 const PORT = process.env.PORT || 5050;
@@ -25,6 +27,7 @@ app.use("/distributors", distributors);
 app.use("/restaurants", restaurants);
 app.use("/carts", carts);
 app.use("/vendorselection", vendorselection);
+app.use("/geolocation", geolocation);
 
 // Global error handling
 app.use((err, _req, res, next) => {
