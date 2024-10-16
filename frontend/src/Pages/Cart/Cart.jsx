@@ -2,18 +2,19 @@ import React, { useContext, useEffect } from 'react';
 import { UserContext } from '../../Context/User/UserContext';
 import { CartContext } from '../../Context/Cart/CartContext';
 import './Cart.css';
+import { NavLink } from 'react-router-dom';
+import FillButton from '../../Components/ui/buttons/fill-button';
+
 
 const Cart = () => {
   const { user } = useContext(UserContext);
   const { cart, fetchCart, updateCartItem, removeItemFromCart } = useContext(CartContext);
 
   useEffect(() => {
-    if (user) {
+    if (user && cart.length === 0) {  // Fetch cart only if user exists and cart is empty
       fetchCart(user);
-      console.log(cart)
     }
-  }, [user, fetchCart]);
-
+  }, [user, cart.length, fetchCart]); 
   const handleQuantityChange = (productSpecification, quantity) => {
     if (user) {
       updateCartItem(user, productSpecification, quantity);
@@ -53,6 +54,9 @@ const Cart = () => {
           ))}
         </div>
       )}
+      <NavLink to={'/market/ingredientmarketplace'}>
+          <FillButton>Previous</FillButton>
+      </NavLink>
     </div>
   );
 };

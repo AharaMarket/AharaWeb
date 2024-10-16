@@ -5,7 +5,7 @@ import Iconify from '../../ui/iconify';
 import Badge from '../../ui/badge';
 import PricingDropdown from '../pricing-dropdown';
 
-const VendorCard = ({ vendor, isFiltered, ...others }) => {
+const VendorCard = ({ vendor, isFiltered, onSelect, isSelected, ...others }) => {
     const [dropdownActive, setDropdownActive] = useState(false);
     const [isClick, setIsClick] = useState(false);
     const dropdownRef = useRef(null);
@@ -32,11 +32,11 @@ const VendorCard = ({ vendor, isFiltered, ...others }) => {
 
     return (
         <div {...others} className='relative flex w-full my-4'>
-            <div className={`flex flex-col md:flex-row sm:justify-between w-full gap-2 md:gap-0 border border-grey rounded-l overflow-hidden cursor-pointer ${vendor.recommended || vendor.fastest ? 'rounded-r lg:rounded-r-none' : 'rounded-r'} ${isClick || isFiltered ? "bg-extra-light-purple !text-white" : ''}`}>
-                <div className="flex flex-col md:flex-row justify-between w-full h-full items-center gap-4 sm:gap-2 lg:gap-4" onClick={() => setIsClick(!isClick)}>
+            <div className={`flex flex-col md:flex-row sm:justify-between w-full gap-2 md:gap-0 border border-grey rounded-l overflow-hidden cursor-pointer ${vendor.recommended || vendor.fastest ? 'rounded-r lg:rounded-r-none' : 'rounded-r'} ${isClick || isSelected ? "bg-extra-light-purple !text-white" : ''}`}>
+                <div className="flex flex-col md:flex-row justify-between w-full h-full items-center gap-4 sm:gap-2 lg:gap-4" onClick={() => {onSelect(vendor); setIsClick(isClick => !isClick)}}>
                     <img src={vendor?.img} alt={vendor?.name} className='w-full h-64 md:!h-fit md:w-fit' />
                     <div className='flex flex-col gap-2 md:justify-between w-full h-fit md:h-full md:py-4 px-2'>
-                        <H2 className={`!font-medium !text-nowrap !leading-6 md:mt-1.5 ${isClick || isFiltered ? '!text-white' : '!text-custom-black'}`}>{vendor?.name}</H2>
+                        <H2 className={`!font-medium !text-nowrap !leading-6 md:mt-1.5 ${isClick || isSelected ? '!text-white' : '!text-custom-black'}`}>{vendor?.name}</H2>
                         <div className="flex flex-col gap-1">
                             <span className='flex justify-between lg:justify-start w-full md:gap-20'>
                                 <H5 className='!font-normal !text-nowrap'>Delivery Time</H5>
@@ -50,7 +50,7 @@ const VendorCard = ({ vendor, isFiltered, ...others }) => {
                     </div>
                 </div>
                 <div className="flex flex-col justify-between items-end gap-1 p-2 w-full md:w-fit h-full">
-                    <div className='flex flex-row md:flex-col md:gap-1 md:items-end justify-between md:justify-end w-full md:pt-5 lg:pt-3' onClick={() => setIsClick(!isClick)}>
+                    <div className='flex flex-row md:flex-col md:gap-1 md:items-end justify-between md:justify-end w-full md:pt-5 lg:pt-3' onClick={() => {onSelect(vendor); setIsClick(isClick => !isClick)}}>
                         <H5 className='!font-normal'>{vendor.location}</H5>
                         <H5 className='!font-normal'>{vendor.phone}</H5>
                     </div>
@@ -58,7 +58,7 @@ const VendorCard = ({ vendor, isFiltered, ...others }) => {
                         <H5 className='!font-normal !text-nowrap'>Total Price:</H5>
                         <H5 className='flex items-center gap-3 !font-medium !text-nowrap' onClick={handleOpenDropdown}>
                             ${vendor.price.toFixed(2)}
-                            <Iconify iconName={'iconamoon:arrow-down-2-bold'} className={`${dropdownActive ? '-rotate-180' : ''} ${isClick || isFiltered ? '!text-white' : '!text-custom-black'}`} />
+                            <Iconify iconName={'iconamoon:arrow-down-2-bold'} className={`${dropdownActive ? '-rotate-180' : ''} ${isClick || isSelected ? '!text-white' : '!text-custom-black'}`} />
                         </H5>
                         {/* Pricing Dropdown */}
                         {dropdownActive && (

@@ -9,33 +9,43 @@ import OutlineButton from '../../ui/buttons/outline-button';
 import FillButton from '../../ui/buttons/fill-button';
 import { NavLink } from 'react-router-dom';
 import '../../../index.css';
+import { emphasize } from '@mui/material';
+import { EmptyBox } from '@hypertheme-editor/chakra-ui';
+import { useVendor } from '../../../Context/Vendor/VendorContext'; // Import your context
 
-const Vendors = ({ initialVendors }) => {
+const Vendors = React.memo(({ initialVendors }) => {
     const [filterDropDownActive, setFilterDropDownActive] = useState(false);
     const dropdownRef = useRef(null);
     const [vendors, setVendors] = useState(initialVendors);
     const [filteredVendorIds, setFilteredVendorIds] = useState([]);
+    var { selectedVendor, setSelectedVendor } = useVendor();
     const allPrices = ['$0 - $50', '$50 - $100', '$100 - $200', '$200 - $300'];
     const [filters, setFilters] = useState({
         vendor: [],
         price: [],
         deliveryTime: []
     });
+    const handleVendorSelect = (vendor) => {
+        console.log("json: " + JSON.stringify(vendor, null, 2))
+
+        setSelectedVendor(JSON.stringify(vendor, null, 2));
+        selectedVendor = JSON.stringify(vendor, null, 2);
+    };
 
     // Extract unique values for filters
     // var json = JSON.parse(initialVendors)
 
     const uniqueVendorsSet = initialVendors.map(vendor => vendor["name"]);
-    const uniqueDeliveryTimes = [...new Set(initialVendors.map(vendor => vendor.deliveryTime))];
+    const uniqueDeliveryTimes = [...new Set(initialVendors.map(vendor => vendor.deliveryTime))] ;
     const uniquePrices = [...new Set(initialVendors.map(vendor => vendor.price))];
 
-    console.log("unique vendors: " + initialVendors)
     const uniqueVendors = [];
     uniqueVendorsSet.forEach(v => uniqueVendors.push(v));
 
     console.log("unique vendors: " + uniqueVendors)
     console.log("unique uniqueDeliveryTimes: " + uniqueDeliveryTimes)
     console.log("unique uniquePrices: " + uniquePrices)
+    
     
     // Handle filter changes
     const handleFilterChange = (type, value) => {
@@ -296,7 +306,13 @@ const Vendors = ({ initialVendors }) => {
             <div className="w-full lg:pl-4 px-4 md:px-7 lg:px-0">
                 {vendors.length > 0 ? (
                     vendors.map(vendor => (
-                        <VendorCard key={vendor.id} vendor={vendor} isFiltered={filteredVendorIds.includes(vendor.id)} />
+                        <VendorCard 
+                            key={vendor.id} 
+                            vendor={vendor} 
+                            isFiltered={filteredVendorIds.includes(vendor.id)} 
+                            onSelect={(vendor) => handleVendorSelect(vendor)} // Track selected vendor
+                            isSelected={selectedVendor?.id === vendor.id} 
+                        />
                     ))
                 ) : (
                     <p>Loading vendor data...</p>
@@ -304,19 +320,25 @@ const Vendors = ({ initialVendors }) => {
                 
                 {/* Buttons */}
                 <div className="flex justify-between my-10">
+                <NavLink to={'/market/ingredientmarketplace'}>
                     <OutlineButton>Cancel</OutlineButton>
+                </NavLink>
                     <div className="flex items-center gap-3">
                         <NavLink to={'/market/ingredientmarketplace'}>
                             <FillButton>Previous</FillButton>
                         </NavLink>
+                        {selectedVendor ? (
                         <NavLink to={'/market/ordercheckout'}>
                             <SolidButton>Continue</SolidButton>
-                        </NavLink>
+                        </NavLink>)
+                        :
+                        <FillButton>Choose Vendor</FillButton>
+}
                     </div>
                 </div>
             </div>
         </div>
     );
-};
+});
 
 export default Vendors;

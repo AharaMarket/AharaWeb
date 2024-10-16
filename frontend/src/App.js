@@ -30,23 +30,26 @@ import OrderConfirmation from "./Pages/OrderConfirmation/OrderConfirmation";
 import ImportOrder from "./Pages/ImportOrder/ImportOrder";
 import Header from "./Components/Vendor/Header/index.jsx";
 import ProtectedRoute from './Context/User/ProtectedRoute';
+import { VendorProvider } from "./Context/Vendor/VendorContext";
 
 function App() {
   return (
     <UserProvider>
       <CartProvider>
-        <BrowserRouter>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/market/*" element={<MarketRoutes />} />
-              <Route path="/dashboard/*" element={<DashboardRoutes />} />
-            </Routes>
-          </Layout>
-        </BrowserRouter>
+        <VendorProvider>
+          <BrowserRouter>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/market/*" element={<MarketRoutes />} />
+                <Route path="/dashboard/*" element={<DashboardRoutes />} />
+              </Routes>
+            </Layout>
+          </BrowserRouter>
+        </VendorProvider>
       </CartProvider>
     </UserProvider>
   );

@@ -27,7 +27,8 @@ const VendorSelection = () => {
   }, [user, fetchCart]);
 
   useEffect(() => {
-    if (cart.length > 0) {
+    if (vendorList == null) {
+      console.log("vendorList: " + vendorList)
       fetchVendorData(); // Fetch vendor data when cart is loaded
     }
   }, [cart]);
@@ -36,60 +37,63 @@ const VendorSelection = () => {
     return cart.map(item => {
       return [item.quantity.toString(), item.productSpecification];
     });
-  };
+  }
 
   const fetchVendorData = async () => {
     const cartData = formatCartData();
-    try {
-      const response = await fetch('http://localhost:5050/vendorselection', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ products: cartData }),
-      });
+    console.log("vendorList: " + vendorList)
+    if (vendorList == null ) {
+      try {
+        const response = await fetch('http://localhost:5050/vendorselection', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ products: cartData }),
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch vendor data');
+        if (!response.ok) {
+          throw new Error('Failed to fetch vendor data');
+        }
+
+        const data = await response.json();
+        setVendorData(data);
+        setFilteredVendors(data); // Set filtered data initially to all vendors
+        const updatedVendorList = Object.keys(filteredVendors).map((vendorName, index) => {
+          // Extract vendor data for each vendor
+          const vendorItems = vendorData[vendorName];
+          console.log(vendorData[vendorName])
+          
+          // Map ingredients (excluding 'total') to priceDetails array
+          const priceDetails = Object.keys(vendorItems)
+            .filter(key => key !== 'total') // Exclude 'total' from items
+            .map((ingredient, i) => ({
+              item: ingredient, // Ingredient name
+              quantity: 1, // Placeholder for quantity (since it's not in the original data)
+              uom: 'UOM', // Placeholder for unit of measure
+              unitPrice: vendorItems[ingredient], // Price of the item
+              totalPrice: vendorItems[ingredient], // Assuming no quantity, unitPrice = totalPrice
+            }));
+              
+          return {
+            id: (index + 1).toString(), // Unique ID as string
+            img: 'Image', // Placeholder image
+            name: vendorName, // Vendor name
+            price: vendorItems.total, // Total price from vendor data
+            deliveryTime: 'Same Day Delivery', // Placeholder delivery time
+            deliveryDate: Date().toLocaleDateString, // Placeholder delivery date
+            phone: '(123) 456-7890', // Placeholder phone number
+            location: 'Pleasanton, CA', // Placeholder location
+            recommended: true, // Placeholder flag
+            fastest: false, // Placeholder flag
+            priceDetails: priceDetails // Price details array
+          };
+          // logging.info(priceDetails)
+        });
+        setVendorList(updatedVendorList);
+      } catch (err) {
+        setError(err.message);
       }
-
-      const data = await response.json();
-      setVendorData(data);
-      setFilteredVendors(data); // Set filtered data initially to all vendors
-      const updatedVendorList = Object.keys(filteredVendors).map((vendorName, index) => {
-        // Extract vendor data for each vendor
-        const vendorItems = vendorData[vendorName];
-        console.log(vendorData[vendorName])
-        
-        // Map ingredients (excluding 'total') to priceDetails array
-        const priceDetails = Object.keys(vendorItems)
-          .filter(key => key !== 'total') // Exclude 'total' from items
-          .map((ingredient, i) => ({
-            item: ingredient, // Ingredient name
-            quantity: 1, // Placeholder for quantity (since it's not in the original data)
-            uom: 'UOM', // Placeholder for unit of measure
-            unitPrice: vendorItems[ingredient], // Price of the item
-            totalPrice: vendorItems[ingredient], // Assuming no quantity, unitPrice = totalPrice
-          }));
-            
-        return {
-          id: (index + 1).toString(), // Unique ID as string
-          img: 'Image', // Placeholder image
-          name: vendorName, // Vendor name
-          price: vendorItems.total, // Total price from vendor data
-          deliveryTime: 'Same Day Delivery', // Placeholder delivery time
-          deliveryDate: 'April 31, 2024', // Placeholder delivery date
-          phone: '(123) 456-7890', // Placeholder phone number
-          location: 'Pleasanton, CA', // Placeholder location
-          recommended: true, // Placeholder flag
-          fastest: false, // Placeholder flag
-          priceDetails: priceDetails // Price details array
-        };
-        // logging.info(priceDetails)
-      });
-      setVendorList(updatedVendorList);
-    } catch (err) {
-      setError(err.message);
     }
   };
 
@@ -127,6 +131,7 @@ const VendorSelection = () => {
           </div>
           {/* <RecommendationList></RecommendationList> */}
           </div>
+      
       // </div>
 //           <div className="vendor-container-vertical">
 //             {Object.keys(filteredVendors).map((vendorName, index) => (

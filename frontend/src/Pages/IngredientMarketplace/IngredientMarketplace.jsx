@@ -13,11 +13,17 @@ import SolidButton from '../../Components/ui/buttons/solid-button';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../../Context/Cart/CartContext';
 import { UserContext } from '../../Context/User/UserContext';
+import {IconButton} from '@mui/material'
+import FillButton from '../../Components/ui/buttons/fill-button';
+import Cart from "../Cart/Cart";
+
+
 
 function Market() {
   const [products, setProducts] = useState([]);
   const [selectedSort, setSelectedSort] = useState("");
   const [vendor, setVendor] = useState("");
+  // const [cart, setCart] = useState([]);
   const [priceRange, setPriceRange] = useState({ min: 0, max: Infinity });
   const [searchResults, setSearchResults] = useState([]); // Store search results from the search bar
 
@@ -32,6 +38,7 @@ function Market() {
       setProducts(data);
       setSearchResults(data); // Initially, the search results are all products
     };
+    // setCart(fetchCart(user))
     fetchProducts();
   }, []);
 
@@ -97,6 +104,7 @@ function Market() {
   const handleAddToCart = (productSpecification, quantity, imageurl) => {
     console.log(user, productSpecification, quantity, imageurl);
     addItemToCart(user, productSpecification, quantity, imageurl);
+    // setCart(fetchCart(user));
   };
 
   return (
@@ -109,15 +117,25 @@ function Market() {
         {/* Pass products and search handler to Searchbar */}
         <Searchbar products={products} handleSearch={handleSearch} />
         <Sortbar onSortChange={handleSortChange} />
-        <CartButton />
+        <IconButton
+              component={Link}
+              to="/market/cart"
+              color="inherit"
+          >
+          <CartButton />
+        </IconButton>
       </div>
       <div className="listings-container">
         <GroceryList grocerydata={filteredAndSortedGroceryData} onAddToCart={handleAddToCart} />
       </div>
       <div className="continue-button">
-        <Link to="/market/vendorselection">
-          <SolidButton>Continue</SolidButton>
-        </Link>
+      {/* {cart.length > 0 ? ( */}
+          <Link to={'/market/vendorselection'}>
+              <SolidButton>Continue</SolidButton>
+          </Link>
+          {/* // )
+          // :
+          // <FillButton>Choose Ingredients</FillButton>} */}
       </div>
     </div>
   );
