@@ -40,6 +40,7 @@ const VendorSelection = () => {
 
   const fetchVendorData = async () => {
     const cartData = formatCartData();
+    console.log(cartData)
     try {
       const response = await fetch('http://localhost:5050/vendorselection', {
         method: 'POST',

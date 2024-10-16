@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './RestaurantRegistrationForm.css';
+import './DistributorRegistrationForm.css';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import {
@@ -14,7 +14,7 @@ import {
 import axios from 'axios';
 import 'react-toastify/dist/ReactToastify.css';
 
-function RestaurantRegistrationForm() {
+function DistributorRegistrationForm() {
     const {
         register,
         handleSubmit,
@@ -31,7 +31,7 @@ function RestaurantRegistrationForm() {
             if (!window.google) {
                 const script = document.createElement('script');
                 script.src =
-                script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAAlk_wVBFyNX08XBVTyJwaQk25DibxRps&libraries=places`;
+                    `https://maps.googleapis.com/maps/api/js?key=AIzaSyAAlk_wVBFyNX08XBVTyJwaQk25DibxRps&libraries=places`;
                 script.async = true;
                 document.body.appendChild(script);
 
@@ -92,7 +92,7 @@ function RestaurantRegistrationForm() {
 
         try {
             await axios.post(
-                'http://localhost:5050/restaurants/register',
+                'http://localhost:5050/distributors/register',
                 registrationData
             );
             toast.success('Registration successful!');
@@ -114,7 +114,7 @@ function RestaurantRegistrationForm() {
                         component="h2"
                         className="registrationformtitle"
                     >
-                        Sign Up
+                        Distributor Sign Up
                     </Typography>
                     <form onSubmit={handleSubmit(onSubmit)} noValidate>
                         <TextField
@@ -141,22 +141,22 @@ function RestaurantRegistrationForm() {
                             helperText={errors.email?.message}
                         />
                         <TextField
-                            label="Restaurant Name"
+                            label="Distributor Name"
                             fullWidth
                             margin="normal"
-                            {...register('restaurantName', {
-                                required: 'Restaurant Name is required',
+                            {...register('distributorName', {
+                                required: 'Distributor Name is required',
                             })}
-                            error={!!errors.restaurantName}
-                            helperText={errors.restaurantName?.message}
+                            error={!!errors.distributorName}
+                            helperText={errors.distributorName?.message}
                         />
                         <TextField
-                            label="Restaurant Address"
+                            label="Distributor Address"
                             fullWidth
                             margin="normal"
-                            inputRef={addressRef} // Correctly assigned here
+                            inputRef={addressRef}
                             {...register('address', {
-                                required: 'Restaurant Address is required',
+                                required: 'Distributor Address is required',
                             })}
                             error={!!errors.address}
                             helperText={errors.address?.message}
@@ -207,4 +207,4 @@ function RestaurantRegistrationForm() {
     );
 }
 
-export default RestaurantRegistrationForm;
+export default DistributorRegistrationForm;
