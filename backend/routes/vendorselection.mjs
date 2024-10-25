@@ -40,6 +40,7 @@ vendorselectionrouter.post("/", async (req, res) => {
         // Parse the price as a float and multiply by the quantity
         let price = parseFloat(spec.Price.replace('$', '')) * quantity;
         let quant = spec.Unit
+        let uom = spec.Unit
 
         // Get and clean the distributor list
         let distributors = spec.Distributor.split(',').map(distributor => distributor.trim());
@@ -55,6 +56,7 @@ vendorselectionrouter.post("/", async (req, res) => {
             // console.log("yes" + distributorPrices[distributor][product]);
             distributorPrices[distributor].total += price;
             distributorPrices[distributor].products.add(product);
+            distributorPrices[distributor].uom = uom;
           }
         });
       });

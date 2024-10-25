@@ -20,6 +20,8 @@ const VendorSelection = () => {
   const [filteredVendors, setFilteredVendors] = useState(null); // For filtered vendor data
   const [maxTotal, setMaxTotal] = useState(100); // Example filter by max total price
   const [vendorList, setVendorList] = useState(null);
+  const [sortCriteria, setSortCriteria] = useState('default');  
+
   useEffect(() => {
     if (user) {
       fetchCart(user);
@@ -77,10 +79,11 @@ const VendorSelection = () => {
         const updatedVendorList = Object.keys(filteredVendors).map((vendorName, index) => {
           // Extract vendor data for each vendor
           const vendorItems = vendorData[vendorName];
-
-          // Map ingredients (excluding 'total') to priceDetails array 
+          console.log(vendorData[vendorName]["uom"]);
+          
+          // Map ingredients (excluding 'total') to priceDetails array
           const priceDetails = Object.keys(vendorItems)
-            .filter(key => key !== 'total' && key !== 'unit') // Exclude 'total' from items
+            .filter(key => key !== 'total' && key !== 'uom' & key !== 'price') // Exclude 'total' from items
             .map((ingredient, i) => ({
               item: ingredient, // Ingredient name
               quantity: quantityMap[ingredient] || 1, // Placeholder for quantity (since it's not in the original data)
@@ -132,6 +135,29 @@ const VendorSelection = () => {
     setFilteredVendors(filteredData);
   };
 
+  // const handleSortChange = (sortCriteria) => {
+  //   let sortedVendors = [...vendorList];
+  //   console.log("criteria: " + sortCriteria);
+
+  //   switch (sortCriteria) {
+  //     case 'nameAZ':
+  //       sortedVendors.sort((a,b) => a.name.localeCompare(b.name));
+  //       break;
+  //     case 'nameZA':
+  //       sortedVendors.sort((a,b) => b.name.localeCompare(a.name));
+  //       break;
+  //     case 'priceLowToHigh':
+  //       sortedVendors.sort((a,b) => a.price - b.price);
+  //       break;
+  //     case 'priceHighToLow':
+  //       sortedVendors.sort((a,b) => b.price - a.price);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   setVendorList(sortedVendors);
+  // }
+
   return (
     <div className="vendor-selection-container">
       {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
@@ -145,6 +171,7 @@ const VendorSelection = () => {
               <VendorSelectionTitleBox></VendorSelectionTitleBox>
           </div>
           <MarketStepper currentStep={2}></MarketStepper>
+<<<<<<< HEAD
           <div className="recommendations-sort-container">
             {/* <div className="sortbar-container"> */}
                 <Sortbar onSortChange={handleSortChange} />
@@ -153,6 +180,11 @@ const VendorSelection = () => {
                 <LocationSlider minLocation={0} maxLocation={1000} onRadiusChange={handleRadiusChange} />
             {/* </div> */}
         </div>
+=======
+          <div className = "recommendations-sort-container">
+          {/* <Sortbar onSortChange={handleSortChange}/> */}
+          </div>
+>>>>>>> db7f5fd57db5678fb5f1c766389a62f4c22afb68
           {/* <div className = "recommendations-list-container"> */}
           <div className="vendor-container-vertical">
           <Vendors initialVendors={vendorList} />
