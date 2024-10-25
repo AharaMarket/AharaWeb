@@ -12,6 +12,8 @@ import '../../../index.css';
 import { emphasize } from '@mui/material';
 import { EmptyBox } from '@hypertheme-editor/chakra-ui';
 import { useVendor } from '../../../Context/Vendor/VendorContext'; // Import your context
+import Sortbar from '../../MarketComponents/Sortbar/Sortbar'
+
 
 const Vendors = React.memo(({ initialVendors }) => {
     const [filterDropDownActive, setFilterDropDownActive] = useState(false);
@@ -20,6 +22,7 @@ const Vendors = React.memo(({ initialVendors }) => {
     const [filteredVendorIds, setFilteredVendorIds] = useState([]);
     var { selectedVendor, setSelectedVendor } = useVendor();
     const allPrices = ['$0 - $50', '$50 - $100', '$100 - $200', '$200 - $300'];
+    const [sortCriteria, setSortCriteria] = useState('default');  
     const [filters, setFilters] = useState({
         vendor: [],
         price: [],
@@ -124,6 +127,29 @@ const Vendors = React.memo(({ initialVendors }) => {
         }
     };
 
+    const handleSortChange = (sortCriteria) => {
+        let sortedVendors = [...vendors];
+        console.log("criteria: " + sortCriteria);
+    
+        switch (sortCriteria) {
+          case 'nameAZ':
+            sortedVendors.sort((a,b) => a.name.localeCompare(b.name));
+            break;
+          case 'nameZA':
+            sortedVendors.sort((a,b) => b.name.localeCompare(a.name));
+            break;
+          case 'priceLowToHigh':
+            sortedVendors.sort((a,b) => a.price - b.price);
+            break;
+          case 'priceHighToLow':
+            sortedVendors.sort((a,b) => b.price - a.price);
+            break;
+          default:
+            break;
+        }
+        setVendors(sortedVendors);
+      }
+
     // Use effects
     useEffect(() => {
         applyFilters();
@@ -143,6 +169,10 @@ const Vendors = React.memo(({ initialVendors }) => {
     }, []);
 
     return (
+        <div className="relative">
+        <div className="flex justify-end mb-4 z-50">
+            <Sortbar onSortChange={handleSortChange} />
+        </div>
         <div className='lg:px-7 flex flex-col lg:flex-row'>
             {/* Filters */}
             <div className="w-full lg:w-1/5 px-4 md:px-7 lg:px-0 hidden lg:flex flex-col gap-0 lg:gap-5 border-b lg:border-r border-grey pb-2">
@@ -338,6 +368,7 @@ const Vendors = React.memo(({ initialVendors }) => {
                 </div>
             </div>
         </div>
+     </div>
     );
 });
 

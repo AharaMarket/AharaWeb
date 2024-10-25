@@ -20,6 +20,8 @@ const VendorSelection = () => {
   const [filteredVendors, setFilteredVendors] = useState(null); // For filtered vendor data
   const [maxTotal, setMaxTotal] = useState(100); // Example filter by max total price
   const [vendorList, setVendorList] = useState(null);
+  const [sortCriteria, setSortCriteria] = useState('default');  
+
   useEffect(() => {
     if (user) {
       fetchCart(user);
@@ -63,11 +65,11 @@ const VendorSelection = () => {
         const updatedVendorList = Object.keys(filteredVendors).map((vendorName, index) => {
           // Extract vendor data for each vendor
           const vendorItems = vendorData[vendorName];
-          console.log(vendorData[vendorName])
+          console.log(vendorData[vendorName]["uom"]);
           
           // Map ingredients (excluding 'total') to priceDetails array
           const priceDetails = Object.keys(vendorItems)
-            .filter(key => key !== 'total') // Exclude 'total' from items
+            .filter(key => key !== 'total' && key !== 'uom' & key !== 'price') // Exclude 'total' from items
             .map((ingredient, i) => ({
               item: ingredient, // Ingredient name
               quantity: 1, // Placeholder for quantity (since it's not in the original data)
@@ -110,6 +112,29 @@ const VendorSelection = () => {
     setFilteredVendors(filteredData);
   };
 
+  // const handleSortChange = (sortCriteria) => {
+  //   let sortedVendors = [...vendorList];
+  //   console.log("criteria: " + sortCriteria);
+
+  //   switch (sortCriteria) {
+  //     case 'nameAZ':
+  //       sortedVendors.sort((a,b) => a.name.localeCompare(b.name));
+  //       break;
+  //     case 'nameZA':
+  //       sortedVendors.sort((a,b) => b.name.localeCompare(a.name));
+  //       break;
+  //     case 'priceLowToHigh':
+  //       sortedVendors.sort((a,b) => a.price - b.price);
+  //       break;
+  //     case 'priceHighToLow':
+  //       sortedVendors.sort((a,b) => b.price - a.price);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   setVendorList(sortedVendors);
+  // }
+
   return (
     <div className="vendor-selection-container">
       {/* {error && <p style={{ color: 'red' }}>{error}</p>} */}
@@ -124,7 +149,7 @@ const VendorSelection = () => {
           </div>
           <MarketStepper currentStep={2}></MarketStepper>
           <div className = "recommendations-sort-container">
-          <Sortbar/>
+          {/* <Sortbar onSortChange={handleSortChange}/> */}
           </div>
           {/* <div className = "recommendations-list-container"> */}
           <div className="vendor-container-vertical">
