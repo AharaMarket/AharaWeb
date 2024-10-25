@@ -12,6 +12,8 @@ import '../../../index.css';
 import { emphasize } from '@mui/material';
 import { EmptyBox } from '@hypertheme-editor/chakra-ui';
 import { useVendor } from '../../../Context/Vendor/VendorContext'; // Import your context
+import LocationSlider from '../../../Components/Slider/LocationSlider'; // Import the PriceSlider component
+
 
 const Vendors = React.memo(({ initialVendors }) => {
     const [filterDropDownActive, setFilterDropDownActive] = useState(false);
@@ -19,15 +21,13 @@ const Vendors = React.memo(({ initialVendors }) => {
     const [vendors, setVendors] = useState(initialVendors);
     const [filteredVendorIds, setFilteredVendorIds] = useState([]);
     var { selectedVendor, setSelectedVendor } = useVendor();
-    const allPrices = ['$0 - $50', '$50 - $100', '$100 - $200', '$200 - $300'];
+    // const allPrices = ['$0 - $50', '$50 - $100', '$100 - $200', '$200 - $300'];
     const [filters, setFilters] = useState({
         vendor: [],
         price: [],
         deliveryTime: []
     });
     const handleVendorSelect = (vendor) => {
-        console.log("json: " + JSON.stringify(vendor, null, 2))
-
         setSelectedVendor(JSON.stringify(vendor, null, 2));
         selectedVendor = JSON.stringify(vendor, null, 2);
     };
@@ -37,7 +37,25 @@ const Vendors = React.memo(({ initialVendors }) => {
 
     const uniqueVendorsSet = initialVendors.map(vendor => vendor["name"]);
     const uniqueDeliveryTimes = [...new Set(initialVendors.map(vendor => vendor.deliveryTime))] ;
-    const uniquePrices = [...new Set(initialVendors.map(vendor => vendor.price))];
+    const uniquePrices = [...new Set(initialVendors.map(vendor => vendor.price))].sort((a, b) => a - b);
+
+    // Define the range size
+    const rangeSize = 50; // Adjust this as needed
+    const ranges = [];
+
+    // Create ranges based on the unique prices
+    for (let i = 0; i < uniquePrices.length; i++) {
+        const start = Math.floor(uniquePrices[i] / rangeSize) * rangeSize;
+        const end = start + rangeSize;
+
+        // Check if the range already exists
+        if (!ranges.some(range => range.start === start && range.end === end)) {
+            ranges.push({ start, end });
+        }
+    }
+
+// Format the output as specified
+const allPrices = ranges.map(range => `$${range.start} - $${range.end}`);
 
     const uniqueVendors = [];
     uniqueVendorsSet.forEach(v => uniqueVendors.push(v));

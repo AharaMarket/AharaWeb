@@ -32,6 +32,7 @@ export const CartProvider = ({ children }) => {
   const updateCartItem = async (email, productSpecification, quantity) => {
     try {
       // const response = await axios.post('http://localhost:5050/carts/update', { email, productSpecification, quantity });
+      console.log(email, productSpecification, quantity)
       setCart(cart.map(item => {
         if (item.productSpecification === productSpecification) {
           return { ...item, quantity: quantity }; // Update quantity

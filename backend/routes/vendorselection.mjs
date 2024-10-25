@@ -6,7 +6,6 @@ const vendorselectionrouter = express.Router();
 
 vendorselectionrouter.post("/", async (req, res) => {
   const { products } = req.body;
-
   // Validate that products is an array of tuples [quantity, productName]
   if (!Array.isArray(products) || products.length === 0 || !products.every(p => Array.isArray(p) && p.length === 2)) {
     return res.status(400).json({ success: false, message: 'Products list is required and should be an array of tuples [quantity, productName]' });
@@ -40,6 +39,7 @@ vendorselectionrouter.post("/", async (req, res) => {
       productSpecs.forEach(spec => {
         // Parse the price as a float and multiply by the quantity
         let price = parseFloat(spec.Price.replace('$', '')) * quantity;
+        let quant = spec.Unit
 
         // Get and clean the distributor list
         let distributors = spec.Distributor.split(',').map(distributor => distributor.trim());
@@ -51,6 +51,8 @@ vendorselectionrouter.post("/", async (req, res) => {
             }
             // Add the prices and product information
             distributorPrices[distributor][product] = price;
+            distributorPrices[distributor].unit = quant;
+            // console.log("yes" + distributorPrices[distributor][product]);
             distributorPrices[distributor].total += price;
             distributorPrices[distributor].products.add(product);
           }

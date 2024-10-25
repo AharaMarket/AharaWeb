@@ -9,7 +9,7 @@ import GroceryList from '../../Components/MarketComponents/GroceryList/GroceryLi
 import MarketStepper from '../../Components/MarketComponents/MarketStepper/MarketStepper';
 import VendorSelectionTitleBox from '../../Components/MarketComponents/MarketTitleBox/VendorSelectionTitleBox/VendorSelectionTitleBox';
 import Vendors from '../../Components/ingredient-marketplace-components/vendors';
-
+import LocationSlider from '../../Components/Slider/LocationSlider';
 
 
 const VendorSelection = () => {
@@ -41,8 +41,22 @@ const VendorSelection = () => {
 
   const fetchVendorData = async () => {
     const cartData = formatCartData();
-    console.log(cartData)
+    console.log("cartData: ", typeof cartData)
     console.log("vendorList: " + vendorList)
+
+    const quantityMap = {};
+
+    if (Array.isArray(cartData)) {
+      cartData.forEach(([quantity, ingredient]) => {
+        // Convert quantity to a number (if necessary)
+        const qty = parseInt(quantity, 10);
+        if (ingredient) {
+          quantityMap[ingredient] = (quantityMap[ingredient] || 0) + qty; // Increment count for each occurrence
+        }
+      });
+    } else {
+      console.error('cartData is not an array:', cartData);
+    }
     if (vendorList == null ) {
       try {
         const response = await fetch('http://localhost:5050/vendorselection', {
@@ -63,18 +77,18 @@ const VendorSelection = () => {
         const updatedVendorList = Object.keys(filteredVendors).map((vendorName, index) => {
           // Extract vendor data for each vendor
           const vendorItems = vendorData[vendorName];
-          console.log(vendorData[vendorName])
-          
-          // Map ingredients (excluding 'total') to priceDetails array
+
+          // Map ingredients (excluding 'total') to priceDetails array 
           const priceDetails = Object.keys(vendorItems)
-            .filter(key => key !== 'total') // Exclude 'total' from items
+            .filter(key => key !== 'total' && key !== 'unit') // Exclude 'total' from items
             .map((ingredient, i) => ({
               item: ingredient, // Ingredient name
-              quantity: 1, // Placeholder for quantity (since it's not in the original data)
-              uom: 'UOM', // Placeholder for unit of measure
-              unitPrice: vendorItems[ingredient], // Price of the item
+              quantity: quantityMap[ingredient] || 1, // Placeholder for quantity (since it's not in the original data)
+              uom: vendorItems["unit"], // Placeholder for unit of measure
+              unitPrice: (vendorItems[ingredient]) / (quantityMap[ingredient] || 1), // Price of the item
               totalPrice: vendorItems[ingredient], // Assuming no quantity, unitPrice = totalPrice
             }));
+          console.log("priceDetails: " + priceDetails);
               
           return {
             id: (index + 1).toString(), // Unique ID as string
@@ -97,6 +111,14 @@ const VendorSelection = () => {
       }
     }
   };
+
+  const handleSortChange = (sortOption) => {
+    setSelectedSort(sortOption);
+  };
+
+  const handleRadiusChange = (newRadius) => {
+    console.log('New radius: ', newRadius);
+};
 
   // Handle filtering by maximum total price
   const handleFilterChange = (event) => {
@@ -123,41 +145,20 @@ const VendorSelection = () => {
               <VendorSelectionTitleBox></VendorSelectionTitleBox>
           </div>
           <MarketStepper currentStep={2}></MarketStepper>
-          <div className = "recommendations-sort-container">
-          <Sortbar/>
-          </div>
+          <div className="recommendations-sort-container">
+            {/* <div className="sortbar-container"> */}
+                <Sortbar onSortChange={handleSortChange} />
+            {/* </div> */}
+            {/* <div className="location-slider-container"> */}
+                <LocationSlider minLocation={0} maxLocation={1000} onRadiusChange={handleRadiusChange} />
+            {/* </div> */}
+        </div>
           {/* <div className = "recommendations-list-container"> */}
           <div className="vendor-container-vertical">
           <Vendors initialVendors={vendorList} />
           </div>
           {/* <RecommendationList></RecommendationList> */}
           </div>
-      
-      // </div>
-//           <div className="vendor-container-vertical">
-//             {Object.keys(filteredVendors).map((vendorName, index) => (
-//               <div key={index} className="vendor-card-vertical">
-//                 <h2>{vendorName}</h2>
-//                 <p><strong>Total: ${vendorData[vendorName].total}</strong></p>
-//                 <div className="dropdown-container">
-//   <label htmlFor={`cart-${vendorName}`}>Cart</label>
-//   <select id={`cart-${vendorName}`} defaultValue="">
-//     <option value="" disabled>
-//       Items:
-//     </option>
-//     {Object.keys(vendorData[vendorName])
-//       .filter(key => key !== 'total') // Exclude "total" from the dropdown
-//       .map((ingredient, i) => (
-//         <option key={i} value={ingredient}>
-//           {ingredient}: ${vendorData[vendorName][ingredient]}
-//         </option>
-//       ))}
-//   </select>
-// </div>
-
-//               </div>
-//             ))}
-//           </div>
         ) : (
           <p>Loading vendor data...</p>
         )}

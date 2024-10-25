@@ -24,9 +24,11 @@ ingredientsrouter.get("/products", async (req, res) => {
       }
     ]).toArray();
 
+    // console.log("Yes " + products);
+
     // removes $ sign and comma. it makes a price stirng into a floating point number
     const extractPrice = (priceStr) => {
-      return parseFloat(priceStr.replace('$', '').replace(',', ''));
+      return parseFloat(priceStr.replace('$', '').replace(',', '.').replace('US', '').replace(' ', ''));
     };
 
     // make into JSON

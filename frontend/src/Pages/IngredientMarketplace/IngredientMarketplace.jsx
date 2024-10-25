@@ -28,8 +28,7 @@ function Market() {
   const [searchResults, setSearchResults] = useState([]); // Store search results from the search bar
 
   const { user } = useContext(UserContext);
-  const { addItemToCart } = useContext(CartContext);
-
+  const { cart, fetchCart, addItemToCart, updateCartItem } = useContext(CartContext);
   // Fetch products data
   useEffect(() => {
     const fetchProducts = async () => {
@@ -38,6 +37,9 @@ function Market() {
       setProducts(data);
       setSearchResults(data); // Initially, the search results are all products
     };
+    if (user && cart.length === 0) {  // Fetch cart only if user exists and cart is empty
+      fetchCart(user);
+    }
     // setCart(fetchCart(user))
     fetchProducts();
   }, []);
@@ -102,8 +104,13 @@ function Market() {
   }, [vendor, priceRange, selectedSort, searchResults]);
 
   const handleAddToCart = (productSpecification, quantity, imageurl) => {
-    console.log(user, productSpecification, quantity, imageurl);
-    addItemToCart(user, productSpecification, quantity, imageurl);
+    const exists = cart.find(item => item.productSpecification === productSpecification)
+    if (exists != undefined) {
+      updateCartItem(user, productSpecification, exists.quantity + 1);
+    }
+    else{
+      addItemToCart(user, productSpecification, quantity, imageurl);
+    }
     // setCart(fetchCart(user));
   };
 
@@ -129,13 +136,12 @@ function Market() {
         <GroceryList grocerydata={filteredAndSortedGroceryData} onAddToCart={handleAddToCart} />
       </div>
       <div className="continue-button">
-      {/* {cart.length > 0 ? ( */}
+      {cart.length !== 0 ? (
           <Link to={'/market/vendorselection'}>
               <SolidButton>Continue</SolidButton>
           </Link>
-          {/* // )
-          // :
-          // <FillButton>Choose Ingredients</FillButton>} */}
+           ):
+          <FillButton>Choose Ingredients</FillButton>} 
       </div>
     </div>
   );

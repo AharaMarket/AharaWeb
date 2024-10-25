@@ -4,6 +4,7 @@ import { CartContext } from '../../Context/Cart/CartContext';
 import './Cart.css';
 import { NavLink } from 'react-router-dom';
 import FillButton from '../../Components/ui/buttons/fill-button';
+import { useNavigate } from 'react-router-dom';
 
 
 const Cart = () => {
@@ -28,6 +29,12 @@ const Cart = () => {
     }
   };
 
+  const navigate = useNavigate();
+
+    const handleGoBack = () => {
+        navigate(-1); // This will go back to the previous page
+    };
+
   return (
     <div className="cart-container">
       <h1 className="cart-header">My Cart</h1>
@@ -45,7 +52,7 @@ const Cart = () => {
               </div>
               <div className="item-actions">
                 <div className="quantity-control">
-                  <button className="quantity-button" onClick={() => handleQuantityChange(item.productSpecification, item.quantity - 1)}>-</button>
+                  <button className="quantity-button" onClick={() => item.quantity - 1 <= 0 ? handleRemoveItem(item.productSpecification):handleQuantityChange(item.productSpecification, item.quantity - 1)}>-</button>
                   <span className="quantity">{item.quantity}</span>
                   <button className="quantity-button" onClick={() => handleQuantityChange(item.productSpecification, item.quantity + 1)}>+</button>
                 </div>
@@ -55,9 +62,17 @@ const Cart = () => {
           ))}
         </div>
       )}
-      <NavLink to={'/market/ingredientmarketplace'}>
-          <FillButton>Previous</FillButton>
-      </NavLink>
+      {/* <div className="continue-button"> */}
+      {cart.length !== 0 ? (
+          <NavLink onClick={handleGoBack}>
+            <FillButton>Previous</FillButton>
+        </NavLink>
+           ):
+           <NavLink to={'/market/ingredientmarketplace'}>
+            <FillButton>Back</FillButton>
+          </NavLink>
+          } 
+      {/* </div> */}
     </div>
   );
 };

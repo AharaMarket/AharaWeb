@@ -18,11 +18,11 @@ const PricingDropdown = ({  vendor }) => {
                             <div className="flex gap-5 sm:gap-10 md:gap-20 grow justify-end">
                                 <div className="flex gap-3 sm:gap-5 md:gap-10">
                                     <H5 className={'!font-normal'}>x{item?.quantity}</H5>
-                                    <H5 className={'!font-normal'}>{item?.totalPrice}</H5>
+                                    <H5 className={'!font-normal'}>${item?.unitPrice}</H5>
                                 </div>
                                 <div className="flex gap-3 sm:gap-5 md:gap-10">
-                                    <H5 className={'!font-normal'}>${item?.unitPrice}</H5>
-                                    <H5 className={'!font-normal'}>${item?.uom}</H5>
+                                    <H5 className={'!font-normal'}>{item?.uom}</H5>
+                                    <H5 className={'!font-normal'}>${item?.totalPrice}</H5>
                                 </div>
                             </div>
                         </div>

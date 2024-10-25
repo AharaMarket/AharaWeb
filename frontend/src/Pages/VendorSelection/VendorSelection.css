@@ -78,9 +78,25 @@
     border: 1px solid #ccc;
     background-color: #f9f9f9;
   }
-  .recommendations-sort-container{
-    margin-left: 199px;
+  .recommendations-sort-container {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr; /* Three columns: center, auto for Sortbar, center */
+    align-items: center;                 /* Vertically center the items */
+    justify-items: center;               /* Center items in their respective columns */
+    width: 100%;
+    padding: 20px;
 }
+
+.sortbar-container {
+    justify-self: end; /* Aligns the Sortbar to the right */
+}
+
+.location-slider-container {
+    grid-column: 2;    /* Ensure LocationSlider stays in the middle column */
+    justify-self: center; /* Center the LocationSlider in its column */
+}
+
+
 
 .recommendations-list-container{
     margin-top: 80px;

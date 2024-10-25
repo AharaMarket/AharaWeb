@@ -49,7 +49,7 @@ cartsrouter.post('/add', async (req, res) => {
     }
 
     const itemIndex = cart.items.findIndex(item => 
-      item.productSpecification === productSpecification
+      item.productSpecification === productSpecification.name
     );
 
     if (itemIndex > -1) {
@@ -86,8 +86,7 @@ cartsrouter.post('/update', async (req, res) => {
     }
 
     const itemIndex = cart.items.findIndex(item => 
-      item.productSpecification.name === productSpecification.name &&
-      item.productSpecification.distributor === productSpecification.distributor
+      item.productSpecification === productSpecification
     );
 
     if (itemIndex > -1) {
@@ -123,8 +122,10 @@ cartsrouter.post('/remove', async (req, res) => {
 
     // Ensure you correctly match productSpecification by comparing fields explicitly
     cart.items = cart.items.filter(item => 
-      item.productSpecification.name !== productSpecification
+      item.productSpecification !== productSpecification
        );
+    
+    console.log(cart.items)
 
     await collection.updateOne(
       { email },
