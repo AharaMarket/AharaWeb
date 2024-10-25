@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Unnamed: 0,Name,Price,Unit,URL,Distributor,Product-ID,Dates,Product-Specification
 ,American Eggplant,"[""34.33""]",37 lb,https://shop.gocheetah.com/product/Eggplant%2C%20Purple%2C%2018%20ct/101366,Cheetah,American-EggplantCheetah93fec582-f499-435a-b44f-31ea8e97dca6,"[""2024-10-22""]",
 ,Carrot,"$[""16.52""]",27 lb,https://shop.gocheetah.com/product/Carrots%2C%20Jumbo%2C%2025%20lb/101112,Cheetah,CarrotCheetah6800a476-6550-4591-9d2f-2f742c898404,"[""2024-10-22""]",
@@ -261,3 +262,268 @@ Unnamed: 0,Name,Price,Unit,URL,Distributor,Product-ID,Dates,Product-Specificatio
 ,Soybean Oil,"$[""34.86""]",560 fl oz,https://shop.sysco.com/app/product-details/opco/050/product/4119079?seller_id=USBL,Sysco,Soybean-OilSyscof798a9bb-48de-490a-a200-f2e3f73aeab2,"[""2024-10-22""]",
 ,Fry Oil,"$[""48.74""]",560 fl oz,https://shop.sysco.com/app/product-details/opco/050/product/7644909?seller_id=USBL,Sysco,Fry-OilSyscoe9624045-52ba-40b8-9b30-7aab38dd0cdd,"[""2024-10-22""]",
 ,Whole Peeled Tomato,"$[""28.07""]",6 pc,https://shop.sysco.com/app/product-details/opco/050/product/5902317?seller_id=USBL,Sysco,Whole-Peeled-TomatoSyscob76af85e-c8d6-4a36-8a41-12558e7713bc,"[""2024-10-22""]",
+=======
+Unnamed: 0;Name;Price;Unit;URL;Distributor;Product-ID;Dates;Product-Specification
+;American Eggplant;34,33 US$;37 lb;https://shop.gocheetah.com/product/Eggplant%2C%20Purple%2C%2018%20ct/101366;Cheetah;American-EggplantCheetah93fec582-f499-435a-b44f-31ea8e97dca6;"[""2024-10-22""]";Eggplant
+;Carrot;16,52 US$;27 lb;https://shop.gocheetah.com/product/Carrots%2C%20Jumbo%2C%2025%20lb/101112;Cheetah;CarrotCheetah6800a476-6550-4591-9d2f-2f742c898404;"[""2024-10-22""]";Carrot
+;Orange;49,85 US$;25 lb;https://shop.gocheetah.com/product/Orange%2C%20Navel%2C%20113%20ct/101116;Cheetah;OrangeCheetahefb2b857-b43f-436c-8b90-8ec3346ee07e;"[""2024-10-22""]";Orange
+;Lemon;47,36 US$;40 lb;https://shop.gocheetah.com/product/Citrus%2C%20Fresh%2C%20Lemon%2C%20Choice%2C%20140's%2C%208%2F5%20lb/122775;Cheetah;LemonCheetah86a313e5-c62d-454b-9362-e3264020e4e6;"[""2024-10-22""]";Lemon
+;Firm Tofu;15,27 US$;25 lb;https://shop.gocheetah.com/product/Tofu%2C%20Extra%20Firm%2C%20Organic%2C%206%2F14%20oz/123357;Cheetah;Firm-TofuCheetah69481b8f-b618-41ad-b87a-810e929b43bc;"[""2024-10-22""]";Firm Tofu
+;Broccoli;25,15 US$;20 lbs;https://shop.gocheetah.com/search/Broccoli;Cheetah;BroccoliCheetah75c00d2e-888e-4b0e-8c54-4dabbead4f52;"[""2024-10-22""]";Broccoli
+;Cabbage;24,41 US$;47 lb;https://shop.gocheetah.com/product/Cabbage%2C%20Green%2C%2045%20lb/101392;Cheetah;CabbageCheetah174112a2-9d9d-4790-a1ae-fe9f962fdec5;"[""2024-10-22""]";Cabbage
+;Cauliflower;46,80 US$;28 lb;https://shop.gocheetah.com/product/Cauliflower%2C%20White%2C%20Cello%2C%2012%20ct/124881;Cheetah;CauliflowerCheetah229d68db-c282-43f1-8f17-10b9c1aad211;"[""2024-10-22""]";Cauliflower
+;Lettuce;21,44 US$;28 lb;https://shop.gocheetah.com/product/Lettuce%2C%20Green%20Leaf%2C%2024%20ct/101416;Cheetah;LettuceCheetah4e8f288d-0ae6-4484-8dfe-043bcb17a84a;"[""2024-10-22""]";Lettuce
+;Spinach;18,16 US$;12 lb;https://shop.gocheetah.com/product/Spinach%2C%20Cleaned%2C%204%2F2.5%20lb/123529;Cheetah;SpinachCheetah214be580-1139-4123-a137-28dbef234383;"[""2024-10-22""]";Spinach
+;Celery;27,33 US$;53 lb;https://shop.gocheetah.com/product/Celery%2C%20Naked%2C%2024%20ct/101337;Cheetah;CeleryCheetah8a00273c-5e2e-42f6-aa4b-cb45a5577889;"[""2024-10-22""]";Celery
+;Mint;8,03 US$;1 lb;https://shop.gocheetah.com/product/Herbs%2C%20Mint%2C%20Fresh%2C%201%20lb/112114;Cheetah;MintCheetahaafb3866-0ad5-46de-b122-6771281a79d3;"[""2024-10-22""]";Mint
+;Green Bell Pepper;35,81 US$;27 lb;https://shop.gocheetah.com/product/Peppers%2C%20Bell%2C%20Green%2C%2025%20lb/101353;Cheetah;Green-Bell-PepperCheetah57560838-08ec-4205-a4d6-15f3b7318648;"[""2024-10-22""]";Green Bell Pepper
+;Red Bell Pepper;47,03 US$;27 lb;https://shop.gocheetah.com/product/Peppers%2C%20Bell%2C%20Red%2C%2025%20lb/101378;Cheetah;Red-Bell-PepperCheetah81a1275f-46eb-4256-9c80-dacb0731e93a;"[""2024-10-22""]";Red Bell Pepper
+;Seranno;17,46 US$;5 lb;https://shop.gocheetah.com/product/Peppers%2C%20Chili%2C%20Serrano%2C%205%20lb/108592;Cheetah;SerannoCheetah38e42e61-e2b9-4c4b-a501-b93e764fae0f;"[""2024-10-22""]";Seranno Pepper
+;Chicken Leg;41,60 US$;40 lb;https://shop.gocheetah.com/product/Chicken%2C%20Leg%20Meat%2C%20Boneless%2C%20Skinless%2C%20Fzn%2C%20Halal%2C%204%2F10%20Lb/125698;Cheetah;Chicken-LegCheetahc5d8f818-cc4e-4fff-955e-38c27eb9f2ac;"[""2024-10-22""]";Chicken Leg
+;Chicken Thigh;91,84 US$;40 lb;https://shop.gocheetah.com/product/Chicken%2C%20Thigh%2C%20Bnls%2FSknls%2C%20Black%20Label%2C%20Frozen%2C%2040%20lb/112059;Cheetah;Chicken-ThighCheetaha4cb9772-d13d-4bb5-9804-2bcdf7175d79;"[""2024-10-22""]";Chicken Thigh
+;Chicken Breast;34,00 US$;40 lb;https://shop.gocheetah.com/product/Chicken%2C%20Breasts%2C%20Bone-In%2C%20CVP%2C%20Frozen%2C%2040%20lb%20avg/124071;Cheetah;Chicken-BreastCheetah99bef7e0-12e9-4fb0-a3b0-731adbbab2c5;"[""2024-10-22""]";Chicken Breast
+;Lamb Leg;168,00 US$;40 lb;https://shop.gocheetah.com/product/Lamb%2C%20Shoulder%2C%20Boneless%2C%20Netted%2C%2040%20Lb%20Avg/125946;Cheetah;Lamb-LegCheetahb781a5ca-35c3-48d1-8aa5-2486818fefe0;"[""2024-10-22""]";Lamb Leg
+;Cut Goat;70,54 US$;15 lb;https://shop.gocheetah.com/product/Goat%2C%20Cube%2C%20Bone-In%2C%20Halal%2C%20Frozen%2C%2015%20lb/112037;Cheetah;Cut-GoatCheetahb45484d9-494c-49bb-9ad9-616858b6b920;"[""2024-10-22""]";Goat
+;Swai Fish Fillets;47,40 US$;15 lb;https://shop.gocheetah.com/product/Swai%2C%20Fillet%2C%20Boneless%2C%20Skinless%2C%207-9%20Oz%2C%20Iqf%2C%20Frozen%2C%2015%20lb/125403;Cheetah;Swai-Fish-FilletsCheetahc71cf444-bc4b-4775-b827-d0961ff7d2c3;"[""2024-10-22""]";Swai Fish
+;Tilapia Fish Fillet;52,90 US$;10 lb;https://shop.gocheetah.com/product/Tilapia%2C%20Fillet%2C%205-7%20Oz%2C%20Iqf%2C%20Frozen%2C%2010%20lb/125404;Cheetah;Tilapia-Fish-FilletCheetaha4b03a5a-c75f-4355-91f4-d8824a7fe6f0;"[""2024-10-22""]";Tilapia Fish
+;Peas and Carrots;43,13 US$;30 lb;https://shop.gocheetah.com/product/Peas%20%26%20Carrots%2C%2012%2F2.5%20lb/112534;Cheetah;Peas-and-CarrotsCheetahd3e500b8-c5ad-4325-a84c-aeccfa772f72;"[""2024-10-22""]";Peas and Carrots
+;Frozen Peas;44,57 US$;30 lb;https://shop.gocheetah.com/product/Peas%2C%2012%2F2.5%20lb/112535;Cheetah;Frozen-PeasCheetah2b61e4e1-d036-472b-994c-abc25a32b613;"[""2024-10-22""]";Peas
+;Fresh Okra;53,81 US$;37 lb;https://shop.gocheetah.com/product/Okra%2C%20Cut%2C%2012%2F3%20Lb/125864;Cheetah;Fresh-OkraCheetahc97a51f8-bf8d-475b-b751-0a610e245712;"[""2024-10-22""]";Okra
+;Mixed Vegetables;50,41 US$;31 lb;https://shop.gocheetah.com/product/Vegetable%20Blend%2C%205%20Way%20Mixed%2C%2012%2F2.5%20lb/112536;Cheetah;Mixed-VegetablesCheetah604b0eb4-9e84-46ce-ba9a-62aca356af98;"[""2024-10-22""]";Mixed Vegetables
+;Sriracha Hot Sauce;45,84 US$;2 lb;https://shop.gocheetah.com/product/Sauce%2C%20Sriracha%2C%2012%2F17%20OZ/110593;Cheetah;Sriracha-Hot-SauceCheetahbd78934a-d5a9-4d66-bdbe-44694acecde3;"[""2024-10-22""]";Sriracha Hot Sauce
+;Sambai Oelek Chili Paste;62,22 US$;75 lb;https://shop.gocheetah.com/product/Paste%2C%20Chili%2C%20Sambal%20Oelek%2C%203%2F1%20gal/123471;Cheetah;Sambai-Oelek-Chili-PasteCheetah0a97bcd4-ebb3-4c65-9d86-425fe2f6fc57;"[""2024-10-22""]";Sambai Oelek Chili Paste
+;Lemon Juice;37,84 US$;843 lb;https://shop.gocheetah.com/product/Juice%2C%20Lemon%2C%208%2F48%20oz/110591;Cheetah;Lemon-JuiceCheetah3b7548e8-45dc-48e0-8deb-c5b70e833eeb;"[""2024-10-22""]";Lemon Juice
+;Salt;17,75 US$;50 lb;https://shop.gocheetah.com/product/Salt%2C%20Granulated%2C%20Top-Flo%2C%2050%20lb/111133;Cheetah;SaltCheetahc7324eee-1093-4b79-b448-ad65852716bd;"[""2024-10-22""]";Salt
+;Sugar;43,21 US$;50 lb;https://shop.gocheetah.com/product/Sugar%2C%20Cane%2C%20Granulated%2C%2050%20lb/110262;Cheetah;SugarCheetah8b987306-9239-4f5c-8733-580e51c60c15;"[""2024-10-22""]";Sugar
+;All purpose Flour;8,08 US$;25 lb;https://shop.gocheetah.com/product/Flour%2C%20H%20%26%20R%2C%20All%20Purpose%2C%20Enriched%2C%20Bleached%2C%2025%20Lb/125886;Cheetah;All-purpose-FlourCheetah112c8575-89cb-435b-afaf-5bb0f1368dd7;"[""2024-10-22""]";All Purpose Flour
+;Tomato Sauce;33,67 US$;25 lb;https://shop.gocheetah.com/product/Tomato%2C%20Sauce%2C%20San%20Benito%2C%206%20%2310%20can/123374;Cheetah;Tomato-SauceCheetahd659409c-dc58-4e5f-8982-5deb1941a9c4;"[""2024-10-22""]";Tomato Sauce
+;Tomato puree;43,68 US$;40 lb;https://shop.gocheetah.com/product/Tomato%2C%20Puree%2C%20Extra%20Heavy%2C%20Full%20Red%2C%206%20%2310%20can/110246;Cheetah;Tomato-pureeCheetahe4d05ed6-f9c4-45dc-88d3-149c3485b216;"[""2024-10-22""]";Tomato Puree
+;Soybean Oil;29,82 US$;35 lb;https://shop.gocheetah.com/product/Oil%2C%20Soybean%2C%2035%20lb/111122;Cheetah;Soybean-OilCheetah6037f28f-e873-4041-950f-023c4075bc20;"[""2024-10-22""]";Soybean Oil
+;Fry Oil;32,02 US$;35 lb;https://shop.gocheetah.com/product/Oil%2C%20Canola%2C%20Frying%2C%20Clear%2C%2035%20lb/110951;Cheetah;Fry-OilCheetah2a2ca00c-a317-409b-9358-545632a995cc;"[""2024-10-22""]";Fry Oil
+;Whole Peeled Tomato;35,89 US$;45 lb;https://shop.gocheetah.com/product/Tomato%2C%20Whole%2C%20Peeled%2C%20Round%2C%20In%20Juice%2C%206%20%2310%20can/123500;Cheetah;Whole-Peeled-TomatoCheetah7d716f4d-d5e9-4051-907e-e990618831ff;"[""2024-10-22""]";Whole Peeled Tomato
+;Cilantro;33,59 US$;Case (6 units);https://www.chefstore.com/p/river-fresh-farms-bunch-cilantro_3389241/;Chef's Store;CilantroChef's-Storee7207295-4066-4268-bd40-98896c36bef9;"[""2024-10-22""]";Cilantro
+;Red Onion;17,39 US$;Unit (25 lb);https://www.chefstore.com/p/jumbo-red-onions_6431738/;Chef's Store;Red-OnionChef's-Store387c0da4-c613-48ef-9bdd-06c2138943c6;"[""2024-10-22""]";Red Onion
+;Zucchini;23,69 US$;Unit (20.000 lb);https://www.chefstore.com/p/green-zucchini-squash_3468279/;Chef's Store;ZucchiniChef's-Store0520d582-37b2-48d5-bdee-9da32cb9ec87;"[""2024-10-22""]";Zucchini
+;Potato;15,49 US$;Unit (50 lb);https://www.chefstore.com/p/russet-potatoes-2_2055960/;Chef's Store;PotatoChef's-Storea2c29ff2-26da-4e79-9264-b75129fd648c;"[""2024-10-22""]";Potato
+;Roma Tomato;33,39 US$;Unit (25 lb);https://www.chefstore.com/p/roma-tomatoes_2015899/;Chef's Store;Roma-TomatoChef's-Store5267225b-3c8d-4355-a32c-91454b99bae4;"[""2024-10-22""]";Roma Tomato
+;Tomato;10,09 US$;Unit (5 lb);https://www.chefstore.com/p/tomatoes-5-lb-tray_3699671/;Chef's Store;TomatoChef's-Store8b2d6890-c82c-4eb9-8ae8-ce0fd9e69ad5;"[""2024-10-22""]";Tomato
+;American Eggplant;47,19 US$;Case (5 units);https://www.chefstore.com/p/pam-pak-eggplant_5940608/;Chef's Store;American-EggplantChef's-Storeceb4071a-7678-4a9a-bcca-82ea6ffa4eea;"[""2024-10-22""]";Eggplant
+;Carrot;12,39 US$;Unit (25 lb);https://www.chefstore.com/p/juice-carrots-25-lb_2243245/;Chef's Store;CarrotChef's-Store4db46a96-6377-432e-94b1-db84dc01b9e3;"[""2024-10-22""]";Carrot
+;Orange;60,89 US$;Case (4 units);https://www.chefstore.com/p/oranges-10-lb-bag_6980364/;Chef's Store;OrangeChef's-Store7a1ce7d6-7bf4-4f29-8694-50bdb01d6e58;"[""2024-10-22""]";Orange
+;Lemon;50,59 US$;Case (8 units);https://www.chefstore.com/p/lemons-5-lb-bag_3626122/;Chef's Store;LemonChef's-Storeaf5a278b-9360-4d7d-9440-826cdeab1dc8;"[""2024-10-22""]";Lemon
+;Green Chili Peppers;63,69 US$;Case (12 units);https://www.chefstore.com/p/del-destino-fire-roasted-diced-green-chili-peppers_4269107/;Chef's Store;Green-Chili-PeppersChef's-Store6b15ec44-d017-49eb-b01a-d24c68922ea0;"[""2024-10-22""]";Green Chili
+;Firm Tofu;38,09 US$;Case (12 units);https://www.chefstore.com/p/house-foods-tofu-firm_2088473/;Chef's Store;Firm-TofuChef's-Stored15e27db-7285-426a-8b5e-186cb6a399c3;"[""2024-10-22""]";Firm Tofu
+;Broccoli;29,99 US$;Unit (20 lb);https://www.chefstore.com/p/cross-valley-farms-broccoli-crown-iceless-box-fresh-ref_8355281/;Chef's Store;BroccoliChef's-Store33fee90a-54e5-4ac3-9dae-7ee87f2c2960;"[""2024-10-22""]";Broccoli
+;Cabbage;34,19 US$;Unit (30 lb);https://www.chefstore.com/p/napa-cabbage-30-lb_9074451/;Chef's Store;CabbageChef's-Store21c93606-51be-40e9-9c34-56f234cc7303;"[""2024-10-22""]";Cabbage
+;Cauliflower;30,09 US$;Case (12 units);https://www.chefstore.com/p/cauliflower_6681788/;Chef's Store;CauliflowerChef's-Store9d601c34-5a56-4ba3-955a-5d4821635131;"[""2024-10-22""]";Cauliflower
+;Spinach;33,59 US$;Case (6 units);https://www.chefstore.com/p/bag-whole-leaf-spinach_3026443/;Chef's Store;SpinachChef's-Store0a8cf164-4edd-489d-aa2d-c1498c70251f;"[""2024-10-22""]";Spinach
+;Mint;56,29 US$;Case (4 units);https://www.chefstore.com/p/fresh-mint_9485944/;Chef's Store;MintChef's-Store1c9c35ac-62f0-4c4f-b9f7-f665c6d36f37;"[""2024-10-22""]";Mint
+;Green Bell Pepper;31,89 US$;Unit (25 lb);https://www.chefstore.com/p/green-bell-peppers-choppers_9854034/;Chef's Store;Green-Bell-PepperChef's-Store20d8e7d1-6a58-4585-8276-ae34c7a04b66;"[""2024-10-22""]";Green Bell Pepper
+;Red Bell Pepper;39,59 US$;Unit (25 lb);https://www.chefstore.com/p/red-bell-peppers-25-lb_2352956/;Chef's Store;Red-Bell-PepperChef's-Store3f344535-ab4f-4a0c-a291-5cdb3c6cdfea;"[""2024-10-22""]";Red Bell Pepper
+;Jalapeno;18,89 US$;Unit (10 lb);https://www.chefstore.com/p/jalapeno-peppers-10-lb_7232048/;Chef's Store;JalapenoChef's-Store304abd3c-c6d0-43c1-98d7-cb4730e5e18c;"[""2024-10-22""]";Jalapeno
+;Seranno;22,99 US$;Unit (10 lb);https://www.chefstore.com/p/serrano-peppers_0998039/;Chef's Store;SerannoChef's-Store180d79c2-da8b-4d05-a6be-6eced031d0bd;"[""2024-10-22""]";Seranno Pepper
+;Chicken Leg;35,49 US$;Unit (4/10 lb);https://www.chefstore.com/p/koch-halal-chicken-drumsticks-bulk_2288479/;Chef's Store;Chicken-LegChef's-Store1e6b35ae-a010-4bc1-9446-b13abbe6bc3e;"[""2024-10-22""]";Chicken Leg
+;Chicken Breast;106,00 US$;Case (4 units);https://www.chefstore.com/p/trimmed-boneless-skinless-chicken-breast_5019564/;Chef's Store;Chicken-BreastChef's-Storec7239b59-4a6a-49ce-b86c-2e0acdd7faf4;"[""2024-10-22""]";Chicken Breast
+;Lamb Leg;5,09 US$;Unit (6 lba);https://www.chefstore.com/p/thomas-farms-halal-boneless-leg-of-lamb_2909325/;Chef's Store;Lamb-LegChef's-Store7477809c-9398-43a7-ab82-37b8ac170c33;"[""2024-10-22""]";Lamb Leg
+;Cut Goat;2,99 US$;Unit (30 lba);https://www.chefstore.com/p/halal-goat-6-way-cut_5923150/;Chef's Store;Cut-GoatChef's-Store7066f020-b0d2-4d09-aa25-377b2c288d9e;"[""2024-10-22""]";Goat
+;Swai Fish Fillets;357,00 US$;Case (9 units);https://www.chefstore.com/p/icelandic-beer-battered-swai-fillets_9190503/;Chef's Store;Swai-Fish-FilletsChef's-Store5b3f57fe-fb52-4b65-bce5-5bc592374d9e;"[""2024-10-22""]";Swai Fish
+;Tilapia Fish Fillet;22,49 US$;Unit (5 lb);https://www.chefstore.com/p/passport-tilapia-fillets-3-5-oz_7541726/;Chef's Store;Tilapia-Fish-FilletChef's-Store16773ecd-b1a8-49fb-b76d-c48acc375d24;"[""2024-10-22""]";Tilapia Fish
+;Peas and Carrots;33,79 US$;Case (6 units);https://www.chefstore.com/p/garden-fresh-peas-carrots_2444455/;Chef's Store;Peas-and-CarrotsChef's-Store71d7c624-d105-4415-a44e-ff0397ce6f96;"[""2024-10-22""]";Peas and Carrots
+;Fresh Okra;32,19 US$;Case (12 units);https://www.chefstore.com/p/garden-fresh-cut-okra_7605704/;Chef's Store;Fresh-OkraChef's-Store78f00081-f083-4455-942f-2f0276d3e6fd;"[""2024-10-22""]";Okra
+;Mixed Vegetables;37,79 US$;Case (6 units);https://www.chefstore.com/p/garden-fresh-mixed-vegetables_4783060/;Chef's Store;Mixed-VegetablesChef's-Store5094c504-a64e-4f39-9c06-9c8a20311be2;"[""2024-10-22""]";Mixed Vegetables
+;Sriracha Hot Sauce;43,09 US$;Case (12 units);https://www.chefstore.com/p/kai-sriracha-hot-chili-sauce_1013526/;Chef's Store;Sriracha-Hot-SauceChef's-Store6d46dd4e-fcad-42ed-87e6-f4967e23bad0;"[""2024-10-22""]";Sriracha Hot Sauce
+;Lemon Juice;27,59 US$;Case (12 units);https://www.chefstore.com/p/thirster-100-lemon-juice_0577148/;Chef's Store;Lemon-JuiceChef's-Storeecc773ff-889b-4c99-9c80-410430da50bb;"[""2024-10-22""]";Lemon Juice
+;Salt;12,59 US$;Unit (25 lb);https://www.chefstore.com/p/diamond-crystal-plain-salt-25-lbs_5378260/;Chef's Store;SaltChef's-Stored0e16bee-96b6-4b98-aff5-8ab8e10fea0d;"[""2024-10-22""]";Salt
+;Sugar;43,69 US$;Unit (50 lb);https://www.chefstore.com/p/ch-granulated-pure-cane-sugar_8010746/;Chef's Store;SugarChef's-Storef89894f3-c695-45e4-a5c7-4677ac101a03;"[""2024-10-22""]";Sugar
+;All purpose Flour;43,29 US$;Case (2 units);https://www.chefstore.com/p/gold-medal-all-purpose-flour_7339695/;Chef's Store;All-purpose-FlourChef's-Store82d5905d-10e6-423a-8ef1-d0b3a5eb41fe;"[""2024-10-22""]";All Purpose Flour
+;Tomato Sauce;42,79 US$;Case (6 units);https://www.chefstore.com/p/hunts-tomato-sauce_2000586/;Chef's Store;Tomato-SauceChef's-Store5c284f1d-45f2-4786-a140-6bff35096512;"[""2024-10-22""]";Tomato Sauce
+;Tomato puree;31,49 US$;Case (6 units);https://www.chefstore.com/p/monarch-fancy-tomato-puree_4522785/;Chef's Store;Tomato-pureeChef's-Store1d57a62e-4d2b-4340-8d44-9e4996730adc;"[""2024-10-22""]";Tomato Puree
+;Soybean Oil;29,69 US$;Unit (35 lb);https://www.chefstore.com/p/harvest-value-clear-soybean-salad-oil_1327055/;Chef's Store;Soybean-OilChef's-Store570ade8d-0086-45fe-8e6a-af89ab1afc3b;"[""2024-10-22""]";Soybean Oil
+;Fry Oil;30,99 US$;Unit (35 lb);https://www.chefstore.com/p/harvest-value-canola-liquid-frying-oil_3327053/;Chef's Store;Fry-OilChef's-Storee5637349-3c5a-4445-8a2b-31a308bb5ed5;"[""2024-10-22""]";Fry Oil
+;Whole Peeled Tomato;40,99 US$;Case (6 units);https://www.chefstore.com/p/san-benito-whole-peeled-pear-tomatoes-with-basil_8493694/;Chef's Store;Whole-Peeled-TomatoChef's-Storef7ef4355-d878-463f-970b-9c70233189fe;"[""2024-10-22""]";Whole Peeled Tomato
+;Yellow Onion;$“22.29”;50 lbs;https://www.costcobusinessdelivery.com/jumbo-yellow-onions,-50-lbs.product.10180999.html;Costco;Yellow-OnionCostco343dd706-5b49-486e-a5ae-413c14b85bd9;"[""2024-10-22""]";Yellow Onion
+;Peeled Garlic;95,13 US$;21 lbs;https://www.costcobusinessdelivery.com/christopher-ranch-monviso-peeled-garlic%2c-3-lbs.product.10178488.html;Costco;Peeled-GarlicCostco8d2e251f-29a7-4251-86b8-d0031f4bbb6c;"[""2024-10-22""]";Peeled Garlic
+;Cilantro;$“4.09”;1 lbs;https://www.costcobusinessdelivery.com/cilantro,-1-lb.product.11753602.html;Costco;CilantroCostcoe9dbe764-3021-47d8-a932-9208f519deb9;"[""2024-10-22""]";Cilantro
+;Red Onion;14,09 US$;25 lbs;https://www.costcobusinessdelivery.com/red-onions,-10-lbs.product.100378070.html;Costco;Red-OnionCostco9953ffff-ca77-4006-8b0f-7163546bcf29;"[""2024-10-22""]";Red Onion
+;Ginger;$“104.90;30 lbs;https://www.costcobusinessdelivery.com/.product.746850.html;Costco;GingerCostco07337e66-1e03-41af-a9d6-aacd72774de2;"[""2024-10-22""]";Ginger
+;Zucchini;$“76.90”;20 lbs;https://sameday.costcobusinessdelivery.com/store/costco-business-center/products/16207364;Costco;ZucchiniCostco0f73c205-809a-4fbb-b672-df0f1b260e75;"[""2024-10-22""]";Zucchini
+;Potato;$“20.99”;50 lbs;https://sameday.costcobusinessdelivery.com/store/costco-business-center/products/26274226;Costco;PotatoCostco0990be17-93b0-469f-95c5-7453d0e847b0;"[""2024-10-22""]";Potato
+;Roma Tomato;34,29 US$;25 lbs;https://www.costcobusinessdelivery.com/baking-potatoes%2c-50-lbs.product.11528404.html;Costco;Roma-TomatoCostcoe3e8d658-f7e4-467d-b3ea-96d877904363;"[""2024-10-22""]";Roma Tomato
+;Tomato;$“30.99”;25 lbs;https://www.costcobusinessdelivery.com/loose-large-tomatoes%2c-25-lbs.product.11135633.html;Costco;TomatoCostco0816dba3-c668-4c56-bece-4a13984ce6fd;"[""2024-10-22""]";Tomato
+;American Eggplant;28,76 US$;24 ct;https://www.costcobusinessdelivery.com/.product.10858.html;Costco;American-EggplantCostcobb806d3b-f83f-4d58-8560-fa4e841532fd;"[""2024-10-22""]";Eggplant
+;Carrot;$“21.89”;25 lbs;https://www.costcobusinessdelivery.com/juicer-carrots%2c-25-lbs.product.11312584.html;Costco;CarrotCostco2f28fc95-776c-4a2b-983a-4069f7e5bf0b;"[""2024-10-22""]";Carrot
+;Orange;32,97 US$;30 lbs;https://www.costcobusinessdelivery.com/.product.197555.html;Costco;OrangeCostcocca9f5b1-2a82-4426-9904-05d91fe08522;"[""2024-10-22""]";Orange
+;Lemon;$“34.99”;46 lbs;https://www.costcobusinessdelivery.com/lemons%2c-165-average-ct.product.11904100.html;Costco;LemonCostco033b26ab-f76f-434f-83a1-0c0130c1bcd8;"[""2024-10-22""]";Lemon
+;Firm Tofu;15,98 US$;128 oz;https://www.costcobusinessdelivery.com/.product.1204135.html;Costco;Firm-TofuCostco2ad1a6e9-0135-492f-b0b3-05d39cda0052;"[""2024-10-22""]";Firm Tofu
+;Broccoli;$“43.33;21 lbs;https://www.costcobusinessdelivery.com/.product.5623.html;Costco;BroccoliCostco5427e624-70c7-4096-b1dd-092c13f57acf;"[""2024-10-22""]";Broccoli
+;Cabbage;49,95 US$;30 lbs;https://www.costcobusinessdelivery.com/.product.1078373.html;Costco;CabbageCostcodb16d138-5351-44c2-b86f-3a2b0a088dee;"[""2024-10-22""]";Cabbage
+;Cauliflower;$“103.08;24 lbs;https://www.costcobusinessdelivery.com/.product.31255.html;Costco;CauliflowerCostco36fd8a17-6576-4f24-a1ea-33c3f70037c9;"[""2024-10-22""]";Cauliflower
+;Lettuce;$“19.16”;24 pc;https://www.costcobusinessdelivery.com/.product.39036.html;Costco;LettuceCostco6112e218-fefa-4bf5-aadf-da31cda2195c;"[""2024-10-22""]";Lettuce
+;Spinach;$“83.85”;15 lbs;https://www.costcobusinessdelivery.com/organic-baby-spinach%2c-1-lb.product.11122701.html;Costco;SpinachCostco571044b9-f912-4cdb-8294-8e5978dbaa83;"[""2024-10-22""]";Spinach
+;Celery;$“120.42”;45 lbs;https://www.costcobusinessdelivery.com/.product.1036732.html;Costco;CeleryCostcob6636a04-f302-4f31-821e-fd9f7e9a5eb1;"[""2024-10-22""]";Celery
+;Green Bell Pepper;$“52.95”;25 lb;https://www.costcobusinessdelivery.com/green-bell-peppers%2c-5-lbs.product.100338636.html;Costco;Green-Bell-PepperCostcof9587afd-1917-4743-9b68-eaa01320d17c;"[""2024-10-22""]";Green Bell Pepper
+;Red Bell Pepper;$“55.95”;25 lb;https://www.costcobusinessdelivery.com/.product.1249373.html;Costco;Red-Bell-PepperCostco67531c8a-9cf3-4a8d-a5f9-6093f88e661f;"[""2024-10-22""]";Red Bell Pepper
+;Jalapeno;$“16.18”;10 lb;https://www.costcobusinessdelivery.com/.product.514606.html;Costco;JalapenoCostcoab73ac66-2480-4463-8340-414d0d15e115;"[""2024-10-22""]";Jalapeno
+;Seranno;$“28.78”;10 lb;https://www.costcobusinessdelivery.com/.product.29690.html;Costco;SerannoCostco4ac59d92-2767-4efe-8560-ad06a3851e02;"[""2024-10-22""]";Seranno Pepper
+;Chicken Leg;36,00 US$;40 lbs;https://www.costcobusinessdelivery.com/case-sale-halal-chicken-leg-quarters,-40-lb-avg-wt.product.11660179.html;Costco;Chicken-LegCostcoa6d4a49f-518d-47a6-af90-424bac08d972;"[""2024-10-22""]";Chicken Leg
+;Chicken Thigh;$“97.60”;40 lbs;https://www.costcobusinessdelivery.com/.product.40961.html;Costco;Chicken-ThighCostco2d5a4058-1317-43d5-9ab1-6756d8ed3484;"[""2024-10-22""]";Chicken Thigh
+;Chicken Breast;$“81.60;40 lbs;https://www.costcobusinessdelivery.com/.product.42953.html;Costco;Chicken-BreastCostco2c34c441-2834-46c6-bde1-f9c25fca92e3;"[""2024-10-22""]";Chicken Breast
+;Lamb Leg;$“249.48”;42 lba;https://www.costcobusinessdelivery.com/.product.42786.html;Costco;Lamb-LegCostco9e2998b6-bd85-42ca-8c88-40034a99a2d4;"[""2024-10-22""]";Lamb Leg
+;Cut Goat;$“167.72”;30 lba;https://www.costcobusinessdelivery.com/.product.1655404.html;Costco;Cut-GoatCostco38264fa6-4c7d-4917-98f4-34de21284fa8;"[""2024-10-22""]";Goat
+;Tilapia Fish Fillet;83,28 US$;12 lbs;https://www.costcobusinessdelivery.com/.product.10462.html;Costco;Tilapia-Fish-FilletCostcof7631532-17ab-4c31-8283-272b3433d93d;"[""2024-10-22""]";Tilapia Fish
+;Peas and Carrots;30,36 US$;20 lbs;https://www.costcobusinessdelivery.com/flav-r-pac-peas-%2526-carrots%2c-5-lbs.product.10179877.html;Costco;Peas-and-CarrotsCostcofce6bb86-f4bc-4f85-8c5a-6f31369e3abb;"[""2024-10-22""]";Peas and Carrots
+;Frozen Peas;42,95 US$;25 lbs;https://www.costcobusinessdelivery.com/.product.7666.html;Costco;Frozen-PeasCostco47b676cb-f551-428d-b7bc-adfaaf12e226;"[""2024-10-22""]";Peas
+;Fresh Okra;73,62 US$;36 lbs;https://www.costcobusinessdelivery.com/.product.28769.html;Costco;Fresh-OkraCostco5454e6a8-1273-433f-8a6d-cffb4c18f2a9;"[""2024-10-22""]";Okra
+;Mixed Vegetables;47,94 US$;30 lbs;https://www.costcobusinessdelivery.com/.product.297889.html;Costco;Mixed-VegetablesCostco4dadcc0d-3996-46b8-b1ae-1293e6a2fd03;"[""2024-10-22""]";Mixed Vegetables
+;Sriracha Hot Sauce;$“55.14”;12 pc;https://www.costcobusinessdelivery.com/.product.1053423.html;Costco;Sriracha-Hot-SauceCostco631afed6-fbab-4d16-aa94-d6d31092690a;"[""2024-10-22""]";Sriracha Hot Sauce
+;Lemon Juice;$“23.97”;24 lbs;https://www.costcobusinessdelivery.com/.product.815248.html;Costco;Lemon-JuiceCostco2ef27a9d-f6bd-4875-92c3-617babbd01e2;"[""2024-10-22""]";Lemon Juice
+;Salt;$“14.18”;50 lbs;https://www.costcobusinessdelivery.com/diamond-crystal-granulated-salt%2c-25-lb.product.11340303.html;Costco;SaltCostcobffd056b-0316-4889-a4a9-38b56e899d73;"[""2024-10-22""]";Salt
+;Sugar;41,19 US$;50 lbs;https://www.costcobusinessdelivery.com/c%2526h-granulated-pure-cane-sugar%2c-50-lbs.product.10193478.html;Costco;SugarCostco53b72023-9849-4ec3-ba32-d1327dbaecec;"[""2024-10-22""]";Sugar
+;All purpose Flour;$“17.09”;50 lbs;https://www.costcobusinessdelivery.com/ardent-mills-harvest-bread-flour%2c-50-lbs.product.11849896.html;Costco;All-purpose-FlourCostco6594fa2b-4b8a-48f9-b8e8-0b441e68722d;"[""2024-10-22""]";All Purpose Flour
+;Tomato Sauce;14,99 US$;12 PC;https://www.costcobusinessdelivery.com/kirkland-signature-organic-tomato-sauce,-15-oz,-12-ct.product.11954187.html;Costco;Tomato-SauceCostco0bd162dc-0fb4-4d7d-bb85-b6d72ed8fd06;"[""2024-10-22""]";Tomato Sauce
+;Tomato puree;36,54 US$;6 PC - 36 lbs;https://www.costcobusinessdelivery.com/.product.192114.html;Costco;Tomato-pureeCostco268602ad-2da4-47e7-9c90-8557c38b63d3;"[""2024-10-22""]";Tomato Puree
+;Soybean Oil;$“31.39”;35 lbs;https://www.costcobusinessdelivery.com/golden-chef-soybean-oil,-35-lbs.product.10253627.html;Costco;Soybean-OilCostco1389b50a-43a4-4c5c-8103-e34367bc7f86;"[""2024-10-22""]";Soybean Oil
+;Fry Oil;$“36.59”;35 lbs;https://www.costcobusinessdelivery.com/master-chef-clear-frying-oil,-35-lbs.product.11815204.html;Costco;Fry-OilCostcoa503dbfa-4594-4fcb-ad20-f6fbcdf92fdf;"[""2024-10-22""]";Fry Oil
+;Yellow Onion;15,06 US$;50 lbs;https://member.restaurantdepot.com/catalogsearch/result/?q=Yellow+Onion;Restaurant Depot;Yellow-OnionRestaurant-Depotfb97be00-718e-4aae-89ba-546755f9cd55;"[""2024-10-22""]";Yellow Onion
+;Peeled Garlic;97,78 US$;30 lbs;https://member.restaurantdepot.com/catalogsearch/result/?q=peeled+garlic;Restaurant Depot;Peeled-GarlicRestaurant-Depot4cae1563-c093-4da9-9b5d-234d2f93c586;"[""2024-10-22""]";Peeled Garlic
+;Cilantro;19,21 US$;5 lbs;https://member.restaurantdepot.com/catalogsearch/result/?q=cilantro;Restaurant Depot;CilantroRestaurant-Depot2d636940-fa9f-4766-a73f-1109ada3b188;"[""2024-10-22""]";Cilantro
+;Red Onion;12,17 US$;25 lbs;https://member.restaurantdepot.com/catalogsearch/result/?q=red+onion;Restaurant Depot;Red-OnionRestaurant-Depot3946b8eb-b7f0-4995-98ad-3618c8fb2407;"[""2024-10-22""]";Red Onion
+;Ginger;49,99 US$;30 lbs;https://member.restaurantdepot.com/catalogsearch/result/?q=Ginger;Restaurant Depot;GingerRestaurant-Depot389078c5-02a4-4f07-b27a-9fa6ab4ad79d;"[""2024-10-22""]";Ginger
+;Zucchini;11,68 US$;24 lbs;https://www.instacart.com/products/20243735-ginger-root-4-lbs?retailerSlug=restaurant-depot;Restaurant Depot;ZucchiniRestaurant-Depot3b06df44-3c8b-4827-aff4-ef9cf7c2900c;"[""2024-10-22""]";Zucchini
+;Potato;18,19 US$;50 lbs;https://www.instacart.com/products/19328815-produce-produce-potato-2-50-lb?retailerSlug=restaurant-depot;Restaurant Depot;PotatoRestaurant-Depot6aa20f79-ad67-450d-8284-23fa4d99ee6c;"[""2024-10-22""]";Potato
+;Tomato;32,71 US$;25 lbs;https://www.instacart.com/store/restaurant-depot/s?k=Roma+Tomato;Restaurant Depot;TomatoRestaurant-Depot547b5cae-a778-4aa6-970a-a268a2915b41;"[""2024-10-22""]";Tomato
+;Roma Tomato;41,09 US$;20 lbs;https://www.instacart.com/store/restaurant-depot/s?k=Roma+Tomato;Restaurant Depot;Roma-TomatoRestaurant-Depot3977f59f-31cc-4c15-9ba9-f4a2fa9049ad;"[""2024-10-22""]";
+;Eggplant;36,65 US$;20 lb;https://member.restaurantdepot.com/catalogsearch/result/?q=eggplant;Restaurant Depot;EggplantRestaurant-Depot02d6c012-464d-4cf6-87a9-d900816c4172;"[""2024-10-22""]";
+;Carrot;14,22 US$;25 lbs;https://www.instacart.com/products/19327242-produce-carrots-25lb-25?retailerSlug=restaurant-depot;Restaurant Depot;CarrotRestaurant-Depot8db62903-a685-43c0-b1d6-700be02cd1a6;"[""2024-10-22""]";Carrot
+;Lemon;39,05 US$;30 lbs;https://www.instacart.com/products/19328769-pd-lemon-bags-5lb-case?retailerSlug=restaurant-depot;Restaurant Depot;LemonRestaurant-Depotbe7b5d18-e91f-447b-b2e6-1ce08273c019;"[""2024-10-22""]";Lemon
+;Broccoli;21,13 US$;20 lbs;https://www.instacart.com/products/19302984-dragonwealth-crowns-20-lb?retailerSlug=restaurant-depot;Restaurant Depot;BroccoliRestaurant-Depot6b142753-77a9-48a0-b52f-df64095a8b8c;"[""2024-10-22""]";Broccoli
+;Cabbage;32,95 US$;45 lbs;https://www.instacart.com/products/19448602-napa-cabbage-15-lb?retailerSlug=restaurant-depot;Restaurant Depot;CabbageRestaurant-Depote717e5cf-3fd4-4804-8e69-0b2ebd9e0a32;"[""2024-10-22""]";Cabbage
+;Cauliflower;18,49 US$;12 ct;https://member.restaurantdepot.com/catalogsearch/result/?q=cauliflower;Restaurant Depot;CauliflowerRestaurant-Depotb003a327-81b0-4fe3-9251-bdcc3c679fa7;"[""2024-10-22""]";
+;Lettuce;21,58 US$;24 pc;https://www.instacart.com/products/19191534-lettuce-in-cello-wrap-24-ct?retailerSlug=restaurant-depot;Restaurant Depot;LettuceRestaurant-Depot0267950d-aa44-4565-a396-bbbbc1321d4d;"[""2024-10-22""]";Lettuce
+;Spinach;64,75 US$;12 lbs;https://www.instacart.com/store/restaurant-depot/s?k=spinach;Restaurant Depot;SpinachRestaurant-Depot711774ce-3692-417f-9b68-0d74a00ee918;"[""2024-10-22""]";Spinach
+;Celery;19,46 US$;24 ct;https://www.instacart.com/products/19451545-celery-3-ct?retailerSlug=restaurant-depot;Restaurant Depot;CeleryRestaurant-Depot9522a455-20aa-465b-ab6f-b2fb837d5dbb;"[""2024-10-22""]";Celery
+;Green Bell Pepper;57,16 US$;22.5 lb;No url;Restaurant Depot;Green-Bell-PepperRestaurant-Depot48801851-c489-449b-884d-e9ea86906898;"[""2024-10-22""]";
+;Red Bell Pepper;76,95 US$;22.5 lb;No url;Restaurant Depot;Red-Bell-PepperRestaurant-Depot1a3de66e-7b69-4e5e-a211-56e88a7baf6f;"[""2024-10-22""]";
+;Jalapeno;46,98 US$;35 lb;https://www.instacart.com/store/restaurant-depot/s?k=Green+Chili+Peppers;Restaurant Depot;JalapenoRestaurant-Depotb9071168-e8da-4eae-992c-c028113a5241;"[""2024-10-22""]";Jalapeno
+;Seranno;55,05 US$;30 lb;https://www.instacart.com/store/restaurant-depot/s?k=Green+Chili+Peppers;Restaurant Depot;SerannoRestaurant-Depot450673cd-2b8d-4e5c-b29b-501e47674b7d;"[""2024-10-22""]";Seranno
+;Chicken Leg;65,83 US$;40 lbs;https://www.instacart.com/products/19884634-fresh-chicken-drumsticks-40-lb?retailerSlug=restaurant-depot;Restaurant Depot;Chicken-LegRestaurant-Depot84297371-786b-4a3b-aeb5-91ad36668a4f;"[""2024-10-22""]";Chicken Leg
+;Chicken Thigh;112,50 US$;40 lbs;https://www.instacart.com/products/19885394-always-fresh-chicken-boneless-thighs-40-lb?retailerSlug=restaurant-depot;Restaurant Depot;Chicken-ThighRestaurant-Depotecb8741b-7c8a-49ee-854d-694c09ef3cd4;"[""2024-10-22""]";Chicken Thigh
+;Chicken Breast;90,05 US$;40 lbs;https://www.instacart.com/products/19880826-fresh-boneless-and-skinless-chicken-breast-always-fresh-boneles-and-skinless-chicken-breast-40-lb?retailerSlug=restaurant-depot;Restaurant Depot;Chicken-BreastRestaurant-Depot1e89dad0-149d-4fa3-84bf-44b9653f4db8;"[""2024-10-22""]";Chicken Breast
+;Lamb Leg;230,10 US$;42 lba;https://www.instacart.com/products/19883190-imported-australia-lamb-halal-boneless-lamb-leg-6-lb?retailerSlug=restaurant-depot;Restaurant Depot;Lamb-LegRestaurant-Depote5fe57f2-7e46-4f45-9ef8-a27ef8969cb8;"[""2024-10-22""]";Lamb Leg
+;Cut Goat;478,80 US$;45 lbs;https://www.instacart.com/products/19432176-halal-australian-bone-in-goat-cubes-per-lb?retailerSlug=restaurant-depot;Restaurant Depot;Cut-GoatRestaurant-Depot55fc4eb8-d86e-4357-87ad-21f5b40e36c8;"[""2024-10-22""]";Cut Goat
+;Halal Ground Lamb;167,20 US$;40 lbs;No url;Restaurant Depot;Halal-Ground-LambRestaurant-Depot87a5ff2c-cbd5-45a1-96f7-dc389b0ae9a4;"[""2024-10-22""]";
+;Swai Fish Fillets;45,79 US$;22 lbs;No url;Restaurant Depot;Swai-Fish-FilletsRestaurant-Depotba3cfec3-5b4f-4d61-9c19-f925bffd2c13;"[""2024-10-22""]";
+;Tilapia Fish Fillet;44,83 US$;10 lbs;https://www.instacart.com/products/22150473-top-catch-5-7-ounce-vacuum-pack-tilapia-fillet-10-lb?retailerSlug=restaurant-depot;Restaurant Depot;Tilapia-Fish-FilletRestaurant-Depotf5b424cc-7ad8-476c-aebf-a6b9c0fdc157;"[""2024-10-22""]";Tilapia Fish
+;Peas and Carrots;29,30 US$;30 lbs;https://www.instacart.com/products/19187395-james-farm-individual-quick-frozen-peas-carrot-2-5-lb?retailerSlug=restaurant-depot;Restaurant Depot;Peas-and-CarrotsRestaurant-Depotf582e5a9-aca0-42a7-a9bf-872d5708aaa6;"[""2024-10-22""]";Peas and Carrots
+;Frozen Peas;40,23 US$;30 lbs;https://www.instacart.com/products/19187337-james-farm-individually-quick-frozen-peas-2-5-lb?retailerSlug=restaurant-depot;Restaurant Depot;Frozen-PeasRestaurant-Depot0bdca4f8-e517-49a8-980f-4f9fe493dc13;"[""2024-10-22""]";Peas
+;Frozen Cut Beans;33,70 US$;24 lbs;No url;Restaurant Depot;Frozen-Cut-BeansRestaurant-Depotf34c8d83-faec-4d4a-8a53-a8962324a257;"[""2024-10-22""]";
+;Frozen Cut Okra;51,66 US$;36 lbs;https://www.instacart.com/products/19189472-james-farm-frozen-cut-okra-3-lb?retailerSlug=restaurant-depot;Restaurant Depot;Frozen-Cut-OkraRestaurant-Depotfa9b0ea9-09cf-4628-9dfc-2892ea7d6c9a;"[""2024-10-22""]";
+;Mixed Vegetables;34,87 US$;30 lbs;https://www.instacart.com/products/19189158-james-farm-individually-quick-frozen-mixed-vegetables-2-5-lb?retailerSlug=restaurant-depot;Restaurant Depot;Mixed-VegetablesRestaurant-Depot42e66dd0-70c5-464d-a55c-c2417acbea1f;"[""2024-10-22""]";Mixed Vegetables
+;Sriracha Hot Sauce;51,04 US$;12 pc;https://www.instacart.com/products/35512-huy-fong-chili-sauce-hot-sriracha-17-oz?retailerSlug=restaurant-depot;Restaurant Depot;Sriracha-Hot-SauceRestaurant-Depot5acac54d-b4e9-4dff-b062-9120dc8ed181;"[""2024-10-22""]";Sriracha Hot Sauce
+;Sambai Oelek Chili Paste;82,36 US$;3 units;https://www.instacart.com/products/3258742-huy-fong-case-of-sambal-oelek-chili-paste-1-gal?retailerSlug=restaurant-depot;Restaurant Depot;Sambai-Oelek-Chili-PasteRestaurant-Depot1382d3d5-923c-4d50-a860-75d15defca17;"[""2024-10-22""]";Sambai Oelek Chili Paste
+;Lemon Juice;37,43 US$;24 lbs;https://www.instacart.com/products/24091426-realime-100-lime-juice-32-fl-oz?retailerSlug=restaurant-depot;Restaurant Depot;Lemon-JuiceRestaurant-Depot028c5039-29c4-4a85-82f8-c1e10a3ae365;"[""2024-10-22""]";Lemon Juice
+;Salt;10,64 US$;50 lbs;https://www.instacart.com/products/2722843-morton-coarse-kosher-salt-for-everyday-cooking-grilling-brining-and-as-a-margarita-salt-rimmer-3-lb-box-3-pack?retailerSlug=restaurant-depot;Restaurant Depot;SaltRestaurant-Depot67940e7f-86b5-4280-ba32-a094e28a36c2;"[""2024-10-22""]";Salt
+;Sugar;42,40 US$;50 lbs;https://www.instacart.com/products/69466-domino-premium-pure-cane-dark-brown-sugar-1-lb?retailerSlug=restaurant-depot;Restaurant Depot;SugarRestaurant-Depot5b6baa47-d64b-4a03-b5d7-74f29fa479ad;"[""2024-10-22""]";Sugar
+;All purpose Flour;17,84 US$;50 lbs;https://www.instacart.com/products/3219120-gold-medal-hotel-and-restaurant-flour-25-lb?retailerSlug=restaurant-depot;Restaurant Depot;All-purpose-FlourRestaurant-Depotc12586eb-7419-4587-9d56-e94cebc051c8;"[""2024-10-22""]";All Purpose Flour
+;Tomato Sauce;25,93 US$;6 PC;https://www.instacart.com/products/19191395-chef-s-quality-10-tomato-sauce-each?retailerSlug=restaurant-depot;Restaurant Depot;Tomato-SauceRestaurant-Depot25f90ae6-205d-48d9-81d5-e8b0bdd2ba2b;"[""2024-10-22""]";Tomato Sauce
+;Tomato puree;34,59 US$;6 PC - 39.75 lbs;https://www.instacart.com/products/19188295-chef-s-quality-tomato-puree-10-lb?retailerSlug=restaurant-depot;Restaurant Depot;Tomato-pureeRestaurant-Depot2e2166ab-ab97-4fbd-9e8b-afdf8cfe6a28;"[""2024-10-22""]";Tomato Puree
+;Soybean Oil;29,32 US$;560 fl oz;https://www.instacart.com/products/19305502-chefs-quality-soybean-oil-35-lb?retailerSlug=restaurant-depot;Restaurant Depot;Soybean-OilRestaurant-Depot586a1412-011d-4e3a-b1db-c539bc0d3eaf;"[""2024-10-22""]";Soybean Oil
+;Fry Oil;30,00 US$;560 fl oz;https://www.instacart.com/products/19306292-chef-s-quality-clear-canola-fry-oil-35-lb?retailerSlug=restaurant-depot;Restaurant Depot;Fry-OilRestaurant-Depot03d40904-fb25-440a-88f7-881e8759e287;"[""2024-10-22""]";Fry Oil
+;Whole Peeled Tomato;23,71 US$;6 pc;https://www.instacart.com/products/19188071-isabella-s-whole-peeled-tomatoes-in-tomato-juice-10-lb?retailerSlug=restaurant-depot;Restaurant Depot;Whole-Peeled-TomatoRestaurant-Depot8bc87ecc-0241-4540-9ad9-659be0ad2e2f;"[""2024-10-22""]";Whole Peeled Tomato
+;Firm Tofu;2,11 US$;16 oz;https://member.restaurantdepot.com/catalogsearch/result/?q=firm+tofu;Restaurant Depot;Firm-TofuRestaurant-Depot51b2c55c-e152-4248-bf42-e998adafca1b;"[""2024-10-22""]";
+;Yellow onion ;19,45;50lbs;50lbs;SJ Distributor;Yellow-onionSJ-Distributor24bdda5c-aeff-45ce-ba76-614d36b41c4f;"[""2024-10-22""]";
+;peeled garlic;59,6;30lbs;30lbs;SJ Distributor;peeled-garlicSJ-Distributor839cf38a-05ed-46c9-9ce0-08133bfeee42;"[""2024-10-22""]";Peeled Garlic
+;peeled garlic;12,5;5lbs;5lbs;SJ Distributor;peeled-garlicSJ-Distributor2fea4289-f4d6-4af4-b6de-84aa184b63c8;"[""2024-10-22""]";Peeled Garlic
+;cilantro;30,95;5doz;5doz;SJ Distributor;cilantroSJ-Distributorcef1ce23-2396-49e2-acda-e48bb6b87c92;"[""2024-10-22""]";Cilantro
+;Red onion;20,95;25lbs;25lbs;SJ Distributor;Red-onionSJ-Distributor54a4c937-99a6-48c6-8d6a-6765a012af73;"[""2024-10-22""]";Red Onion
+;ginger;32,5;30lbs;30lbs;SJ Distributor;ZucchiniSJ-Distributor1d6fb643-6dc1-401e-89c7-872deed365c2;"[""2024-10-22""]";
+;Zucchini;12,4;20lbs;20lbs;SJ Distributor;potatoSJ-Distributor90fc83f5-954b-4dc1-b665-a2abc92ca117;"[""2024-10-22""]";Zucchini
+;potato;22;80-90CT;80-90CT;SJ Distributor;Roma-TomatoSJ-Distributorb186d4ae-7f50-41be-81bb-a5bc29899056;"[""2024-10-22""]";Potato
+;Roma Tomato ;32;20lbs;20lbs;SJ Distributor;TomatoSJ-Distributorf47596d8-b4c1-45b5-8d7c-9f3fb0a904df;"[""2024-10-22""]";
+;Tomato ;26,5;18lbs;18lbs;SJ Distributor;American-eggplantSJ-Distributor3022bb88-71cd-4497-b0ac-c26fc99722fd;"[""2024-10-22""]";
+;American eggplant;38;16-24PC;16-24PC;SJ Distributor;carrotSJ-Distributorf5c7ab01-c2ee-49a9-a114-3dc4a45b4067;"[""2024-10-22""]";Eggplant
+;carrot;17,5;25lbs;25lbs;SJ Distributor;orangeSJ-Distributor2797b177-2b6c-42ce-ae4f-da2cc4aafaf7;"[""2024-10-22""]";Carrot
+;orange;29,5;30lbs;30lbs;SJ Distributor;Thai-Chili-GreenSJ-Distributore8d8684c-2ce9-4231-8c3b-19fc050a5371;"[""2024-10-22""]";Orange
+;lemon;28;35lbs;35lbs;SJ Distributor;Firm-tofuSJ-Distributorbc8d5465-2d3b-480e-b1c6-1feece976332;"[""2024-10-22""]";
+;Thai Chili Green;4,95;1 lbs;1 lbs;SJ Distributor;broccoliSJ-Distributorf4045e93-16fd-4db2-9e8d-d2c9317f6a38;"[""2024-10-22""]";Green Chili
+;Firm tofu;19,5;60PC;60PC;SJ Distributor;cabbageSJ-Distributor8a93bdb3-473f-41d7-8f3e-73e3fcee951a;"[""2024-10-22""]";Firm Tofu
+;broccoli;25,5;18lbs;18lbs;SJ Distributor;cauliflowerSJ-Distributord5d9aca7-1ed4-447f-b549-84933293d5bc;"[""2024-10-22""]";Broccoli
+;Fresh Halal Chicken Leg Quarter;37,2;40lbs;40lbs;SJ Distributor;lettuceSJ-Distributor3a070ab3-f950-4d20-a7d5-357af5224013;"[""2024-10-22""]";Chicken Leg
+;Fresh Halal Chicken Thigh;96,0;40lbs;40lbs;SJ Distributor;spinachSJ-Distributordb3b80a2-dc74-4109-b2af-ecab5942699e;"[""2024-10-22""]";Chicken Thigh
+;Fresh Halal Chicken Breast;88,0;40lbs;40lbs;SJ Distributor;celerySJ-Distributor561f87e4-7e8c-46e0-8f13-0dfb5459866f;"[""2024-10-22""]";Chicken Breast
+;Frozen Halal Bone/less Lamb Leg;194,0;40lbs;40lbs;SJ Distributor;mintSJ-Distributorfa848124-02b0-42ef-a747-a3e1188ebfc2;"[""2024-10-22""]";Lamb Leg
+;Frozen Halal Cut goat <1-2>;166,0;40lbs;40lbs;SJ Distributor;Green-bell-pepperSJ-Distributor320c2054-dfdc-4573-bb48-29d9cb4604a2;"[""2024-10-22""]";Cut Goat
+;Frozen Halal ground lamb;166,0;40lbs;40lbs;SJ Distributor;Red-bell-pepperSJ-Distributor0c7a7f9d-cdfb-4a44-bb87-871b81db843e;"[""2024-10-22""]";
+;Swai fish fillet 8/10;42,9;22lbs;22lbs;SJ Distributor;JalapenoSJ-Distributore78b9a9b-9290-4f75-bcf8-7147ca1383f3;"[""2024-10-22""]";Swai Fish
+;Swai fish fillet 12/14;42,9;22lbs;22lbs;SJ Distributor;SerrranoSJ-Distributor48242194-739a-4b49-9532-465e57ae2aa2;"[""2024-10-22""]";Swai Fish
+;Tilapia fillet 5/7;29,5;10lbs;10lbs;SJ Distributor;Fresh-Halal-Chicken-Leg-QuarterSJ-Distributorda9be421-863c-401d-98e4-4eb357e3fffb;"[""2024-10-22""]";Tilapia Fish
+;Tilapia fillet 7/9;29,0;10lbs;10lbs;SJ Distributor;Fresh-Halal-Chicken-ThighSJ-Distributor51ee1471-b314-4177-a2ec-a58c9b647cc0;"[""2024-10-22""]";Tilapia Fish
+;Peas&Carrot;25,2;24lbs;24lbs;SJ Distributor;Fresh-Halal-Chicken-BreastSJ-Distributor88b8b46b-77f6-4881-b0e3-c8a7c2d6c236;"[""2024-10-22""]";Peas and Carrots
+;Frozen green peas;29;24lbs;24lbs;SJ Distributor;Frozen-Halal-Bone/less-Lamb-LegSJ-Distributorfa303443-4ed4-4913-a216-5b45f620f3db;"[""2024-10-22""]";
+;Frozen cut beans;27;24lbs;24lbs;SJ Distributor;Frozen-Halal-Cut-goat-<1-2>SJ-Distributor18e580c6-19bb-4691-995e-aa19f2c4ded4;"[""2024-10-22""]";
+;Frozen cut okra;41,5;36lbs;36lbs;SJ Distributor;Swai-fish-fillet-8/10SJ-Distributor6aeb1824-869b-4246-b761-b621be9059e2;"[""2024-10-22""]";Okra
+;Frozen chopped spinach;35,5;36lbs;36lbs;SJ Distributor;Swai-fish-fillet-12/14SJ-Distributora15eff3b-8c71-4f77-ad09-08e7e9e374bb;"[""2024-10-22""]";Frozen Spinach
+;Mixed vegetables;42;30lbs;30lbs;SJ Distributor;Tilapia-fillet-5/7SJ-Distributorb9cac2f8-f459-4438-b152-8ad995ec4a7e;"[""2024-10-22""]";
+;Sirracha Hot Chili Sauce;48,95;12PC;12PC;SJ Distributor;Tilapia-fillet-7/9SJ-Distributor95b7b67b-6cec-4287-b804-9b5aa5dd227a;"[""2024-10-22""]";Sriracha Hot Sauce
+;Sambai Oelek Chili Paste;53;3PC;3PC;SJ Distributor;Peas&CarrotSJ-Distributor5da5d0c9-6efb-4651-981f-99c8b5087bf9;"[""2024-10-22""]";
+;Lemon Juice;26,95;12PC;12PC;SJ Distributor;Frozen-cut-okraSJ-Distributord9015847-7d0f-4aa7-99df-12b2425ef68f;"[""2024-10-22""]";Lemon Juice
+;Salt;12,95;50lbs;50lbs;SJ Distributor;Frozen-chopped-spinachSJ-Distributore2dae4d1-6d4d-407e-b23b-023d8369c918;"[""2024-10-22""]";Salt
+;Sugar;44,95;50lbs;50lbs;SJ Distributor;Sirracha-Hot-Chili-SauceSJ-Distributora4bea2bf-09e9-4c30-b30c-fe64831bb067;"[""2024-10-22""]";Sugar
+;All purpose Flour;19,95;50lbs;50lbs;SJ Distributor;Lemon-JuiceSJ-Distributorde6b52c9-265d-473d-a627-6f3d803e7467;"[""2024-10-22""]";All Purpose Flour
+;Coconut milk;29,95;24PC;24PC;SJ Distributor;SaltSJ-Distributor9ea21f8e-296d-43cd-99d3-35ff9fa39d9a;"[""2024-10-22""]";Coconut Milk
+;Tomato Sauce;34,95;6PC;6PC;SJ Distributor;SugarSJ-Distributor3f0156bb-18a5-484b-a3c7-7e816b1b0c5b;"[""2024-10-22""]";Tomato Sauce
+;Tomato Puree;41,95;6PC;6PC;SJ Distributor;All-purpose-FlourSJ-Distributorf430b3e3-849f-4a5a-931e-52b94cad1c2b;"[""2024-10-22""]";Tomato Puree
+;Whole Peeled tomato;29,95;6PC;6PC;SJ Distributor;Coconut-milkSJ-Distributora2e65ff5-25d7-4d73-8af3-ba98bd5f9362;"[""2024-10-22""]";Whole Peeled Tomato
+;Soybean oil;32,5;560FLOZ;560FLOZ;SJ Distributor;Tomato-SauceSJ-Distributord233a6d4-8c6d-4de6-99ba-31cc6f5951df;"[""2024-10-22""]";Soybean Oil
+;Fry oil;33,5;560FLOZ;560FLOZ;SJ Distributor;Tomato-PureeSJ-Distributor245724f9-8453-415a-926a-9883a009cb92;"[""2024-10-22""]";Fry Oil
+;Yellow onion ;19,45;50lbs;50lbs;SJ Distributor;Whole-Peeled-tomatoSJ-Distributord3c45f64-cd3b-4aff-8cec-490bb71efcbf;"[""2024-10-22""]";
+;peeled garlic;59,6;30lbs;30lbs;SJ Distributor;Soybean-oilSJ-Distributore9ca23d1-f53b-45ff-85c8-55e1c503e29d;"[""2024-10-22""]";Peeled Garlic
+;peeled garlic;12,5;5lbs;5lbs;SJ Distributor;Fry-oilSJ-Distributor574a4f28-a191-4715-8c33-9ba75e453473;"[""2024-10-22""]";Peeled Garlic
+;Peeled Garlic;90,65 US$;20 lbs;https://shop.sysco.com/app/product-details/opco/050/product/1821537?seller_id=USBL;Sysco;Peeled-GarlicSyscof998686f-1641-40f2-93c0-b430c6325435;"[""2024-10-22""]";Peeled Garlic
+;Cilantro;2,01 US$;1 lb;https://shop.sysco.com/app/product-details/opco/050/product/7078475?seller_id=USBL;Sysco;CilantroSyscoc3283bcc-6408-4e9e-9c05-96de32355f62;"[""2024-10-22""]";Cilantro
+;Red Onion;22,35 US$;50 lbs;https://shop.sysco.com/app/product-details/opco/050/product/1094663?seller_id=USBL;Sysco;Red-OnionSysco86ecc737-7e29-4ac8-89a2-5652e48b2825;"[""2024-10-22""]";Red Onion
+;Ginger;80,45 US$;30 lbs;https://shop.sysco.com/app/product-details/opco/050/product/7049235?seller_id=USBL;Sysco;GingerSyscoc1c39296-c0e1-4b9e-bcba-2d35487157df;"[""2024-10-22""]";Ginger
+;Zucchini;22,95 US$;20 lbs;https://shop.sysco.com/app/product-details/opco/050/product/1602556?seller_id=USBL;Sysco;ZucchiniSysco72ebecee-c280-4943-9088-bfc8d63dd9c0;"[""2024-10-22""]";Zucchini
+;Potato;20,49 US$;50 lbs;https://shop.sysco.com/app/product-details/opco/050/product/1008507?seller_id=USBL;Sysco;PotatoSysco4f7fd2ff-ff17-48cd-8da3-3b482c7aa367;"[""2024-10-22""]";Potato
+;Roma Tomato;36,85 US$;25 lbs;https://shop.sysco.com/app/product-details/opco/050/product/6894125?seller_id=USBL;Sysco;Roma-TomatoSysco00bb5247-0049-426c-89a7-5e337983752e;"[""2024-10-22""]";Roma Tomato
+;Tomato;14,39 US$;25 lbs;https://shop.sysco.com/app/product-details/opco/050/product/4935623?seller_id=USBL;Sysco;TomatoSysco8f1ac9e2-397a-4c4b-8832-2bc9cf8eaa32;"[""2024-10-22""]";Tomato
+;American Eggplant;48,55 US$;18 ct;https://shop.sysco.com/app/product-details/opco/050/product/4294294?seller_id=USBL;Sysco;American-EggplantSysco426a848e-f90b-41e4-a354-2c3c4c93c3b5;"[""2024-10-22""]";Eggplant
+;Carrot;23,98 US$;25 lbs;https://shop.sysco.com/app/product-details/opco/050/product/2227007?seller_id=USBL;Sysco;CarrotSyscob6898df6-27e6-42b5-a1db-25d52c535233;"[""2024-10-22""]";Carrot
+;Orange;65,10 US$;30 lbs;https://shop.sysco.com/app/product-details/opco/050/product/7289526?seller_id=USBL;Sysco;OrangeSysco55e340b7-6be5-435b-85a6-4046991c2b66;"[""2024-10-22""]";Orange
+;Lemon;31,75 US$;35 lbs;https://shop.sysco.com/app/product-details/opco/050/product/7289542?seller_id=USBL;Sysco;LemonSysco51b2bc1b-ff66-40af-86d4-b85a526ec717;"[""2024-10-22""]";Lemon
+;Green Chili Peppers;52,39 US$;21 lb;https://shop.sysco.com/app/product-details/opco/050/product/0815282?seller_id=USBL;Sysco;Green-Chili-PeppersSysco947e14ed-17e3-4c19-b76d-b403932fcab7;"[""2024-10-22""]";Green Chili
+;Firm Tofu;26,49 US$;12 lbs;https://shop.sysco.com/app/product-details/opco/050/product/9907433?seller_id=USBL;Sysco;Firm-TofuSyscob335e99b-014e-4f68-ac51-2b61cd5be515;"[""2024-10-22""]";Firm Tofu
+;Broccoli;24,72 US$;20 lbs;https://shop.sysco.com/app/product-details/opco/050/product/2704989?seller_id=USBL;Sysco;BroccoliSysco173c1471-1e9d-4330-bcf4-b9f75014acdf;"[""2024-10-22""]";Broccoli
+;Cabbage;33,45 US$;50 lbs;https://shop.sysco.com/app/product-details/opco/050/product/1007970?seller_id=USBL;Sysco;CabbageSysco820380b9-90b6-425a-a885-a9ffca8e9138;"[""2024-10-22""]";Cabbage
+;Cauliflower;41,84 US$;12 ct;https://shop.sysco.com/app/product-details/opco/050/product/1243724?seller_id=USBL;Sysco;CauliflowerSysco1c4626ad-629f-4c3c-8631-b5408c2a80a5;"[""2024-10-22""]";Cauliflower
+;Lettuce;33,29 US$;24 pc;https://shop.sysco.com/app/product-details/opco/050/product/1091168?seller_id=USBL;Sysco;LettuceSysco2ce6420c-1131-46e3-af1f-dd27ea47a840;"[""2024-10-22""]";Lettuce
+;Spinach;25,40 US$;12.5 lbs;https://shop.sysco.com/app/product-details/opco/050/product/8474538?seller_id=USBL;Sysco;SpinachSysco5d874096-f96a-4c86-b8a3-ff13b401aa52;"[""2024-10-22""]";Spinach
+;Celery;31,29 US$;24 ct;https://shop.sysco.com/app/product-details/opco/050/product/1120625?seller_id=USBL;Sysco;CelerySysco22106537-60e6-42f4-94a9-97853988e323;"[""2024-10-22""]";Celery
+;Mint;12,95 US$;1 lb;https://shop.sysco.com/app/product-details/opco/050/product/7187552?seller_id=USBL;Sysco;MintSyscoa5d895fd-80d2-4fed-8955-602e2c0bdbd8;"[""2024-10-22""]";Mint
+;Green Bell Pepper;39,95 US$;25 lbs;https://shop.sysco.com/app/product-details/opco/050/product/1910231?seller_id=USBL;Sysco;Green-Bell-PepperSysco5648da0e-c0f5-40fc-8987-96047a076371;"[""2024-10-22""]";Green Bell Pepper
+;Red Bell Pepper;54,95 US$;25 lbs;https://shop.sysco.com/app/product-details/opco/050/product/4615704?seller_id=USBL;Sysco;Red-Bell-PepperSyscoaeadfd44-e8b6-46e2-b3e6-0b9c3cfd4cab;"[""2024-10-22""]";Red Bell Pepper
+;Jalapeno;28,42 US$;35 lbs;https://shop.sysco.com/app/product-details/opco/050/product/1185156?seller_id=USBL;Sysco;JalapenoSyscoa280d2f8-9d8d-42ef-8550-394f96e26ed5;"[""2024-10-22""]";Jalapeno
+;Seranno;74,85 US$;30 lbs;https://shop.sysco.com/app/product-details/opco/050/product/5214465?seller_id=USBL;Sysco;SerannoSysco2b27ff5b-bea6-4ae6-8e04-cee3e5a40312;"[""2024-10-22""]";Seranno Pepper
+;Chicken Leg;65,83 US$;40 lbs;https://shop.sysco.com/app/product-details/opco/050/product/2334706?seller_id=USBL;Sysco;Chicken-LegSysco3b63f856-2e48-4f52-acbf-550db437587b;"[""2024-10-22""]";Chicken Leg
+;Chicken Thigh;112,50 US$;40 lbs;https://shop.sysco.com/app/product-details/opco/050/product/6844815?seller_id=USBL;Sysco;Chicken-ThighSysco00d07854-02a8-44df-b8b9-7c4d330c0108;"[""2024-10-22""]";Chicken Thigh
+;Chicken Breast;90,05 US$;40 lbs;https://shop.sysco.com/app/product-details/opco/050/product/1289150?seller_id=USBL;Sysco;Chicken-BreastSysco02e02bb0-b790-467c-ab44-d461548a2b6e;"[""2024-10-22""]";Chicken Breast
+;Lamb Leg;11,60 US$;40 lbs;https://shop.sysco.com/app/product-details/opco/050/product/7175929?seller_id=USBL;Sysco;Lamb-LegSysco61579134-57ae-4c21-bd1b-f2218580a9d4;"[""2024-10-22""]";Lamb Leg
+;Cut Goat;209,50 US$;45 lbs;https://shop.sysco.com/app/product-details/opco/050/product/7211423?seller_id=USBL;Sysco;Cut-GoatSysco05b118cc-445b-445e-9f59-d2a6bef84c32;"[""2024-10-22""]";Cut Goat
+;Swai Fish Fillets;50,11 US$;22 lbs;https://shop.sysco.com/app/product-details/opco/050/product/7077752?seller_id=USBL;Sysco;Swai-Fish-FilletsSysco2eba4b91-566d-4412-9b0a-a7785861d89e;"[""2024-10-22""]";Swai Fish
+;Tilapia Fish Fillet;42,83 US$;10 lbs;https://shop.sysco.com/app/product-details/opco/050/product/0496671?seller_id=USBL;Sysco;Tilapia-Fish-FilletSysco18154d0c-f5e9-4c25-83ec-68de4665c94f;"[""2024-10-22""]";Tilapia Fish
+;Peas and Carrots;66,89 US$;30 lbs;https://shop.sysco.com/app/product-details/opco/050/product/1263615?seller_id=USBL;Sysco;Peas-and-CarrotsSysco4ef0c64a-94ac-4d86-bdd1-f20df433d57e;"[""2024-10-22""]";Peas and Carrots
+;Frozen Peas;50,29 US$;24 lbs;https://shop.sysco.com/app/product-details/opco/050/product/6409940?seller_id=USBL;Sysco;Frozen-PeasSysco34bf71f8-7d1b-494e-8fa2-96f34053e8a7;"[""2024-10-22""]";Frozen Peas
+;Fresh Okra;77,95 US$;36 lbs;No url;Sysco;Fresh-OkraSysco8952eb03-0692-4128-96ff-b4a1b535b3d6;"[""2024-10-22""]";
+;Mixed Vegetables;53,85 US$;30 lbs;https://shop.sysco.com/app/product-details/opco/050/product/3960200?seller_id=USBL;Sysco;Mixed-VegetablesSyscoddc3c10f-25c0-4a51-8a5b-308b51e6fb20;"[""2024-10-22""]";Mixed Vegetables
+;Sriracha Hot Sauce;52,90 US$;12 pc;https://shop.sysco.com/app/product-details/opco/050/product/7214352?seller_id=USBL;Sysco;Sriracha-Hot-SauceSysco6bfa3eb0-c3d5-42d6-9bb1-33b432b6422a;"[""2024-10-22""]";Sriracha Hot Sauce
+;Sambai Oelek Chili Paste;35,69 US$;12 units;https://shop.sysco.com/app/product-details/opco/050/product/4260970?seller_id=USBL;Sysco;Sambai-Oelek-Chili-PasteSysco748fc896-8b3c-42b4-8ddf-cce563743b06;"[""2024-10-22""]";Sambai Oelek Chili Paste
+;Lemon Juice;50,37 US$;24 lbs;https://shop.sysco.com/app/product-details/opco/050/product/3944574?seller_id=USBL;Sysco;Lemon-JuiceSysco63f723ff-37d4-4625-8545-35a089ee1944;"[""2024-10-22""]";Lemon Juice
+;Salt;14,43 US$;50 lbs;https://shop.sysco.com/app/product-details/opco/050/product/4564894?seller_id=USBL;Sysco;SaltSyscof5893055-d7aa-468f-a9f4-fdca481ac5be;"[""2024-10-22""]";Salt
+;Sugar;47,52 US$;50 lbs;https://shop.sysco.com/app/product-details/opco/050/product/5825672?seller_id=USBL;Sysco;SugarSysco633f7bb2-008f-49bf-8570-0e0434e8eba8;"[""2024-10-22""]";Sugar
+;All purpose Flour;17,57 US$;50 lbs;https://shop.sysco.com/app/product-details/opco/050/product/4267274?seller_id=USBL;Sysco;All-purpose-FlourSysco7c48a8eb-5964-47cf-95e3-f5faa5dff122;"[""2024-10-22""]";All Purpose Flour
+;Tomato Sauce;33,94 US$;6 PC;https://shop.sysco.com/app/product-details/opco/050/product/4978884?seller_id=USBL;Sysco;Tomato-SauceSysco5a868d15-bd7d-4ed0-a4a7-f6511ed2184c;"[""2024-10-22""]";Tomato Sauce
+;Tomato puree;34,15 US$;6 PC;https://shop.sysco.com/app/product-details/opco/050/product/7129067?seller_id=USBL;Sysco;Tomato-pureeSyscod5ec309d-f35b-4966-b47e-4ccb7cd346c7;"[""2024-10-22""]";Tomato Puree
+;Soybean Oil;34,86 US$;560 fl oz;https://shop.sysco.com/app/product-details/opco/050/product/4119079?seller_id=USBL;Sysco;Soybean-OilSyscof798a9bb-48de-490a-a200-f2e3f73aeab2;"[""2024-10-22""]";Soybean Oil
+;Fry Oil;48,74 US$;560 fl oz;https://shop.sysco.com/app/product-details/opco/050/product/7644909?seller_id=USBL;Sysco;Fry-OilSyscoe9624045-52ba-40b8-9b30-7aab38dd0cdd;"[""2024-10-22""]";Fry Oil
+;Whole Peeled Tomato;28,07 US$;6 pc;https://shop.sysco.com/app/product-details/opco/050/product/5902317?seller_id=USBL;Sysco;Whole-Peeled-TomatoSyscob76af85e-c8d6-4a36-8a41-12558e7713bc;"[""2024-10-22""]";Whole Peeled Tomato
+>>>>>>> b83c30d (Aggregate.csv)
