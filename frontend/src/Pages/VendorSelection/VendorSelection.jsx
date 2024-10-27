@@ -83,7 +83,7 @@ const VendorSelection = () => {
           
           // Map ingredients (excluding 'total') to priceDetails array
           const priceDetails = Object.keys(vendorItems)
-            .filter(key => key !== 'total' && key !== 'uom' & key !== 'price') // Exclude 'total' from items
+            .filter(key => key !== 'total' && key !== 'uom' & key !== 'price' & key !== 'unit') // Exclude 'total' from items
             .map((ingredient, i) => ({
               item: ingredient, // Ingredient name
               quantity: quantityMap[ingredient] || 1, // Placeholder for quantity (since it's not in the original data)
@@ -171,20 +171,9 @@ const VendorSelection = () => {
               <VendorSelectionTitleBox></VendorSelectionTitleBox>
           </div>
           <MarketStepper currentStep={2}></MarketStepper>
-<<<<<<< HEAD
-          <div className="recommendations-sort-container">
-            {/* <div className="sortbar-container"> */}
-                <Sortbar onSortChange={handleSortChange} />
-            {/* </div> */}
-            {/* <div className="location-slider-container"> */}
-                <LocationSlider minLocation={0} maxLocation={1000} onRadiusChange={handleRadiusChange} />
-            {/* </div> */}
-        </div>
-=======
           <div className = "recommendations-sort-container">
           {/* <Sortbar onSortChange={handleSortChange}/> */}
           </div>
->>>>>>> db7f5fd57db5678fb5f1c766389a62f4c22afb68
           {/* <div className = "recommendations-list-container"> */}
           <div className="vendor-container-vertical">
           <Vendors initialVendors={vendorList} />

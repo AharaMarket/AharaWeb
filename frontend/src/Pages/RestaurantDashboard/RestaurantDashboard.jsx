@@ -208,8 +208,8 @@ export default function UserReports() {
                 }
               }
             >
-              <Sidebar routes={routes} />
-              <Box
+              {/* <Sidebar routes={routes} /> */}
+              {/* <Box
                 float="right"
                 minHeight="100vh"
                 height="100%"
@@ -222,18 +222,18 @@ export default function UserReports() {
                 transitionDuration=".2s, .2s, .35s"
                 transitionProperty="top, bottom, width"
                 transitionTimingFunction="linear, linear, ease"
-              >
+              > */}
                 <Portal>
                   <Box>
-                    <Navbar
+                    {/* <Navbar
                       onOpen={onOpen}
                       logoText={"Ahara PRO"}
-                      // brandText={getActiveRoute(routes)}
-                      // secondary={getActiveNavbar(routes)}
-                      // message={getActiveNavbarText(routes)}
-                      fixed={fixed}
-                    // {...rest}
-                    />
+                      brandText={getActiveRoute(routes)}
+                      secondary={getActiveNavbar(routes)}
+                      message={getActiveNavbarText(routes)}
+                      fixed={fixed} */}
+                    {/* // {...rest} */}
+                    {/* /> */}
                   </Box>
                 </Portal>
                 <SimpleGrid
@@ -369,7 +369,7 @@ export default function UserReports() {
                 <Box p="20px">
                   <Footer />
                 </Box>
-              </Box>
+              {/* </Box> */}
             </SidebarContext.Provider>
           </Box>
         </Box>

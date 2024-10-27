@@ -14,7 +14,7 @@ const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
     <section className="card">
       <div className="card-details">
         <h3 className="card-title">{title}</h3>
-        <img src={img} alt={title} className="card-img" />
+        <img src={img} alt={title} className="card-img" style={{ width: '100%', height: '100px' }}/>
         <section className="card-price">
           <div className="price">
             <del>{prevPrice}</del> ${newPrice}

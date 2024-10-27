@@ -1,6 +1,5 @@
 import React from "react";
-
-// chakra imports
+// Chakra imports
 import {
   Box,
   Flex,
@@ -21,13 +20,11 @@ import {
 } from "../scrollbar/Scrollbar";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import PropTypes from "prop-types";
-
 // Assets
 import { IoMenuOutline } from "react-icons/io5";
 
 function Sidebar(props) {
   const { routes } = props;
-
   let variantChange = "0.2s linear";
   let shadow = useColorModeValue(
     "14px 17px 40px 4px rgba(112, 144, 176, 0.08)",
@@ -41,18 +38,17 @@ function Sidebar(props) {
   return (
     <Box
       display={{ sm: "none", xl: "block" }}
-      w="100%"
+      w="300px" // Set fixed width for the sidebar
       position="fixed"
-      minH="100%"
-      top="63.5px"         // Ensure it's stuck to the top
-      left="0"        // Stick to the left of the viewport
-      zIndex="1000"   // Set a high z-index to stay on top of other content
+      minH="100vh" // Ensures it covers the full viewport height
+      top="0" // Anchor it to the top
+      left="0" // Stick to the left of the viewport
+      zIndex="1000" // High z-index to stay on top
     >
       <Box
         bg={sidebarBg}
         transition={variantChange}
-        w="300px"
-        h="100vh"     // Ensures it covers the full viewport height
+        h="100vh" // Full height of the viewport
         m={sidebarMargins}
         overflowX="hidden"
         boxShadow={shadow}
@@ -124,7 +120,6 @@ export function SidebarResponsive(props) {
 }
 
 // PROPS
-
 Sidebar.propTypes = {
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
