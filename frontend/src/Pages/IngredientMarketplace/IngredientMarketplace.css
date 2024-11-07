@@ -10,15 +10,32 @@
 }
 
 .market-search-container {
-    margin-top: 30px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; /* Aligns items to the bottom */
     width: 98%;
+    gap: 15px; /* Optional: adds space between components */
 }
 
-.market-search-container .component {
-    margin: 0 8px; /* Adjust this value to control the spacing */
+/* Ensure a consistent height for each child component */
+.search-bar input { /* if Sortbar has a specific class, replace .sort-bar */
+    height: 40px; /* Adjust height as needed */
+    padding: 5px 10px;
+    margin-top: 30px;
+}
+
+.market-search-container > div:nth-child(2) {
+    margin-top: 0px; /* Only targets the second child in the container */
+    margin-right: 20px;
+}
+
+.market-search-container > div:nth-child(3) {
+    margin-top: 40px; /* Only targets the third child in the container */
+    margin-right: 20px;
+}
+
+.market-search-container > * {
+    min-width: 100px; /* Adjust this value to control the spacing */
 }
 
 .continue-button{

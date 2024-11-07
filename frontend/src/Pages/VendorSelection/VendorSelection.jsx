@@ -83,7 +83,7 @@ const VendorSelection = () => {
           
           // Map ingredients (excluding 'total') to priceDetails array
           const priceDetails = Object.keys(vendorItems)
-            .filter(key => key !== 'total' && key !== 'uom' & key !== 'price' & key !== 'unit') // Exclude 'total' from items
+            .filter(key => key !== 'total' && key !== 'uom' && key !== 'price' && key !== 'unit') // Exclude 'total' from items
             .map((ingredient, i) => ({
               item: ingredient, // Ingredient name
               quantity: quantityMap[ingredient] || 1, // Placeholder for quantity (since it's not in the original data)
@@ -134,29 +134,6 @@ const VendorSelection = () => {
     });
     setFilteredVendors(filteredData);
   };
-
-  // const handleSortChange = (sortCriteria) => {
-  //   let sortedVendors = [...vendorList];
-  //   console.log("criteria: " + sortCriteria);
-
-  //   switch (sortCriteria) {
-  //     case 'nameAZ':
-  //       sortedVendors.sort((a,b) => a.name.localeCompare(b.name));
-  //       break;
-  //     case 'nameZA':
-  //       sortedVendors.sort((a,b) => b.name.localeCompare(a.name));
-  //       break;
-  //     case 'priceLowToHigh':
-  //       sortedVendors.sort((a,b) => a.price - b.price);
-  //       break;
-  //     case 'priceHighToLow':
-  //       sortedVendors.sort((a,b) => b.price - a.price);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  //   setVendorList(sortedVendors);
-  // }
 
   return (
     <div className="vendor-selection-container">
