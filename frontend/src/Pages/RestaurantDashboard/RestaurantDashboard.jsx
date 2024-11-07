@@ -208,6 +208,8 @@ export default function UserReports() {
                 }
               }
             >
+              {/* <Sidebar routes={routes} />
+              <Box
               {/* <Sidebar routes={routes} /> */}
               {/* <Box
                 float="right"
