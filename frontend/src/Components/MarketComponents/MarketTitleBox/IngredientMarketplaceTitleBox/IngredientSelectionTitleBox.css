@@ -8,10 +8,16 @@
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.ingredient-title-box h1 {
+.ingredient-title-box h2 {
   color: #333;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 .ingredient-title-box p {
   color: #666;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }

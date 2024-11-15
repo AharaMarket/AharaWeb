@@ -1,8 +1,18 @@
+/* Container to wrap cards */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+/* Card styling */
 .card {
+  flex: 1 1 23%; /* Each card takes up roughly a fourth of the container */
+  max-width: 23%; /* Prevents cards from stretching too wide */
   margin: 10px;
   border: 2px solid #ededed;
   padding: 20px;
-  width: 160px;
   border-radius: 12px;
   cursor: pointer;
   display: flex;
@@ -11,8 +21,9 @@
   align-items: center;
   position: relative;
   height: 400px;
+  box-sizing: border-box; /* Ensures padding is included in width */
+  background-color: white;
 }
-
 
 .card-details {
   display: flex;
@@ -23,9 +34,12 @@
 }
 
 .card-img {
-  width: 13rem;
-  margin-bottom: .5rem;
+  width: 100%;              /* Ensures image spans the full width of the container */
+  height: 300px;            /* Set a fixed height for consistency */
+  object-fit: cover;        /* Keeps the image's aspect ratio while filling the container */
+  border-radius: 8px;       /* Optional: adds rounded corners to the image */
 }
+
 
 .card-title {
   font-weight: bold;
@@ -56,6 +70,8 @@
   margin-bottom: 1rem;
   width: 100%;
   text-align: center;
+  position: absolute;
+  bottom: 80px;
 }
 
 .bag {
@@ -79,14 +95,12 @@
 .bag:hover {
   background-color: #5356cf;
   color: white;
-
 }
 
 .bag-icon {
   color: #535353;
   margin-left: 10px;
 }
-
 
 .bag:hover .bag-icon {
   color: white;
@@ -98,7 +112,6 @@
   align-items: center;
   position: relative;
   left: 10px;
-
 }
 
 .quantity-picker input[type="number"] {
@@ -110,19 +123,11 @@
   font-size: 1rem;
 }
 
-.card-price {
-  position: absolute;
-  bottom: 80px;
-  width: 100%;
-  text-align: center;
-}
-
 .price {
   font-size: 1.1rem;
   color: #2d87f0;
   font-weight: 550;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
-  /* Add a subtle background color */
   padding: 5px;
   border-radius: 8px;
   display: inline-block;

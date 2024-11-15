@@ -2,7 +2,7 @@ import React from 'react';
 import './IngredientSelectionTitleBox.css'; // Import the CSS file
 
 function IngredientSelectionTitleBox() {
-  const description = "Please select ingredients below ";
+  const description = "Please select ingredients below including the amount and unit. We will match your input with the best package each distributor has.";
 
   return (
     <div className="ingredient-title-box">

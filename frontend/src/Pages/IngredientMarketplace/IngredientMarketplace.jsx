@@ -120,28 +120,30 @@ function Market() {
         <IngredientSelectionTitleBox />
       </div>
       <MarketStepper currentStep={1} />
-      <div className="market-search-container">
-        {/* Pass products and search handler to Searchbar */}
-        <Searchbar products={products} handleSearch={handleSearch} />
-        <Sortbar onSortChange={handleSortChange} />
-        <IconButton
-              component={Link}
-              to="/market/cart"
-              color="inherit"
-          >
-          <CartButton />
-        </IconButton>
-      </div>
-      <div className="listings-container">
-        <GroceryList grocerydata={filteredAndSortedGroceryData} onAddToCart={handleAddToCart} />
-      </div>
-      <div className="continue-button">
-      {cart.length !== 0 ? (
-          <Link to={'/market/vendorselection'}>
-              <SolidButton>Continue</SolidButton>
-          </Link>
-           ):
-          <FillButton>Choose Ingredients</FillButton>} 
+      <div className="rest">
+        <div className="market-search-container">
+          {/* Pass products and search handler to Searchbar */}
+          <Searchbar products={products} handleSearch={handleSearch} />
+          <Sortbar onSortChange={handleSortChange} />
+          <IconButton
+                component={Link}
+                to="/market/cart"
+                color="inherit"
+            >
+            {/* <CartButton /> */}
+          </IconButton>
+        </div>
+        <div className="listings-container">
+          <GroceryList grocerydata={filteredAndSortedGroceryData} onAddToCart={handleAddToCart} />
+        </div>
+        <div className="continue-button">
+        {cart.length !== 0 ? (
+            <Link to={'/market/vendorselection'}>
+                <SolidButton>Continue</SolidButton>
+            </Link>
+            ):
+            <FillButton>Choose Ingredients</FillButton>} 
+        </div>
       </div>
     </div>
   );

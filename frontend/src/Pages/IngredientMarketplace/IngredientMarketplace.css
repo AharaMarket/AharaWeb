@@ -44,3 +44,8 @@
     margin-right: 40px;
     margin-bottom: 40px;
 }
+
+.rest {
+    background-color: #f0f0f0;;
+    overflow: hidden;
+}
