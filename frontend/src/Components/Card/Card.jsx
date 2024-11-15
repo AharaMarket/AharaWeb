@@ -31,7 +31,7 @@ const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
           value={quantity}
           onChange={(e) => setQuantity(parseInt(e.target.value))}
           min="1"
-          style={{ height: '40px', width: '60px', marginRight: '8px' }} // Adjust the width as needed
+          style={{ height: '40px', width: '45px', marginRight: '8px' }} // Adjust the width as needed
         />
         <select id="unit" name="unit" style={{ height: '40px', width: '60px', marginRight: '8px' }}>
           <option value="lbs">lbs</option>
@@ -41,7 +41,7 @@ const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
           {/* Add more options as needed */}
         </select>
       </div>
-      <div style={{ height: '40px', width: '60px', top: '8px' }}>
+      <div style={{ height: '40px', width: '60px'}}>
         <button className="bag" onClick={handleAddToCart}>
           Add <BsFillBagFill className="bag-icon" />
         </button>

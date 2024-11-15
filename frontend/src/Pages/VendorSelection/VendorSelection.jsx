@@ -173,6 +173,7 @@ const VendorSelection = () => {
               <VendorSelectionTitleBox></VendorSelectionTitleBox>
           </div>
           <MarketStepper currentStep={2}></MarketStepper>
+          
           <div className = "recommendations-sort-container">
           {/* <Sortbar onSortChange={handleSortChange}/> */}
           </div>
