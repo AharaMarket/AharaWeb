@@ -193,7 +193,7 @@ const allPrices = ranges.map(range => `$${range.start} - $${range.end}`);
         </div>
         <div className='lg:px-7 flex flex-col lg:flex-row'>
             {/* Filters */}
-            <div className="w-full lg:w-1/5 px-4 md:px-7 lg:px-0 hidden lg:flex flex-col gap-0 lg:gap-5 border-b lg:border-r border-grey pb-2">
+            <div className="w-full lg:w-1/5 px-4 md:px-7 lg:px-0 hidden lg:flex flex-col gap-0 lg:gap-5 border-b lg:border-r border-grey pb-2 -translate-y-20">
                 <H3 className={'!text-custom-black !font-medium mt-2 lg:mt-4 mb-2 lg:-mb-2'}>Filter by</H3>
                 
                 {/* Vendor Filter */}

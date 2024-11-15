@@ -51,12 +51,12 @@ vendorselectionrouter.post("/", async (req, res) => {
               distributorPrices[distributor] = { total: 0, products: new Set() };
             }
             // Add the prices and product information
-            distributorPrices[distributor][product].price = price;
+            distributorPrices[distributor][product] = price;
             distributorPrices[distributor].unit = quant;
             // console.log("yes" + distributorPrices[distributor][product]);
             distributorPrices[distributor].total += price;
             distributorPrices[distributor].products.add(product);
-            distributorPrices[distributor][product].uom = uom;
+            // distributorPrices[distributor][product].uom = uom;
           }
           console.log("distributor: " + distributorPrices);
         });

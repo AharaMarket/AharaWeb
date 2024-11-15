@@ -89,22 +89,26 @@ const CheckOuts = () => {
                 {/* Payment Details  */}
                 <div className="w-full lg:w-1/2 xl:w-[54%]">
                     <H2 className={'my-4 '}>Payment Details</H2>
-                    <div className=" w-full border border-grey rounded-md h-[880px] md:h-[700px]  lg:h-[600px] ">
+                    <div className=" w-full border border-grey rounded-md h-[880px] md:h-[700px]  lg:h-[600px] overflow-y-auto">
                         <H4 className={'!text-custom-black !font-semibold p-3'}>Shipping Address</H4>
                         <div className=" flex flex-col gap-2 md:gap-10 px-3 border-b border-grey pb-3">
-                            <div className="flex flex-col gap-2">
-                                <TailwindInput type={'text'} label={'Full Name'} required={true} />
-                                <TailwindInput type={'text'} label={'Address 1'} required={true} />
-                                <TailwindInput type={'text'} label={'Address 2'} required={false} />
-
+                            <div className="flex flex-col gap-2 flex-wrap justify-between gap-2 w-full">
+                                <TailwindInput type={'text'} label={'Full Name'} required={true} className="w-full md:max-w-xs min-w-full"/>
+                                <TailwindInput type={'text'} label={'Address 1'} required={true} className="w-full md:max-w-xs min-w-full"/>
+                                {/* <TailwindInput type={'text'} label={'Address 2'} required={false} className="w-full md:max-w-xs min-w-full"/> */}
+                            {/* </div> */}
+                            {/* <div className="flex flex-row flex-wrap justify-between gap-2 w-full"> */}
+                                <TailwindInput type="text" label="City" required={true} className="w-full md:max-w-xs min-w-full" />
+                                <div className="flex flex-col md:flex-row gap-2 w-full">
+                                    <TailwindSelect className="flex-1 md:max-w-xs min-w-0" />
+                                    <TailwindInput 
+                                        type="text" 
+                                        label="Zip Code" 
+                                        required={true} 
+                                        className="flex-1 md:max-w-xs min-w-0" 
+                                    />
+                                </div>
                             </div>
-                            <div className="flex flex-row justify-between gap-2">
-                                <TailwindInput type={'text'} label={'City '} required={true} className="max-w-xs" />
-                                <TailwindSelect className="max-w-xs" />
-                                <TailwindInput type={'text'} label={'Zip Code '} required={true} className="max-w-xs" />
-                            </div>
-
-
                         </div>
                         {/* Payment Methods Tabs  */}
                         <div className="flex flex-col sm:flex-row gap-2 w-full justify-between items-start sm:items-center px-3 py-2">
@@ -118,12 +122,29 @@ const CheckOuts = () => {
                         {/* Payment Methods  */}
                         {
                             activeTab && (
-                                <div className="flex flex-col gap-2 p-3 w-full">
-                                    <TailwindInput type={'text'} label={'Card Holder Name '} required={true} />
-                                    <div className="flex flex-col md:flex-row gap-2 md:gap-4 w-full ">
-                                        <TailwindInput type={'text'} label={'Credit Card Number '} required={true} className={'max-w-xs'} />
-                                        <TailwindInput type={'text'} label={'Exp Date'} required={true} className={"max-w-xs"}/>
-                                        <TailwindInput type={'text'} label={'CVC'} required={true} className={"max-w-xs"}/>
+                                <div className="flex flex-col p-3 w-[50%] ">
+                                    <div className="flex flex-col md:flex-row gap-2">
+                                        <TailwindInput type={'text'} label={'Card Holder Name '} required={true} className="flex-1 md:basis-1/2 md:max-w-[100%]"/>
+                                        <TailwindInput 
+                                                type="text" 
+                                                label="Credit Card Number" 
+                                                required={true} 
+                                                className="flex-1 md:basis-1/2 md:max-w-[100%]" 
+                                            />
+                                    </div>
+                                    <div className="flex flex-col md:flex-row md:max-w-full gap-2">
+                                        <TailwindInput 
+                                            type="text" 
+                                            label="Exp Date" 
+                                            required={true} 
+                                            className="flex-1 md:basis-1/4 md:max-w-[50%]" 
+                                        />
+                                        <TailwindInput 
+                                            type="text" 
+                                            label="CVC" 
+                                            required={true} 
+                                            className="flex-1 md:basis-1/4 md:max-w-[50%]" 
+                                        />
                                     </div>
                                 </div>
                             )

@@ -35,7 +35,7 @@ const VendorCard = ({ vendor, isFiltered, onSelect, isSelected, ...others }) => 
         <div {...others} className='relative flex w-full my-4'>
             <div className={`flex flex-col md:flex-row sm:justify-between w-full gap-2 md:gap-0 border border-grey rounded-l overflow-hidden cursor-pointer ${vendor.recommended || vendor.fastest ? 'rounded-r lg:rounded-r-none' : 'rounded-r'} ${isClick || isSelected ? "bg-extra-light-purple !text-white" : ''}`}>
                 <div className="flex flex-col md:flex-row justify-between w-full h-full items-center gap-4 sm:gap-2 lg:gap-4" onClick={() => {onSelect(vendor); setIsClick(isClick => !isClick)}}>
-                    <img src={VendorImage} alt={vendor?.name} className='w-24 h-24' />
+                    <img src={VendorImage} alt={vendor?.name} className='w-32 h-full rounded' />
                     <div className='flex flex-col gap-2 md:justify-between w-full h-fit md:h-full md:py-4 px-2'>
                         <H2 className={`!font-medium !text-nowrap !leading-6 md:mt-1.5 ${isClick || isSelected ? '!text-white' : '!text-custom-black'}`}>{vendor?.name}</H2>
                         <div className="flex flex-col gap-1">
