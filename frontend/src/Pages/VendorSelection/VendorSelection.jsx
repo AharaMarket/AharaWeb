@@ -11,7 +11,6 @@ import VendorSelectionTitleBox from '../../Components/MarketComponents/MarketTit
 import Vendors from '../../Components/ingredient-marketplace-components/vendors';
 import LocationSlider from '../../Components/Slider/LocationSlider';
 
-
 const VendorSelection = () => {
   const { user } = useContext(UserContext);
   const { cart, fetchCart } = useContext(CartContext);
@@ -80,31 +79,57 @@ const VendorSelection = () => {
           // Extract vendor data for each vendor
           const vendorItems = vendorData[vendorName];
           console.log(vendorData[vendorName]["uom"]);
-          
+          // check this number and unit string within this. Divide the number by the number requested and return the remainder.
+
+          const unit = vendorItems["unit"].replace(/[^a-zA-Z]/g, '');
+          const num = vendorItems["unit"].replace(/\D/g, '');
+
+          console.log("tomato: " + vendorItems["Whole Peeled Tomato"]);
+          console.log("tofu: " + vendorItems["Firm Tofu"]);
+
+          // Math.ceil(quantityMap[ingredient]/num) calculates how many orders of a package need to be ordered to fulfill that order
+          // (vendorItems[ingredient]) / (quantityMap[ingredient] || 1) calculates how much one order costs
           // Map ingredients (excluding 'total') to priceDetails array
+
+          //why is the units all the smae within each order. Need to check vendorItems["unit"]
           const priceDetails = Object.keys(vendorItems)
             .filter(key => key !== 'total' && key !== 'uom' && key !== 'price' && key !== 'unit') // Exclude 'total' from items
             .map((ingredient, i) => ({
+              desired: quantityMap[ingredient] || 1,
               item: ingredient, // Ingredient name
-              quantity: quantityMap[ingredient] || 1, // Placeholder for quantity (since it's not in the original data)
+              quantity: Math.ceil(quantityMap[ingredient]/num), // Placeholder for quantity (since it's not in the original data)
               uom: vendorItems["unit"], // Placeholder for unit of measure
               unitPrice: (vendorItems[ingredient]) / (quantityMap[ingredient] || 1), // Price of the item
-              totalPrice: vendorItems[ingredient], // Assuming no quantity, unitPrice = totalPrice
+              totalPrice: (vendorItems[ingredient]) / (quantityMap[ingredient] || 1) * Math.ceil(quantityMap[ingredient]/num), // Assuming no quantity, unitPrice = totalPrice
             }));
-          console.log("priceDetails: " + priceDetails);
-              
+            
+            const total = priceDetails.reduce((acc, currentItem) => {
+              return acc + parseInt(currentItem.totalPrice);
+            }, 0);
+            console.log("total: " + total);
+
+            // need to find the total amount of food
+            const totalUnits = priceDetails.reduce((acc, currentItem) => {
+              return acc + parseInt(currentItem.quantity) * num;
+            }, 0);
+            console.log("total: " + totalUnits);
+          
+            //price per unit
+            const ppu = total/totalUnits;
+            console.log("ppu: " + ppu);
           return {
             id: (index + 1).toString(), // Unique ID as string
             img: 'Image', // Placeholder image
             name: vendorName, // Vendor name
-            price: vendorItems.total, // Total price from vendor data
+            price: total, // Total price from vendor data
             deliveryTime: 'Same Day Delivery', // Placeholder delivery time
             deliveryDate: Date().toLocaleDateString, // Placeholder delivery date
             phone: '(123) 456-7890', // Placeholder phone number
             location: 'Pleasanton, CA', // Placeholder location
             recommended: true, // Placeholder flag
             fastest: false, // Placeholder flag
-            priceDetails: priceDetails // Price details array
+            priceDetails: priceDetails, // Price details array
+            ppu: ppu
           };
           // logging.info(priceDetails)
         });

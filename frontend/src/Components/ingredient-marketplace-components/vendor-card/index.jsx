@@ -56,6 +56,10 @@ const VendorCard = ({ vendor, isFiltered, onSelect, isSelected, ...others }) => 
                         <H5 className='!font-normal'>{vendor.phone}</H5>
                     </div>
                     <div className='flex items-center justify-between md:justify-end w-full md:w-fit md:gap-2 xl:gap-16 md:mb-1' ref={dropdownRef}>
+                        <H5 className='!font-normal !text-nowrap'>Price Per Unit:</H5>
+                            <H5 className='flex items-center gap-3 !font-medium !text-nowrap' onClick={handleOpenDropdown}>
+                                ${vendor.ppu.toFixed(2)}
+                            </H5>
                         <H5 className='!font-normal !text-nowrap'>Total Price:</H5>
                         <H5 className='flex items-center gap-3 !font-medium !text-nowrap' onClick={handleOpenDropdown}>
                             ${vendor.price.toFixed(2)}

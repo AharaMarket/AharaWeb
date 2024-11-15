@@ -39,6 +39,17 @@ def create_specification_dict(csv_file):
                     unit_conversion[product_specification].append(unit)
                 else:
                     unit_conversion[product_specification] = [unit]
+
+
+                if product_specification in spec_dict:
+                    spec_dict[product_specification].append(unit_conversion[product_specification])
+                else:
+                    spec_dict[product_specification] = [unit_conversion[product_specification]]
+
+                if product_specification in dollar_per_lb_dict:
+                    dollar_per_lb_dict[product_specification].append(cost_numbers/unit_numbers)
+                else:
+                    dollar_per_lb_dict[product_specification] = [cost_numbers/unit_numbers]
              
             # Add the specification and unit to the dictionary
             if product_specification in spec_dict:
