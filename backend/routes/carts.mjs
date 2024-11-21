@@ -35,12 +35,12 @@ cartsrouter.get("/user", async (req, res) => {
 
 // Add an item to the cart
 cartsrouter.post('/add', async (req, res) => {
-  const { email, productSpecification, quantity, imageurl } = req.body;
+  const { email, productSpecification, quantity, imageurl, unit } = req.body;
   // add unit within this
   let collection = await db.collection("ahara-restaurant-carts");
 
   if (!email || !productSpecification || !quantity) {
-    return res.status(400).json({ success: false, message: 'Email, productSpecification, and quantity are required' });
+    return res.status(400).json({ success: false, message: 'Email, productSpecification, quantity and unit are required' });
   }
 
   try {
@@ -55,8 +55,10 @@ cartsrouter.post('/add', async (req, res) => {
 
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity += quantity;
+      cart.items[itemIndex].unit = unit;
     } else {
-      cart.items.push({ productSpecification, quantity, imageurl });
+      console.log({ productSpecification, quantity, imageurl, unit });
+      cart.items.push({ productSpecification, quantity, imageurl, unit });
     }
 
     await collection.updateOne(
@@ -73,11 +75,13 @@ cartsrouter.post('/add', async (req, res) => {
 
 // Update the quantity of an item in the cart
 cartsrouter.post('/update', async (req, res) => {
-  const { email, productSpecification, quantity } = req.body;
+  const { email, productSpecification, quantity, unit } = req.body;
   let collection = await db.collection("ahara-restaurant-carts");
 
+  console.log("updating's unit " + unit);
+
   if (!email || !productSpecification || quantity == null) {
-    return res.status(400).json({ success: false, message: 'Email, productSpecification, and quantity are required' });
+    return res.status(400).json({ success: false, message: 'Email, productSpecification, quantity, and unit are required' });
   }
 
   try {
@@ -92,6 +96,8 @@ cartsrouter.post('/update', async (req, res) => {
 
     if (itemIndex > -1) {
       cart.items[itemIndex].quantity = quantity;
+      cart.items[itemIndex].unit = unit;
+      console.log({ productSpecification, quantity, imageurl, unit });
       await collection.updateOne(
         { email },
         { $set: { items: cart.items } }

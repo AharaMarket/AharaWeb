@@ -37,6 +37,7 @@ vendorselectionrouter.post("/", async (req, res) => {
       // Find the specs for the current product
       let productSpecs = await productSpecPriceCollection.find({ Name: product }).toArray();
       productSpecs.forEach(spec => {
+        console.log("spec" + Object.keys(spec));
         // Parse the price as a float and multiply by the quantity
         let price = parseFloat(spec.Price.replace('$', '')) * quantity;
         let quant = spec.Unit
@@ -51,8 +52,9 @@ vendorselectionrouter.post("/", async (req, res) => {
               distributorPrices[distributor] = { total: 0, products: new Set() };
             }
             // Add the prices and product information
-            distributorPrices[distributor][product] = price;
-            distributorPrices[distributor].unit = quant;
+            distributorPrices[distributor][product] = [price, quant];
+            console.log(quant);
+            distributorPrices[distributor][product].unit = quant;
             // console.log("yes" + distributorPrices[distributor][product]);
             distributorPrices[distributor].total += price;
             distributorPrices[distributor].products.add(product);
