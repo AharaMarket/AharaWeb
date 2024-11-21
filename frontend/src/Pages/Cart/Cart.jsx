@@ -16,9 +16,10 @@ const Cart = () => {
       fetchCart(user);
     }
   }, [user, cart.length, fetchCart]); 
-  const handleQuantityChange = (productSpecification, quantity) => {
+  const handleQuantityChange = (productSpecification, quantity, unit) => {
     if (user) {
-      updateCartItem(user, productSpecification, quantity);
+      console.log(unit);
+      updateCartItem(user, productSpecification, quantity, unit);
     }
   };
 
@@ -52,11 +53,11 @@ const Cart = () => {
               </div>
               <div className="item-actions">
                 <div className="quantity-control">
-                  <button className="quantity-button" onClick={() => item.quantity - 1 <= 0 ? handleRemoveItem(item.productSpecification):handleQuantityChange(item.productSpecification, item.quantity - 1)}>-</button>
-                  <span className="quantity">{item.quantity}</span>
-                  <button className="quantity-button" onClick={() => handleQuantityChange(item.productSpecification, item.quantity + 1)}>+</button>
+                  <button className="quantity-button" onClick={() => item.quantity - 1 <= 0 ? handleRemoveItem(item.productSpecification):handleQuantityChange(item.productSpecification, item.quantity - 1, item.unit)}>-</button>
+                  <span className="quantity">{item.quantity} {item.unit}</span>
+                  <button className="quantity-button" onClick={() => handleQuantityChange(item.productSpecification, item.quantity + 1, item.unit)}>+</button>
                 </div>
-                <button className="remove-button" onClick={() => handleRemoveItem(item.productSpecification)}>Remove</button>
+                <button className="remove-button" onClick={() => handleRemoveItem(item.productSpecification, item.unit)}>Remove</button>
               </div>
             </div>
           ))}

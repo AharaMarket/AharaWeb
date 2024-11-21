@@ -4,10 +4,16 @@ import './Card.css';
 
 const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
+  const [unit, setUnit] = useState("lbs"); // Default to the first option
+
+
+  const handleUnitChange = (event) => {
+    setUnit(event.target.value);
+  };
 
   const handleAddToCart = () => {
     const productSpecification = `${title}`;
-    onAddToCart(productSpecification, quantity, img);
+    onAddToCart(productSpecification, quantity, img, unit);
   };
 
   return (
@@ -33,7 +39,7 @@ const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
           min="1"
           style={{ height: '40px', width: '45px', marginRight: '8px' }} // Adjust the width as needed
         />
-        <select id="unit" name="unit" style={{ height: '40px', width: '60px', marginRight: '8px' }}>
+        <select id="unit" name="unit" onChange={handleUnitChange} value={unit} style={{ height: '40px', width: '70px', marginRight: '8px' }}>
           <option value="lbs">lbs</option>
           <option value="kg">kg</option>
           <option value="oz">oz</option>

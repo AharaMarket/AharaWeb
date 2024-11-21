@@ -42,8 +42,6 @@ const VendorSelection = () => {
 
   const fetchVendorData = async () => {
     const cartData = formatCartData();
-    console.log("cartData: ", typeof cartData)
-    console.log("vendorList: " + vendorList)
 
     const quantityMap = {};
 
@@ -57,7 +55,7 @@ const VendorSelection = () => {
       });
     } else {
       console.error('cartData is not an array:', cartData);
-    }
+    } 
     if (vendorList == null ) {
       try {
         const response = await fetch('http://localhost:5050/vendorselection', {
@@ -78,14 +76,8 @@ const VendorSelection = () => {
         const updatedVendorList = Object.keys(filteredVendors).map((vendorName, index) => {
           // Extract vendor data for each vendor
           const vendorItems = vendorData[vendorName];
-          console.log(vendorData[vendorName]["uom"]);
+          console.log(vendorItems["Cabbage"][1].replace(/\D/g, ''));
           // check this number and unit string within this. Divide the number by the number requested and return the remainder.
-
-          const unit = vendorItems["unit"].replace(/[^a-zA-Z]/g, '');
-          const num = vendorItems["unit"].replace(/\D/g, '');
-
-          console.log("tomato: " + vendorItems["Whole Peeled Tomato"]);
-          console.log("tofu: " + vendorItems["Firm Tofu"]);
 
           // Math.ceil(quantityMap[ingredient]/num) calculates how many orders of a package need to be ordered to fulfill that order
           // (vendorItems[ingredient]) / (quantityMap[ingredient] || 1) calculates how much one order costs
@@ -97,26 +89,24 @@ const VendorSelection = () => {
             .map((ingredient, i) => ({
               desired: quantityMap[ingredient] || 1,
               item: ingredient, // Ingredient name
-              quantity: Math.ceil(quantityMap[ingredient]/num), // Placeholder for quantity (since it's not in the original data)
-              uom: vendorItems["unit"], // Placeholder for unit of measure
-              unitPrice: (vendorItems[ingredient]) / (quantityMap[ingredient] || 1), // Price of the item
-              totalPrice: (vendorItems[ingredient]) / (quantityMap[ingredient] || 1) * Math.ceil(quantityMap[ingredient]/num), // Assuming no quantity, unitPrice = totalPrice
+              quantity: Math.ceil(quantityMap[ingredient]/vendorItems[ingredient][1].replace(/\D/g, '')), // Placeholder for quantity (since it's not in the original data)
+              uom: vendorItems[ingredient][1], // Placeholder for unit of measure
+              unitPrice: parseInt(vendorItems[ingredient][0]) / (quantityMap[ingredient] || 1), // Price of the item
+              totalPrice: parseInt(vendorItems[ingredient][0]) / (quantityMap[ingredient] || 1) * Math.ceil(quantityMap[ingredient]/vendorItems[ingredient][1].replace(/\D/g, '')), // Assuming no quantity, unitPrice = totalPrice
             }));
+
             
             const total = priceDetails.reduce((acc, currentItem) => {
               return acc + parseInt(currentItem.totalPrice);
             }, 0);
-            console.log("total: " + total);
 
             // need to find the total amount of food
             const totalUnits = priceDetails.reduce((acc, currentItem) => {
-              return acc + parseInt(currentItem.quantity) * num;
+              return acc + parseInt(currentItem.quantity) * vendorItems[currentItem.item][1].replace(/\D/g, '');
             }, 0);
-            console.log("total: " + totalUnits);
           
             //price per unit
             const ppu = total/totalUnits;
-            console.log("ppu: " + ppu);
           return {
             id: (index + 1).toString(), // Unique ID as string
             img: 'Image', // Placeholder image

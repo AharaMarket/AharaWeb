@@ -20,26 +20,31 @@ export const CartProvider = ({ children }) => {
     }
   };
 
-  const addItemToCart = async (email, productSpecification, quantity, imageurl) => {
+  const addItemToCart = async (email, productSpecification, quantity, imageurl, unit) => {
     try {
-      const response = await axios.post('http://localhost:5050/carts/add', { email, productSpecification, quantity, imageurl });
+      const response = await axios.post('http://localhost:5050/carts/add', { email, productSpecification, quantity, imageurl, unit });
       setCart(response.data.cart.items);
     } catch (error) {
       console.error('Error adding item to cart:', error);
     }
   };
 
-  const updateCartItem = async (email, productSpecification, quantity) => {
+  const updateCartItem = async (email, productSpecification, quantity, unit) => {
     try {
       // const response = await axios.post('http://localhost:5050/carts/update', { email, productSpecification, quantity });
-      console.log(email, productSpecification, quantity)
+      console.log(email, productSpecification, quantity, unit)
       setCart(cart.map(item => {
         if (item.productSpecification === productSpecification) {
-          return { ...item, quantity: quantity }; // Update quantity
+          if (item.unit & item.unit == unit){
+            return { ...item, quantity: quantity};
+          }
+          else{
+            return { ...item, quantity: quantity, unit: unit }; // Update quantity
+          }
         }
         return item; // Return unchanged item
       }).filter(item => item.quantity > 0));
-      const response = await axios.post('http://localhost:5050/carts/update', { email, productSpecification, quantity });
+      const response = await axios.post('http://localhost:5050/carts/update', { email, productSpecification, quantity, unit });
     } catch (error) {
       console.error('Error updating cart item:', error);
     }

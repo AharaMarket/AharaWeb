@@ -103,13 +103,14 @@ function Market() {
     return filteredData;
   }, [vendor, priceRange, selectedSort, searchResults]);
 
-  const handleAddToCart = (productSpecification, quantity, imageurl) => {
+  const handleAddToCart = (productSpecification, quantity, imageurl, unit) => {
     const exists = cart.find(item => item.productSpecification === productSpecification)
+    console.log("Unit: " + unit);
     if (exists != undefined) {
-      updateCartItem(user, productSpecification, exists.quantity + 1);
+      updateCartItem(user, productSpecification, exists.quantity + 1, unit);
     }
     else{
-      addItemToCart(user, productSpecification, quantity, imageurl);
+      addItemToCart(user, productSpecification, quantity, imageurl, unit);
     }
     // setCart(fetchCart(user));
   };

@@ -4,10 +4,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../../Context/User/UserContext';
+import { CartContext } from '../../../Context/Cart/CartContext';
 
 function MarketNavbar() {
     const { user, setUser } = useContext(UserContext);
-    
+    const { cart } = useContext(CartContext);
+
     const logout = () => {
         setUser(null); // Call the logout function from context
     };
@@ -51,7 +53,7 @@ function MarketNavbar() {
                         to="/market/cart"
                         color="inherit"
                     >
-                        <Badge badgeContent={0} color="secondary">
+                        <Badge badgeContent={cart.length} color="secondary">
                             <ShoppingCartIcon />
                         </Badge>
                     </IconButton>
