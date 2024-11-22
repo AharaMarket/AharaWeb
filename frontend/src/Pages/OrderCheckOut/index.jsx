@@ -23,7 +23,7 @@ const CheckOuts = () => {
     const parsedVendor = JSON.parse(selectedVendor);
     
     console.log(parsedVendor); // Output: Sysco
-    console.log(parsedVendor.deliveryDate);
+    // console.log(parsedVendor.deliveryDate);
     const currentDate = new Date();
 
     // const priceDetails = [

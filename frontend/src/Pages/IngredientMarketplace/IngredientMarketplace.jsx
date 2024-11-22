@@ -105,7 +105,6 @@ function Market() {
 
   const handleAddToCart = (productSpecification, quantity, imageurl, unit) => {
     const exists = cart.find(item => item.productSpecification === productSpecification)
-    console.log("Unit: " + unit);
     if (exists != undefined) {
       updateCartItem(user, productSpecification, exists.quantity + 1, unit);
     }
