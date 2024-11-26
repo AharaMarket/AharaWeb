@@ -18,6 +18,9 @@ import DistributorRegistration from "./Pages/Registration/DistributorRegistratio
 import Cart from './Pages/Cart/Cart'
 import { UserProvider } from './Context/User/UserContext';
 import { CartProvider } from './Context/Cart/CartContext';
+import { OrderProvider } from './Context/Order/OrderContext';
+import { EmailProvider } from './Context/Email/EmailContext';
+
 
 import {
   BrowserRouter,
@@ -36,20 +39,24 @@ function App() {
   return (
     <UserProvider>
       <CartProvider>
-        <VendorProvider>
-          <BrowserRouter>
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/market/*" element={<MarketRoutes />} />
-                <Route path="/dashboard/*" element={<DashboardRoutes />} />
-              </Routes>
-            </Layout>
-          </BrowserRouter>
-        </VendorProvider>
+        <OrderProvider>
+          <VendorProvider>
+            <EmailProvider>
+              <BrowserRouter>
+                <Layout>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/market/*" element={<MarketRoutes />} />
+                    <Route path="/dashboard/*" element={<DashboardRoutes />} />
+                  </Routes>
+                </Layout>
+              </BrowserRouter>
+            </EmailProvider>
+          </VendorProvider>
+        </OrderProvider>
       </CartProvider>
     </UserProvider>
   );

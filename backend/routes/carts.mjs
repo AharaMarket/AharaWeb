@@ -146,5 +146,32 @@ cartsrouter.post('/remove', async (req, res) => {
   }
 });
 
+// Assuming cartsrouter is being used correctly
+cartsrouter.post('/removeAll', async (req, res) => {
+  const { email } = req.body;
+  let collection = await db.collection("ahara-restaurant-carts");
+
+  if (!email) {
+    return res.status(400).json({ success: false, message: 'Email is required' });
+  }
+
+  try {
+    const cart = await collection.findOne({ email });
+    if (!cart) {
+      return res.status(404).json({ success: false, message: 'Cart not found' });
+    }
+
+    // Clear the entire cart
+    cart.items = [];
+    await collection.updateOne({ email }, { $set: { items: cart.items } });
+
+    res.status(200).json({ success: true, cart });
+  } catch (error) {
+    console.error('Error clearing the cart:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+
 
 export default cartsrouter;

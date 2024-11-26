@@ -33,7 +33,6 @@ function Market() {
   useEffect(() => {
     const fetchProducts = async () => {
       const data = await fetchData();
-      console.log('Fetched data:', data);
       setProducts(data);
       setSearchResults(data); // Initially, the search results are all products
     };

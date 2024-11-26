@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from "react";
 import MarketStepper from "../../Components/MarketComponents/MarketStepper/MarketStepper";
 import Iconify from '../../Components/ui/iconify'
 import H2 from '../../Components/ui/typography/h2'
@@ -10,15 +10,23 @@ import OutlineButton from '../../Components/ui/buttons/outline-button';
 import FillButton from '../../Components/ui/buttons/fill-button';
 import TailwindInput from '../../Components/ui/input'
 import TailwindSelect from '../../Components/ui/select'
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { EmptyBox } from '@hypertheme-editor/chakra-ui';
 import { useVendor } from '../../Context/Vendor/VendorContext'; 
+import { OrderContext } from '../../Context/Order/OrderContext';
+import { CartContext } from '../../Context/Cart/CartContext';
+import { UserContext } from '../../Context/User/UserContext';
+import { EmailContext } from '../../Context/Email/EmailContext';
+import axios from 'axios';
 
- 
 const CheckOuts = () => {
     const [activeTab, setActiveTab] = useState(false);
     const { selectedVendor } = useVendor();
+    const { order, sendOrder } = useContext(OrderContext);
+    const { cart, fetchCart } = useContext(CartContext);
+    const { user } = useContext(UserContext);
+    const { sendEmail } = useContext(EmailContext);
 
     const parsedVendor = JSON.parse(selectedVendor);
     
@@ -26,13 +34,36 @@ const CheckOuts = () => {
     // console.log(parsedVendor.deliveryDate);
     const currentDate = new Date();
 
-    // const priceDetails = [
-    //     { item: 'Apple: Akane', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-    //     { item: 'Carrot: Mixed Variety', quantity: 25, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-    //     { item: 'Cilantro', quantity: 5, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-    //     { item: 'Yellow Onions', quantity: 15, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-    //     { item: 'Zucchini', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-    // ]
+    useEffect(() => {
+        if (user) {
+            fetchCart(user);
+        }
+      }, [user, fetchCart]);
+
+
+    const createOrder = async () => {
+        if (!user ) {
+            console.error("User is not defined.");
+            return;
+          }
+          try {
+            // if (cart.length == 0) {
+                const response = await axios.get(`http://localhost:5050/carts/user?email=${user}`);
+                const cartItems = response.data.cart.items;
+            // }
+                console.log("cartItems: " + cartItems);
+                const randomNumber = Math.floor(Math.random() * 900000000) + 100000000;
+                await sendOrder(user, randomNumber, cartItems);
+                await sendEmail(user, randomNumber, cartItems);
+                //   } else {
+                //     console.error("Cart is empty.");
+                //   }
+            //   }
+          } catch (error) {
+            console.error("Error fetching cart in createOrder:", error);
+          }
+    }
+
     return (
         <div>
             {/* Form steper  */}
@@ -163,13 +194,11 @@ const CheckOuts = () => {
                     </Link>
                     <Link to="/market/orderconfirmation">
                     {
-                        // filteredVendorIds?.length > 0 ? (
-                        // <NavLink to={'/checkout'}>
-                        //     <SolidButton>Continue</SolidButton>
-                        // </NavLink>
-                        // ) : (
+                        parsedVendor ? (
+                            <SolidButton onClick={createOrder}>Continue</SolidButton>
+                        ) : (
                         <SolidButton className={`!bg-grey opacity-30 !text-gray-700 border-2 border-gray-500 cursor-not-allowed `}>Continue</SolidButton>
-                        // )
+                        )
                     }
                     </Link>
                 </div>

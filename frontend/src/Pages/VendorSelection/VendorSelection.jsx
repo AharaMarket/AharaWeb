@@ -10,6 +10,8 @@ import MarketStepper from '../../Components/MarketComponents/MarketStepper/Marke
 import VendorSelectionTitleBox from '../../Components/MarketComponents/MarketTitleBox/VendorSelectionTitleBox/VendorSelectionTitleBox';
 import Vendors from '../../Components/ingredient-marketplace-components/vendors';
 import LocationSlider from '../../Components/Slider/LocationSlider';
+import { Link } from 'react-router-dom';
+
 
 const VendorSelection = () => {
   const { user } = useContext(UserContext);

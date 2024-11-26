@@ -10,6 +10,8 @@ import restaurants from "./routes/restaurants.mjs";
 import carts from "./routes/carts.mjs";
 import vendorselection from "./routes/vendorselection.mjs";
 import geolocation from "./routes/geolocation.mjs";
+import email from "./routes/email.mjs";
+import nodemailer from 'nodemailer';
 
 
 // import distributors from "./routes/distributors.mjs";
@@ -28,6 +30,8 @@ app.use("/restaurants", restaurants);
 app.use("/carts", carts);
 app.use("/vendorselection", vendorselection);
 app.use("/geolocation", geolocation);
+app.use("/email", email);
+
 
 // Global error handling
 app.use((err, _req, res, next) => {

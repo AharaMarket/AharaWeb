@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
   const { user } = useContext(UserContext);
-  const { cart, fetchCart, updateCartItem, removeItemFromCart } = useContext(CartContext);
+  const { cart, fetchCart, updateCartItem, removeItemFromCart, resetCart } = useContext(CartContext);
 
   useEffect(() => {
     if (user && cart.length === 0) {  // Fetch cart only if user exists and cart is empty
@@ -27,6 +27,12 @@ const Cart = () => {
     if (user) {
       console.log(user,productSpecification);
       removeItemFromCart(user, productSpecification);
+    }
+  };
+
+  const handleRemoveAll = () => {
+    if (user) {
+      resetCart(user);
     }
   };
 
@@ -65,9 +71,17 @@ const Cart = () => {
       )}
       {/* <div className="continue-button"> */}
       {cart.length !== 0 ? (
-          <NavLink onClick={handleGoBack}>
-            <FillButton>Previous</FillButton>
-        </NavLink>
+        <>
+          <div className="flex justify-between mt-6">
+            <NavLink onClick={handleGoBack}>
+              <FillButton>Previous</FillButton>
+            </NavLink>
+
+            <NavLink onClick={handleRemoveAll}>
+              <FillButton className="remove-all-button">Remove All</FillButton>
+            </NavLink>
+          </div>
+        </>
            ):
            <NavLink to={'/market/ingredientmarketplace'}>
             <FillButton>Back</FillButton>

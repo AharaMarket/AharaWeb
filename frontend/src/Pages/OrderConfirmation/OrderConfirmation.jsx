@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { CartContext } from '../../Context/Cart/CartContext'
 import Iconify from '../../Components/ui/iconify'
 import H2 from '../../Components/ui/typography/h2'
 import H4 from '../../Components/ui/typography/h4'
@@ -6,36 +7,20 @@ import H5 from '../../Components/ui/typography/h5'
 import SolidButton from '../../Components/ui/buttons/solid-button'
 import { useVendor } from '../../Context/Vendor/VendorContext'
 import { Link } from 'react-router-dom'
-import { CartContext } from '../../Context/Cart/CartContext'
 import { UserContext } from '../../Context/User/UserContext'
+import { OrderContext } from '../../Context/Order/OrderContext';
 
 const OrderPlace = () => {
     const { selectedVendor } = useVendor();
-    const { cart, resetCart } = useContext(CartContext);
+    const { resetCart } = useContext(CartContext);
     const { user } = useContext(UserContext);
-
+    const { order } = useContext(OrderContext);
 
     const parsedVendor = JSON.parse(selectedVendor);
-
-    console.log(parsedVendor); 
-
-    // useEffect(() => {
-    //     if (user) {
-    //       fetchCart(user);
-    //     }
-    //   }, [user, fetchCart]);
-
-    // const priceDetails = [
-    //     { item: 'Apple: Akane', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-    //     { item: 'Carrot: Mixed Variety', quantity: 25, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-    //     { item: 'Cilantro', quantity: 5, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-    //     { item: 'Yellow Onions', quantity: 15, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-    //     { item: 'Zucchini', quantity: 10, uom: 'UOM', unitPrice: 'XX.XX', totalPrice: 'XX.XX' },
-    // ]
-
-    const handleStartNewOrder = () => {
-        cart = [];
-      };
+    
+    const handleNewOrder = () => {
+        resetCart(user);
+    }
 
     return (
         <div className='flex flex-col justify-center items-center gap-4 mt-4 mb-10  mx-4 sm:mx-0 '>
@@ -49,8 +34,14 @@ const OrderPlace = () => {
             <div className="border border-grey divide-y divide-grey rounded-md  mt-4 w-full sm:w-fit">
                 <div className="flex justify-between items-center p-3 ">
                     <H4 className={'!text-custom-black !font-semibold'}>Order Number</H4>
-                    <H4 className={'!text-light-purple'}>#1234567890</H4>
-                </div>
+                    {
+                        order ?
+                        <H4 className={'!text-light-purple'}>#{order.orderId}</H4>
+                        :
+                        <H4 className={'!text-light-purple'}>#</H4>
+                    }
+                    {/* <H4 className={'!text-light-purple'}>#{order.orderId}</H4> */}
+                </div> 
                 <div className="flex justify-between items-start p-3">
                     <H4 className={'!text-custom-black !font-semibold'}>Vendor</H4>
                     <div className="">
@@ -92,7 +83,7 @@ const OrderPlace = () => {
                     <H5 className={'!font-semibold'}>${parsedVendor?.price.toFixed(2)}</H5>
                 </div>
             </div>
-            <Link to="/market/ingredientmarketplace" onClick={handleStartNewOrder}>
+            <Link to="/market/ingredientmarketplace" onClick={handleNewOrder}>
                 {
                 <SolidButton>Start New Order</SolidButton>
                 }

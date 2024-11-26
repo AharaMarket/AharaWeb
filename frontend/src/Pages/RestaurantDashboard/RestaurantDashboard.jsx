@@ -70,12 +70,18 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AdminLayout from "../../Layouts/admin";
 import Footer from "../../Components/Footer/Footer.js";
 import { UserContext } from '../../Context/User/UserContext'; 
+import { OrderContext } from '../../Context/Order/OrderContext';
+import { CartContext } from '../../Context/Cart/CartContext';
 
 export default function UserReports() {
   // Chakra Color Mode
   const [fixed] = useState(false);
   const [toggleSidebar, setToggleSidebar] = useState(false);
   const { onOpen } = useDisclosure();
+  const { getOrders } = useContext(OrderContext);
+  const { fetchCart } = useContext(CartContext);
+  const [orders, setOrders] = useState([]); // Local state for orders
+
 
   const { user } = useContext(UserContext);
 
@@ -109,6 +115,36 @@ export default function UserReports() {
     fetchData();
   }, [user]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("orders: " + orders);
+      if (user && (!orders || orders.length === 0)) {
+        try {
+          // Wait for both fetchCart and getOrders to complete
+          await fetchCart(user);
+          const fetchedOrders = await getOrders(user);
+
+          console.log("fetched Orders:" + fetchedOrders);
+          const processedOrders = Array.from(fetchedOrders.values()).map(order => {
+            return {
+              name: "Order #" + String(order.orderId),
+              date: order.date,
+              items: order.items,
+              status: order.orderStatus,
+              progress: String(Math.floor(Math.random() * 100) + 1)
+            };
+          });
+
+          // Update state with processed orders
+          setOrders(processedOrders);
+          
+        } catch (error) {
+          console.error("Error fetching data: ", error);
+        }
+      }
+    };
+    fetchData(); 
+  });
 
 
   // functions for changing the states from components
@@ -365,7 +401,7 @@ export default function UserReports() {
                   </SimpleGrid>
                   <ComplexTable
                     columnsData={columnsDataComplex}
-                    tableData={tableDataComplex}
+                    tableData={orders}
                   />
                 </SimpleGrid>
                 <Box p="20px">

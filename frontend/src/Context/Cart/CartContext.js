@@ -7,8 +7,13 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  const resetCart = () => {
-      setCart([]);
+  const resetCart = async (email) => {
+    try {
+      const response = await axios.post('http://localhost:5050/carts/removeAll', { email });
+      setCart(response.data.cart.items);
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
+    }
   };
 
   const fetchCart = async (email) => {
@@ -62,7 +67,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cart, fetchCart, addItemToCart, updateCartItem, removeItemFromCart }}>
+    <CartContext.Provider value={{ cart, fetchCart, addItemToCart, updateCartItem, removeItemFromCart, resetCart }}>
       {children}
     </CartContext.Provider>
   );

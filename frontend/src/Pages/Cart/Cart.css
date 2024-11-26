@@ -112,3 +112,15 @@
 .remove-button:hover {
   background: #ff1a1a;
 }
+
+/* For Remove All button */
+.remove-all-button {
+  background-color: red; /* Red background for removal */
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.remove-all-button:hover {
+  background-color: darkred;
+}

@@ -9,7 +9,7 @@
 /* Card styling */
 .card {
   flex: 1 1 23%; /* Each card takes up roughly a fourth of the container */
-  max-width: 10%; /* Prevents cards from stretching too wide */
+  max-width: 20%; /* Prevents cards from stretching too wide */
   margin: 10px;
   border: 2px solid #ededed;
   padding: 20px;

@@ -6,7 +6,7 @@ const PricingDropdown = ({  vendor }) => {
     console.log(vendor, 'vendor');
 
     return (
-        <div className=' absolute top-[417px] md:top-32 mt-1 right-0 lg:right-36 bg-white shadow-lg border border-grey rounded-b-md z-40  py-2 '>
+        <div className=' absolute top-[417px] md:top-32 mt-1 right-0 lg:right-36 bg-white shadow-lg border border-grey rounded-b-md z-40  py-2 text-black'>
             <H4 className={' !text-base md:!text-base !font-semibold px-2 sm:px-4  pt-2'}> Price Details</H4>
             <div className=" flex flex-col gap-2 border-b border-grey px-2 sm:px-4 pt-2 pb-4">
                 {

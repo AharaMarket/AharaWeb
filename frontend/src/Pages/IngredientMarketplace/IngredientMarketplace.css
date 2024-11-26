@@ -15,7 +15,6 @@
     justify-content: space-between;
     align-items: center; /* Aligns items to the bottom */
     width: 98%;
-    margin-left: 400px;
     gap: 15px; /* Optional: adds space between components */
 }
 
