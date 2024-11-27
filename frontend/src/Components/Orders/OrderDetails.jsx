@@ -15,9 +15,6 @@ const OrderDetails = ({orderData, isOpen, onToggle, textColor }) => {
       {/* Collapse Section for Row Items */}
       <Collapse in={isOpen}>
         <Box p="20px" bg="gray.50" borderRadius="md" boxShadow="sm">
-          <Text color={textColor} fontSize="lg" fontWeight="700" mb="10px">
-            {name}
-          </Text>
           <List spacing={3}>
             {JSON.parse(items).map((item, index) => (
               <ListItem key={index} p="10px" bg="white" borderRadius="md" boxShadow="sm">
