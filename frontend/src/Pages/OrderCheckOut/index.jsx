@@ -24,7 +24,7 @@ const CheckOuts = () => {
     const [activeTab, setActiveTab] = useState(false);
     const { selectedVendor } = useVendor();
     const { order, sendOrder } = useContext(OrderContext);
-    const { cart, fetchCart } = useContext(CartContext);
+    const { cart, fetchCart, resetCart } = useContext(CartContext);
     const { user } = useContext(UserContext);
     const { sendEmail } = useContext(EmailContext);
 
@@ -50,7 +50,9 @@ const CheckOuts = () => {
                 const cartItems = JSON.stringify(cart, null, 2);
                 const randomNumber = Math.floor(Math.random() * 900000000) + 100000000;
                 await sendOrder(user, randomNumber, cartItems);
-                // await sendEmail(user, randomNumber, cartItems);
+                await sendEmail(user, randomNumber, cartItems);
+                resetCart(user);
+
           } catch (error) {
             console.error("Error in createOrder:", error);
           }

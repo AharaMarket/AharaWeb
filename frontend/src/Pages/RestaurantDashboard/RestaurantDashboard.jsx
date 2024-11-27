@@ -127,8 +127,19 @@ export default function UserReports() {
           console.log("fetched Orders:" + fetchedOrders);
           const processedOrders = Array.from(fetchedOrders.values()).map(order => {
             const predate = order.date.split("T0")[0];
-            const pretime = order.date.split("T0")[1];
             const date = new Date(predate);
+
+            const dtime = new Date(order.date);
+
+            const options = { 
+              timeZone: 'America/Los_Angeles', 
+              hour: '2-digit', 
+              minute: '2-digit', 
+              second: '2-digit', 
+              hour12: false 
+            };
+
+            const pstTime = dtime.toLocaleTimeString('en-US', options);
 
             // Get the month, day, and year
             const month = date.getMonth() + 1; // getMonth() returns 0-11, so add 1
@@ -140,7 +151,7 @@ export default function UserReports() {
 
             return {
               name: "Order #" + String(order.orderId),
-              date: formattedDate + " " + pretime.split(".")[0],
+              date: formattedDate + " " + pstTime,
               items: order.items,
               status: order.orderStatus,
               progress: String(Math.floor(Math.random() * 100) + 1)

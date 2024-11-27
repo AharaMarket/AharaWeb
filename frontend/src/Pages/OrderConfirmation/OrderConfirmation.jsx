@@ -18,10 +18,6 @@ const OrderPlace = () => {
     const { order } = useContext(OrderContext);
 
     const parsedVendor = JSON.parse(selectedVendor);
-    
-    const handleNewOrder = () => {
-        resetCart(user);
-    }
 
     return (
         <div className='flex flex-col justify-center items-center gap-4 mt-4 mb-10  mx-4 sm:mx-0 '>
@@ -85,7 +81,7 @@ const OrderPlace = () => {
                     <H5 className={'!font-semibold'}>${parsedVendor?.price.toFixed(2)}</H5>
                 </div>
             </div>
-            <Link to="/market/ingredientmarketplace" onClick={handleNewOrder}>
+            <Link to="/market/ingredientmarketplace">
                 {
                 <SolidButton>Start New Order</SolidButton>
                 }
