@@ -5,6 +5,15 @@ import './Card.css';
 const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
   const [unit, setUnit] = useState("lbs"); // Default to the first option
+  const [showOverlay, setShowOverlay] = useState(false); // State to manage the overlay visibility
+
+  const handleCardClick = () => {
+    setShowOverlay(true); // Show overlay when the card is clicked
+  };
+
+  const handleOverlayClose = () => {
+    setShowOverlay(false); // Close overlay when the close button is clicked
+  };
 
 
   const handleUnitChange = (event) => {
@@ -17,7 +26,7 @@ const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
   };
 
   return (
-    <section className="card">
+    <section className="card" onClick={handleCardClick}>
     <div className="card-details">
       <h3 className="card-title">{title}</h3>
       <img src={img || '../Assets/noimage.jpg'} alt={title} className="card-img" style={{ width: '100%', height: '200px' }}/>
