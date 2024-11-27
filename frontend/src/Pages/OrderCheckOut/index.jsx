@@ -35,10 +35,10 @@ const CheckOuts = () => {
     const currentDate = new Date();
 
     useEffect(() => {
-        if (user) {
+        if (user & !cart) {
             fetchCart(user);
         }
-      }, [user, fetchCart]);
+      }, [user, cart]);
 
 
     const createOrder = async () => {
@@ -47,20 +47,12 @@ const CheckOuts = () => {
             return;
           }
           try {
-            // if (cart.length == 0) {
-                const response = await axios.get(`http://localhost:5050/carts/user?email=${user}`);
-                const cartItems = response.data.cart.items;
-            // }
-                console.log("cartItems: " + cartItems);
+                const cartItems = JSON.stringify(cart, null, 2);
                 const randomNumber = Math.floor(Math.random() * 900000000) + 100000000;
                 await sendOrder(user, randomNumber, cartItems);
-                await sendEmail(user, randomNumber, cartItems);
-                //   } else {
-                //     console.error("Cart is empty.");
-                //   }
-            //   }
+                // await sendEmail(user, randomNumber, cartItems);
           } catch (error) {
-            console.error("Error fetching cart in createOrder:", error);
+            console.error("Error in createOrder:", error);
           }
     }
 

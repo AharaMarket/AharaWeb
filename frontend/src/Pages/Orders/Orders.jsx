@@ -23,6 +23,7 @@ import theme from "../../theme/theme";
 import { OrderContext } from '../../Context/Order/OrderContext';
 import { CartContext } from '../../Context/Cart/CartContext';
 import { UserContext } from '../../Context/User/UserContext';
+import { format } from "prettier";
 
 const Orders = () => {
   const { getOrders } = useContext(OrderContext);
@@ -41,9 +42,21 @@ const Orders = () => {
 
           console.log("fetched Orders:" + fetchedOrders);
           const processedOrders = Array.from(fetchedOrders.values()).map(order => {
+            const predate = order.date.split("T0")[0];
+            const pretime = order.date.split("T0")[1];
+            const date = new Date(predate);
+
+            // Get the month, day, and year
+            const month = date.getMonth() + 1; // getMonth() returns 0-11, so add 1
+            const day = date.getDate();
+
+            const year = date.getFullYear();
+            // Format the date as MM/DD/YYYY
+            const formattedDate = `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${year}`;
+
             return {
               name: "Order #" + String(order.orderId),
-              date: order.date,
+              date: formattedDate + " " + pretime.split(".")[0],
               items: order.items,
               status: order.orderStatus,
               progress: String(Math.floor(Math.random() * 100) + 1)

@@ -9,6 +9,7 @@ import { useVendor } from '../../Context/Vendor/VendorContext'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../Context/User/UserContext'
 import { OrderContext } from '../../Context/Order/OrderContext';
+import OrderConfTitleBox from '../../Components/MarketComponents/MarketTitleBox/OrderConfTitleBox/OrderConfTitleBox';
 
 const OrderPlace = () => {
     const { selectedVendor } = useVendor();
@@ -29,6 +30,7 @@ const OrderPlace = () => {
                     <Iconify iconName={'mingcute:check-fill'} className={' !w-8 !h-8 md:!w-10 md:!h-10 '} />
                 </span>
                 <H2 className='!font-semibold sm:!text-nowrap '>Order Successfully Placed</H2>
+                <OrderConfTitleBox />
             </div>
             {/* Details  */}
             <div className="border border-grey divide-y divide-grey rounded-md  mt-4 w-full sm:w-fit">
@@ -36,7 +38,7 @@ const OrderPlace = () => {
                     <H4 className={'!text-custom-black !font-semibold'}>Order Number</H4>
                     {
                         order ?
-                        <H4 className={'!text-light-purple'}>#{order.orderId}</H4>
+                        <H4 className={'!text-light-purple'}>#{order["orderId"]}</H4>
                         :
                         <H4 className={'!text-light-purple'}>#</H4>
                     }
