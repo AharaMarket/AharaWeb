@@ -1,0 +1,78 @@
+/* ProductDetail.module.css */
+
+.mainWrapper {
+    padding: 20px;
+    background: #f9f9f9;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.left {
+    flex: 1;
+    padding: 20px;
+}
+
+.mainImage img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.right {
+    flex: 1;
+    padding: 20px;
+}
+
+h3 {
+    color: #5667FF;
+    font-size: 28px;
+}
+
+h4 {
+    color: #333;
+    font-size: 24px;
+}
+
+.add {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.quantityInput {
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 50px;
+}
+
+.quantitySelect {
+    padding: 8px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 80px;
+}
+
+.addToBagBtn {
+    background-color: #5667FF;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.addToBagBtn:hover {
+    background-color: #434ea0;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px;
+    margin-top: 30px;
+    background: #f4f4f4;
+}
