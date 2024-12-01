@@ -1,0 +1,5 @@
+.expand-on-hover:hover {
+    transform: translateY(0); /* Ensure it moves back to the normal position */
+    width: 100%; /* Make it full width */
+    transition: all 0.3s ease-in-out; /* Smooth transition */
+  }

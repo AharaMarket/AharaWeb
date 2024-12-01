@@ -6,6 +6,7 @@ import Footer from "./Components/Footer/Footer";
 import Home from "./Pages/Home/Home";
 import About from "./Pages/About/About";
 import Market from "./Pages/IngredientMarketplace/IngredientMarketplace";
+// import ProductDetail from './Pages/ProductDetails/ProductDetail';
 import Login from "./Pages/Login/Login";
 import Account from "./Pages/Account/Account";
 import Contact from "./Pages/Contact/Contact";
@@ -20,7 +21,6 @@ import { UserProvider } from './Context/User/UserContext';
 import { CartProvider } from './Context/Cart/CartContext';
 import { OrderProvider } from './Context/Order/OrderContext';
 import { EmailProvider } from './Context/Email/EmailContext';
-
 
 import {
   BrowserRouter,
@@ -89,6 +89,7 @@ function MarketRoutes() {
       <Route path="orderconfirmation" element={<ProtectedRoute element={OrderConfirmation} />} />
       <Route path="ordercheckout" element={<ProtectedRoute element={CheckOuts} />} />
       <Route path="orders" element={<ProtectedRoute element={Orders} />} />
+      {/* <Route path="productdetails" element={<ProtectedRoute element={ProductDetail} />} /> */}
       <Route path="login" element={<Login />} />
       <Route path="account" element={<Account />} />
       <Route path="importorder" element={<ProtectedRoute element={ImportOrder} />} />

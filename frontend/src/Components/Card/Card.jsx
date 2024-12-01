@@ -1,32 +1,32 @@
 import React, { useState } from "react";
 import { BsFillBagFill } from "react-icons/bs";
 import './Card.css';
+import { useNavigate } from 'react-router-dom';
 
-const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
+const Card = ({ img, title, prevPrice, newPrice, onAddToCart, onClick }) => {
   const [quantity, setQuantity] = useState(1);
   const [unit, setUnit] = useState("lbs"); // Default to the first option
   const [showOverlay, setShowOverlay] = useState(false); // State to manage the overlay visibility
 
-  const handleCardClick = () => {
-    setShowOverlay(true); // Show overlay when the card is clicked
+  const handleInputChange = (e) => {
+    // e.stopPropagation(); // Stop the click event from propagating to parent
+    setQuantity(parseInt(e.target.value));
   };
 
-  const handleOverlayClose = () => {
-    setShowOverlay(false); // Close overlay when the close button is clicked
+  const handleUnitChange = (e) => {
+    e.stopPropagation(); // Stop the click event from propagating to parent
+    setUnit(e.target.value);
   };
 
-
-  const handleUnitChange = (event) => {
-    setUnit(event.target.value);
-  };
-
-  const handleAddToCart = () => {
+  const handleAddToCart = (e) => {
+    e.stopPropagation(); // Stop the click event from propagating to parent
     const productSpecification = `${title}`;
+    alert(`Added  ${title} of ${quantity} ${unit} added to the bag.`);
     onAddToCart(productSpecification, quantity, img, unit);
   };
 
   return (
-    <section className="card" onClick={handleCardClick}>
+    <section className="card" onClick={onClick}>
     <div className="card-details">
       <h3 className="card-title">{title}</h3>
       <img src={img || '../Assets/noimage.jpg'} alt={title} className="card-img" style={{ width: '100%', height: '200px' }}/>
@@ -44,11 +44,12 @@ const Card = ({ img, title, prevPrice, newPrice, onAddToCart }) => {
           name="quantity"
           placeholder="qty"
           value={quantity}
-          onChange={(e) => setQuantity(parseInt(e.target.value))}
+          onClick={(e) => e.stopPropagation()}
+          onChange={handleInputChange}
           min="1"
           style={{ height: '40px', width: '45px', marginRight: '8px' }} // Adjust the width as needed
         />
-        <select id="unit" name="unit" onChange={handleUnitChange} value={unit} style={{ height: '40px', width: '70px', marginRight: '8px' }}>
+        <select id="unit" name="unit" onClick={(e) => e.stopPropagation()} onChange={handleUnitChange} value={unit} style={{ height: '40px', width: '70px', marginRight: '8px' }}>
           <option value="lbs">lbs</option>
           <option value="kg">kg</option>
           <option value="oz">oz</option>

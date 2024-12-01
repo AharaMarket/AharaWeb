@@ -1,4 +1,4 @@
-/* * {
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -30,7 +30,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-} */
+}
 
 .main_image img {
     width: 100%;
@@ -233,3 +233,4 @@ button:hover {
         width: 100%;
     }
 }
+
