@@ -41,10 +41,27 @@ emailrouter.post('/send', async (req, res) => {
       subject, // Subject of the email
       text, // Body content of the email
     };
+
+    const transporter2 = nodemailer.createTransport({
+      service: 'gmail', // You can use other services like Outlook, SendGrid, etc.
+      auth: {
+        user: 'aharamarket@gmail.com', // Your email
+        pass: 'icjz ecxg eftx fzoj', // Your email password (or app password)
+      },
+    });
+  
+    // Define email options
+    const mailOptions2 = {
+      from: 'aharamarket@gmail.com', // Sender's email address
+      to: 'aharamarket@gmail.com', // Recipient's email
+      subject, // Subject of the email
+      text, // Body content of the email
+    };
   
     try {
       // Send email using Nodemailer
       const info = await transporter.sendMail(mailOptions);
+      const info2 = await transporter2.sendMail(mailOptions2);
       console.log('Email sent: ' + info.response);
       res.status(200).send('Email sent successfully');
     } catch (error) {
