@@ -35,7 +35,7 @@ export default function ColumnsTable(props) {
   const data = useMemo(() => tableData, [tableData]);
 
   const tableContainerRef = useRef(null);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
   const [expandedRows, setExpandedRows] = useState({}); // Track expanded rows by their IDs
 
   const parsedTableData = JSON.parse(JSON.stringify(tableData, 2));

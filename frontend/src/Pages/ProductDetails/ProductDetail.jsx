@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './ProductDetail.module.css'; // Import the CSS module
 import { CartContext } from '../../Context/Cart/CartContext';
 import { UserContext } from '../../Context/User/UserContext';
-
+import { IoIosArrowBack } from 'react-icons/io';
 
 const ProductDetail = () => {
     const location = useLocation();
@@ -33,6 +33,10 @@ const ProductDetail = () => {
         setUnit(event.target.value);
     };
 
+    const handleBackClick = () => {
+        navigate(-1);  // Navigate back to the previous page
+    };
+
     const increaseQuantity = () => setQuantity(quantity + 1);
     const decreaseQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
 
@@ -42,6 +46,10 @@ const ProductDetail = () => {
 
     return (
         <div className={styles.mainWrapper}>
+            <button className={styles.backBtn} onClick={handleBackClick}>
+                <IoIosArrowBack size={24} />
+            </button>
+
             <div className={styles.container}>
                 <div className={styles.left}>
                     <div className={styles.mainImage}>
@@ -54,7 +62,9 @@ const ProductDetail = () => {
                 </div>
                 <div className={styles.right}>
                     <h3>{product.Name}</h3>
-                    <h4>{product.Price}</h4>
+                    <div className={styles.price}>
+                        <h4>{product.Price}</h4>
+                    </div>
 
                     <div className={styles.add}>
                         <input

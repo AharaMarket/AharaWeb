@@ -9,6 +9,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    overflow: hidden;
 }
 
 .left {
@@ -25,6 +26,8 @@
 .right {
     flex: 1;
     padding: 20px;
+    margin-left: 100px;
+    /* transform: translateX(20%); */
 }
 
 h3 {
@@ -40,7 +43,13 @@ h4 {
 .add {
     display: flex;
     gap: 10px;
-    margin-top: 20px;
+    margin-top: 70px;
+    bottom: 1px;
+}
+
+.price {
+    margin-top: 70px;
+    color: #5667FF;
 }
 
 .quantityInput {
@@ -48,6 +57,7 @@ h4 {
     border-radius: 5px;
     font-size: 16px;
     width: 50px;
+    background-color: white;
 }
 
 .quantitySelect {
@@ -55,6 +65,7 @@ h4 {
     border-radius: 5px;
     font-size: 16px;
     width: 80px;
+    background-color: white;
 }
 
 .addToBagBtn {
@@ -64,6 +75,8 @@ h4 {
     border-radius: 30px;
     padding: 10px 20px;
     cursor: pointer;
+    margin-top: 50px;
+    bottom: 1px;
 }
 
 .addToBagBtn:hover {
@@ -74,5 +87,10 @@ h4 {
     text-align: center;
     padding: 10px;
     margin-top: 30px;
-    background: #f4f4f4;
+    color: #f4f4f4;
+    background-color: #5667FF;
+}
+
+.backBtn {
+    color: #5667FF;
 }

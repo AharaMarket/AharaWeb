@@ -345,7 +345,7 @@ export default function UserReports() {
                   <MiniStatistics
                     growth="+23%"
                     name="Total Orders"
-                    value={totalOrders}
+                    value={orders.length}
                   />
                   <MiniStatistics
                     endContent={
