@@ -85,7 +85,7 @@ const CheckOuts = () => {
             console.log("cartItems: " + cartItems);
 
             await sendOrder(user, randomNumber, cartItems);
-        //     await sendEmail(user, randomNumber, cartItems);
+            await sendEmail(user, randomNumber, cartItems);
             resetCart(user);
         } catch (error) {
             console.error("Error in createOrder:", error);
@@ -258,16 +258,16 @@ const CheckOuts = () => {
                         <FillButton> Previous</FillButton>
                     </Link>
                             {
-                            // isFormValid ? (
+                            isFormValid ? (
                                 <Link to="/market/orderconfirmation">
                         {
                                 <SolidButton onClick={createOrder}>Continue</SolidButton>
                         }
                                             </Link>
 
-                            // ) : (
-                            //     <SolidButton className={`!bg-grey opacity-30 !text-gray-700 border-2 border-gray-500 cursor-not-allowed`}>Complete the Form</SolidButton>
-                            // )
+                            ) : (
+                                <SolidButton className={`!bg-grey opacity-30 !text-gray-700 border-2 border-gray-500 cursor-not-allowed`}>Complete the Form</SolidButton>
+                            )
 }
                 </div>
             </div>
