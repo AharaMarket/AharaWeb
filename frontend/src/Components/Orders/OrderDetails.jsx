@@ -4,6 +4,8 @@ import { Box, Flex, Text, Collapse, Icon, List, ListItem } from "@chakra-ui/reac
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
 const OrderDetails = ({orderData, isOpen, onToggle, textColor }) => {
+
+    console.log("orderData: " + JSON.stringify(orderData, null, 2));
     const {name} = orderData;
     const {items} = orderData;
     console.log("name" + name);

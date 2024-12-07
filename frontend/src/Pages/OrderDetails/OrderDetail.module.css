@@ -1,0 +1,77 @@
+/* OrderDetails.css */
+
+/* General layout and container styling */
+.order-details {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+  
+  h3 {
+    color: #555;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Table styling for order items */
+  .order-items table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .order-items th,
+  .order-items td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .order-items th {
+    background-color: #f1f1f1;
+    color: #444;
+  }
+  
+  .order-items td {
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+  
+  .order-items td:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* Styling for price formatting */
+  .order-items td:last-child {
+    text-align: right;
+  }
+  
+  .order-items th, .order-items td {
+    font-size: 1rem;
+  }
+  
+  /* Total price section */
+  .order-total {
+    margin-top: 20px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: right;
+  }
+  
+  .order-total h3 {
+    color: #4CAF50;
+  }
+  
+  .order-total h3 span {
+    color: #333;
+  }
+  

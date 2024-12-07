@@ -13,6 +13,7 @@ import Contact from "./Pages/Contact/Contact";
 import VendorSelection from "./Pages/VendorSelection/VendorSelection";
 import Orders from "./Pages/Orders/Orders";
 import CheckOuts from "./Pages/OrderCheckOut/index.jsx";
+import OrderDetail from "./Pages/OrderDetails/OrderDetail";
 import Register from "./Pages/Registration/Register";
 import RestaurantRegistration from "./Pages/Registration/RestaurantRegistration/RestaurantRegistration";
 import DistributorRegistration from "./Pages/Registration/DistributorRegistration/DistributorRegistration";
@@ -89,6 +90,7 @@ function MarketRoutes() {
       <Route path="orderconfirmation" element={<ProtectedRoute element={OrderConfirmation} />} />
       <Route path="ordercheckout" element={<ProtectedRoute element={CheckOuts} />} />
       <Route path="orders" element={<ProtectedRoute element={Orders} />} />
+      <Route path="orderdetails" element={<ProtectedRoute element={OrderDetail} /> } />
       <Route path="productdetails" element={<ProtectedRoute element={ProductDetail} />} />
       <Route path="login" element={<Login />} />
       <Route path="account" element={<Account />} />

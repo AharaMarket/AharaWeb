@@ -10,14 +10,24 @@ import { Link } from 'react-router-dom'
 import { UserContext } from '../../Context/User/UserContext'
 import { OrderContext } from '../../Context/Order/OrderContext';
 import OrderConfTitleBox from '../../Components/MarketComponents/MarketTitleBox/OrderConfTitleBox/OrderConfTitleBox';
+import { useNavigate } from 'react-router-dom'
 
 const OrderPlace = () => {
+    const navigate = useNavigate();  // Initialize the navigate function
     const { selectedVendor } = useVendor();
     const { resetCart } = useContext(CartContext);
     const { user } = useContext(UserContext);
     const { order } = useContext(OrderContext);
 
     const parsedVendor = JSON.parse(selectedVendor);
+
+    const navToOrderDetails = (order) => {
+        if (order){
+            navigate(`/market/orderdetails`, {
+            state: { prod: order },  // Pass the entire item (product) object here
+            });
+        }
+    }
 
     return (
         <div className='flex flex-col justify-center items-center gap-4 mt-4 mb-10  mx-4 sm:mx-0 '>
@@ -34,7 +44,7 @@ const OrderPlace = () => {
                     <H4 className={'!text-custom-black !font-semibold'}>Order Number</H4>
                     {
                         order ?
-                        <H4 className={'!text-light-purple'}>#{order["orderId"]}</H4>
+                        <H4 className={'!text-light-purple'} onClick={() => navToOrderDetails(order)}>#{order["orderId"]}</H4>
                         :
                         <H4 className={'!text-light-purple'}>#</H4>
                     }

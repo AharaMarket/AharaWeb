@@ -62,10 +62,30 @@ const CheckOuts = () => {
             return;
         }
         try {
-            const cartItems = JSON.stringify(cart, null, 2);
+            let cartItems = JSON.stringify(cart, null, 2);
             const randomNumber = Math.floor(Math.random() * 900000000) + 100000000;
+
+            // Parse the cart items string back into an object
+            let cartArray = JSON.parse(cartItems);
+            console.log("priceDetails: " + JSON.stringify(parsedVendor?.priceDetails));
+
+            cartArray = cartArray.map(item => {
+                console.log("item: " + item);
+                const priceDetail = parsedVendor?.priceDetails.find(price => price.productSpecification === item.productSpecification);
+                console.log("pD: " + priceDetail);
+                if (priceDetail) {
+                  // Add the price to the item
+                  item.price = priceDetail.totalPrice;
+                }
+                return item;
+              });
+
+            cartItems = JSON.stringify(cartArray, null, 2);
+
+            console.log("cartItems: " + cartItems);
+
             await sendOrder(user, randomNumber, cartItems);
-            await sendEmail(user, randomNumber, cartItems);
+        //     await sendEmail(user, randomNumber, cartItems);
             resetCart(user);
         } catch (error) {
             console.error("Error in createOrder:", error);
@@ -237,16 +257,17 @@ const CheckOuts = () => {
                     <Link to="/market/vendorselection">
                         <FillButton> Previous</FillButton>
                     </Link>
-                            {isFormValid ? (
+                            {
+                            // isFormValid ? (
                                 <Link to="/market/orderconfirmation">
                         {
                                 <SolidButton onClick={createOrder}>Continue</SolidButton>
                         }
                                             </Link>
 
-                            ) : (
-                                <SolidButton className={`!bg-grey opacity-30 !text-gray-700 border-2 border-gray-500 cursor-not-allowed`}>Complete the Form</SolidButton>
-                            )
+                            // ) : (
+                            //     <SolidButton className={`!bg-grey opacity-30 !text-gray-700 border-2 border-gray-500 cursor-not-allowed`}>Complete the Form</SolidButton>
+                            // )
 }
                 </div>
             </div>

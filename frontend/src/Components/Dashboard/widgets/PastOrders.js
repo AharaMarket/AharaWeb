@@ -27,9 +27,12 @@ import OrderDetails from "../../Orders/OrderDetails";
 
 // Assets
 import { MdCheckCircle, MdCancel, MdOutlineError, MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { useNavigate } from 'react-router-dom'
+
 
 export default function ColumnsTable(props) {
   const { columnsData, tableData } = props;
+  const navigate = useNavigate();  // Initialize the navigate function
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -88,6 +91,15 @@ export default function ColumnsTable(props) {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const borderColor = useColorModeValue("gray.200", "whiteAlpha.100");
 
+  const navToOrderDetails = (order) => {
+    // console.log("order: " + JSON.stringify(order, null, 2));
+    if (order){
+        navigate(`/market/orderdetails`, {
+        state: { prod: order },  // Pass the entire item (product) object here
+        });
+    }
+}
+
   const toggleRowExpansion = (rowId) => {
     setExpandedRows((prev) => ({
       ...prev,
@@ -145,7 +157,7 @@ export default function ColumnsTable(props) {
                     let data = "";
                     if (cell.column.Header === "NAME") {
                       data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        <Text color={textColor} onClick={() => navToOrderDetails(JSON.parse(JSON.stringify(row.original, null, 2)))} fontSize='sm' fontWeight='700'>
                           {cell.value}
                         </Text>
                       );
