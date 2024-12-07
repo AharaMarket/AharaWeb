@@ -32,7 +32,7 @@ const OrderDetail = () => {
   // Calculate the total price of the order
   return (
     <div className="order-details">
-      <h2>Order: {product["name"]}</h2>
+      <h2>{product["name"]}</h2>
 
       <div className="order-items">
         <h3>Items:</h3>
@@ -47,11 +47,11 @@ const OrderDetail = () => {
           </thead>
           <tbody>
           {itemsArray && Array.isArray(itemsArray) && itemsArray.map((ingredient, index) => (
-  <tr key={index}>
-    <td>{ingredient.productSpecification}</td>
-    <td>{ingredient.quantity}</td>
-  </tr>
-))}
+            <tr key={index}>
+                <td>{ingredient.productSpecification}</td>
+                <td>{ingredient.quantity}</td>
+            </tr>
+            ))}
           
           </tbody>
         </table>
