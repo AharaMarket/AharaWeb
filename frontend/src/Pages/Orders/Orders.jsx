@@ -70,7 +70,8 @@ const Orders = () => {
               date: formattedDate + " " + pstTime,
               items: order.items,
               status: order.orderStatus,
-              progress: String(Math.floor(Math.random() * 100) + 1)
+              progress: String(Math.floor(Math.random() * 100) + 1),
+              vendorName: order.vendorName
             };
           });
 

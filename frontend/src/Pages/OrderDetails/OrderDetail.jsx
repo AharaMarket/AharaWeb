@@ -15,40 +15,49 @@ const OrderDetail = () => {
     const { cart, fetchCart, addItemToCart, updateCartItem } = useContext(CartContext);
     // const totalPrice = order.items.reduce((total, item) => total + item.price * item.quantity, 0);
 
-    const product = location.state.prod;
-    // console.log("product: " + JSON.stringify(product, null, 2));
+    const product = location.state.prod;;
 
     const items = product["items"];
+
+    const vendorName = product["vendorName"];
 
     const itemsString = items.replace(/,\s*}/g, '}').replace(/,\s*\]/g, ']');
 
     const itemsArray = JSON.parse(itemsString);
 
+    let totalPrice = 0.0;
 
     itemsArray.forEach((ingredient) => {
-        console.log("ingredient: " + ingredient.q);
+        totalPrice += ingredient.price;
     })
+
+    const handleBackClick = () => {
+      navigate(-1);  // Navigate back to the previous page
+    };
 
   // Calculate the total price of the order
   return (
-    <div className="order-details">
-      <h2>{product["name"]}</h2>
-
+    <div className={styles.mainWrapper}>
+      <button className={styles.backBtn} onClick={handleBackClick}>
+          <IoIosArrowBack size={24} />
+        </button>
+      <h1 className={styles.detailsh1}> {product["name"]}</h1>
+      <h2 className={styles.detailsh2}> Purchased from {product["vendorName"]} </h2>
       <div className="order-items">
-        <h3>Items:</h3>
+        <h3 className={styles.detailsh3}>Items:</h3>
         <table>
           <thead> 
             <tr>
               <th>Item</th>
-              {/* <th>Price per Item</th> */}
+              <th>Price per Item</th>
               <th>Quantity</th>
-              {/* <th>Total Price</th> */}
             </tr>
           </thead>
           <tbody>
           {itemsArray && Array.isArray(itemsArray) && itemsArray.map((ingredient, index) => (
             <tr key={index}>
                 <td>{ingredient.productSpecification}</td>
+                <td>${ingredient.price.toFixed(2)}</td>
                 <td>{ingredient.quantity}</td>
             </tr>
             ))}
@@ -57,9 +66,9 @@ const OrderDetail = () => {
         </table>
       </div>
 
-      {/* <div className="order-total">
+      <div className="order-total">
         <h3>Total: ${totalPrice.toFixed(2)}</h3>
-      </div> */}
+      </div>
     </div>
   );
 };

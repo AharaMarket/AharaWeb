@@ -92,6 +92,15 @@ export default function UserReports() {
   const [creditBalance, setCreditBalance] = useState(0);
   const [distributorPartners, setDistributorPartners] = useState(0);
   const [totalDishes, setTotalDishes] = useState(0);
+  const [distributorData, setDistributorData] = useState([]);
+  const distributors = new Set();
+  const distributorQuantity = new Map();
+  const distributorPercentages = [
+    { name: "SJ Distributor", percentage: 63, color: "brand.500" },
+    { name: "Restaurant Depot", percentage: 25, color: "#6AD2FF" },
+  ];
+
+  let totalPrice = 0.0;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,10 +111,9 @@ export default function UserReports() {
           console.log(response);
           const data = response.data.data;
           setTotalSaved(data.monthSaved);
-          setTotalSpent(data.monthSpent);
-          setTotalOrders(data.orders);
+          // setTotalSpent(data.monthSpent);
+          // setTotalOrders(data.orders);
           setCreditBalance(data.creditBalance);
-          setDistributorPartners(data.distributorPartners);
           setTotalDishes(data.totalDishes);
         }
       } catch (error) {
@@ -117,14 +125,12 @@ export default function UserReports() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("orders: " + orders);
       if (user && (!orders || orders.length === 0)) {
         try {
           // Wait for both fetchCart and getOrders to complete
           await fetchCart(user);
           const fetchedOrders = await getOrders(user);
 
-          console.log("fetched Orders:" + fetchedOrders);
           const processedOrders = Array.from(fetchedOrders.values()).map(order => {
             const predate = order.date.split("T0")[0];
             const date = new Date(predate);
@@ -148,19 +154,48 @@ export default function UserReports() {
             const year = date.getFullYear();
             // Format the date as MM/DD/YYYY
             const formattedDate = `${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}/${year}`;
+            distributors.add(order.vendorName);
+
+            order.vendorName in distributorQuantity ? distributorQuantity[order.vendorName] += 1 : distributorQuantity[order.vendorName] = 1;
+            
+            const itemsArray = JSON.parse(JSON.stringify(order.items)).split("},");
+
+            const extractPrice = (str) => {
+              // Using regex to find the price (assuming the price is after "price: ")
+              const match = str.match(/"price":\s*(\d+)/);
+              return match ? parseInt(match[1], 10) : 0; // Return the price if found, else 0
+            };
+            
+            totalPrice += itemsArray.reduce((sum, item) => sum + extractPrice(item), 0);
 
             return {
               name: "Order #" + String(order.orderId),
               date: formattedDate + " " + pstTime,
               items: order.items,
               status: order.orderStatus,
-              progress: String(Math.floor(Math.random() * 100) + 1)
+              progress: String(Math.floor(Math.random() * 100) + 1),
+              vendorName: order.vendorName
             };
           });
 
           // Update state with processed orders
+          setDistributorPartners(distributors.size);
           setOrders(processedOrders);
+          setTotalOrders(fetchedOrders.length);
+          setTotalSpent(totalPrice);
+
+          const totalQuantity = Object.values(distributorQuantity).reduce((acc, quantity) => acc + quantity, 0);
+          const distributorArray = Array.from(distributors);
+
+          // Map the distributor names to their corresponding percentage
+          const distributorData = distributorArray.map((name) => ({
+            name,
+            percentage: (distributorQuantity[name] / totalQuantity) * 100, // Calculate percentage
+          }));
+
+          console.log("distributor data: " + distributorData);
           
+          setDistributorData(distributorData);
         } catch (error) {
           console.error("Error fetching data: ", error);
         }
@@ -298,7 +333,7 @@ export default function UserReports() {
                   </Box>
                 </Portal>
                 <SimpleGrid
-                  columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
+                  columns={{ base: 1, md: 2, lg: 3, "2xl": 5 }}
                   gap="20px"
                   mb="20px"
                   mt="60px"
@@ -345,7 +380,7 @@ export default function UserReports() {
                   <MiniStatistics
                     growth="+23%"
                     name="Total Orders"
-                    value={orders.length}
+                    value={totalOrders}
                   />
                   <MiniStatistics
                     endContent={
@@ -388,7 +423,7 @@ export default function UserReports() {
                     name="Distributor Partners"
                     value={distributorPartners}
                   />
-                  <MiniStatistics
+                  {/* <MiniStatistics
                     startContent={
                       <IconBox
                         w="56px"
@@ -406,7 +441,7 @@ export default function UserReports() {
                     }
                     name="Total Dishes"
                     value={totalDishes}
-                  />
+                  /> */}
                 </SimpleGrid>
 
                 <SimpleGrid
@@ -415,12 +450,12 @@ export default function UserReports() {
                   mb="20px"
                   p="20px"
                 >
-                  <TotalSpent />
-                  <SimpleGrid columns={{ base: 1, md: 3, xl: 3 }} gap="20px">
+                  <TotalSpent totalSaved={totalSaved}/>
+                  <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
                     {/* <DailyTraffic /> */}
                     <MiniCalendar h="100%" minW="100%" selectRange={false} />
-                    <PieCard />
-                    <WeeklyRevenue />
+                    <PieCard initialDistributors={distributorData}/>
+                    {/* <WeeklyRevenue /> */}
                   </SimpleGrid>
                   <ComplexTable
                     columnsData={columnsDataComplex}

@@ -6,7 +6,7 @@ const emailrouter = express.Router();
 
 // Define a POST route for sending email
 emailrouter.post('/send', async (req, res) => {
-    const { email, orderId, newOrder } = req.body; // Get email details from the client
+    const { email, orderId, newOrder, vendorName } = req.body; // Get email details from the client
     console.log("inside the router " + email);
 
     const subject = "Order# " + {orderId};
@@ -20,7 +20,8 @@ emailrouter.post('/send', async (req, res) => {
         time: (new Date()).toTimeString('en-US'),
         deliveryFee: "0",
         serviceFee: "0",
-        active: true
+        active: true,
+        vendor: vendorName
       };
     
     const text = "The order is " + JSON.stringify(addOrder, null, 2);

@@ -53,7 +53,6 @@ vendorselectionrouter.post("/", async (req, res) => {
             }
             // Add the prices and product information
             distributorPrices[distributor][product] = [price, quant];
-            console.log(quant);
             distributorPrices[distributor][product].unit = quant;
             // console.log("yes" + distributorPrices[distributor][product]);
             distributorPrices[distributor].total += price;

@@ -21,7 +21,7 @@ import {
 } from "../variables/charts";
 
 export default function TotalSpent(props) {
-  const { ...rest } = props;
+  const { totalSaved, ...rest } = props;
 
   // Chakra Color Mode
 
@@ -86,7 +86,7 @@ export default function TotalSpent(props) {
             textAlign='start'
             fontWeight='700'
             lineHeight='100%'>
-            $37.5K
+            ${totalSaved}
           </Text>
           <Flex align='center' mb='20px'>
             <Text

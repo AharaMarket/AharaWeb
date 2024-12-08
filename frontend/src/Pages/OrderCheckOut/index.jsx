@@ -70,11 +70,12 @@ const CheckOuts = () => {
             console.log("priceDetails: " + JSON.stringify(parsedVendor?.priceDetails));
 
             cartArray = cartArray.map(item => {
-                console.log("item: " + item);
-                const priceDetail = parsedVendor?.priceDetails.find(price => price.productSpecification === item.productSpecification);
+                console.log("item: " + JSON.parse(JSON.stringify(item)));
+                const priceDetail = parsedVendor?.priceDetails.find(price => price["item"] === item.productSpecification);
                 console.log("pD: " + priceDetail);
                 if (priceDetail) {
                   // Add the price to the item
+                  item.quantity = priceDetail["uom"];
                   item.price = priceDetail.totalPrice;
                 }
                 return item;
@@ -84,8 +85,8 @@ const CheckOuts = () => {
 
             console.log("cartItems: " + cartItems);
 
-            await sendOrder(user, randomNumber, cartItems);
-            await sendEmail(user, randomNumber, cartItems);
+            await sendOrder(user, randomNumber, cartItems, parsedVendor?.name);
+            await sendEmail(user, randomNumber, cartItems, parsedVendor?.name);
             resetCart(user);
         } catch (error) {
             console.error("Error in createOrder:", error);

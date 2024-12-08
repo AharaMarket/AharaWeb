@@ -53,14 +53,14 @@ const OrderPlace = () => {
                 <div className="flex justify-between items-start p-3">
                     <H4 className={'!text-custom-black !font-semibold'}>Vendor</H4>
                     <div className="">
-                        <H4 className={'!text-custom-black '}>Vendor Name</H4>
-                        <H4 className={'!text-custom-black'}>Pleasanton, CA</H4>
+                        <H4 className={'!text-custom-black '}>{parsedVendor?.name}</H4>
+                        <H4 className={'!text-custom-black'}>{parsedVendor?.location}</H4>
 
                     </div>
                 </div>
                 <div className="flex justify-between items-center p-3 ">
                     <H4 className={'!text-custom-black !font-semibold'}>Estimated Delivery Date</H4>
-                    <H4 className={'!text-custom-black'}>April 31, 2024</H4>
+                    <H4 className={'!text-custom-black'}>{((new Date()).getMonth() + 1).toString().padStart(2, '0')}/{((new Date()).getDay() + 1).toString().padStart(2, '0')}/{(new Date()).getFullYear()}</H4>
                 </div>
                 <div className='px-3 pt-2 pb-8 sm:pb-10 md:pb-16 '>
                     <H4 className={' !font-semibold pt-2'}> Price Details</H4>

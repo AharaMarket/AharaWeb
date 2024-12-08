@@ -14,7 +14,6 @@ ordersrouter.get("/get", async (req, res) => {
   let collection = await db.collection("ahara-orders");
   let results = await collection.find({restaurant: userid})
   .sort({ date: -1 })
-    .limit(50)
     .toArray();
   console.log(results);
   res.send(results).status(200);
@@ -37,7 +36,7 @@ ordersrouter.get("/getRecent", async (req, res) => {
 });
 
 ordersrouter.post("/add", async (req, res) => {
-    const { email, orderId, newOrder } = req.body; // Extract userid and newOrder from the request body
+    const { email, orderId, newOrder, vendorName } = req.body; // Extract userid and newOrder from the request body
     // newOrder is undefiend
     var userid = email;
 
@@ -60,7 +59,8 @@ ordersrouter.post("/add", async (req, res) => {
       date: (new Date()),
       deliveryFee: "0",
       serviceFee: "0",
-      active: true
+      active: true,
+      vendorName: vendorName
     };
     
     let insertResult = await collection.insertOne(addOrder);

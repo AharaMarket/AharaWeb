@@ -16,7 +16,7 @@ export default function MiniCalendar(props) {
       direction='column'
       w='100%'
       maxW='auto'
-      px='20%'
+      px='33%'
       h='100%'
       {...rest}>
       <Calendar

@@ -5,8 +5,8 @@ export const EmailContext = createContext();
 
 export const EmailProvider = ({ children }) => {
 
-    const sendEmail = async (email, orderId, newOrder) => {
-        const response = await axios.post('http://localhost:5050/email/send', { email, orderId, newOrder });
+    const sendEmail = async (email, orderId, newOrder, vendorName) => {
+        const response = await axios.post('http://localhost:5050/email/send', { email, orderId, newOrder, vendorName });
         console.log(response.data);
     }
 

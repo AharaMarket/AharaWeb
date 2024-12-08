@@ -8,10 +8,10 @@ export const OrderProvider = ({ children }) => {
     let [order, setOrder] = useState([]);
     let orders = new Set();
 
-    const sendOrder = async (email, orderId, newOrder) => {
+    const sendOrder = async (email, orderId, newOrder, vendorName) => {
         try {
             console.log(` userId: ${email} newOrder: ${newOrder}`)
-            const response = await axios.post('http://localhost:5050/orders/add', { email, orderId, newOrder });
+            const response = await axios.post('http://localhost:5050/orders/add', { email, orderId, newOrder, vendorName });
 
             const parsedResponse = JSON.parse(JSON.stringify(response, null, 2));
             const { data } = parsedResponse;

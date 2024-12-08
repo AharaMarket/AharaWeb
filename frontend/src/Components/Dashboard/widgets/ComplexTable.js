@@ -24,6 +24,8 @@ import {
 import Card from "../card/Card";
 import Menu from "../menu/MainMenu";
 import OrderDetails from "../../Orders/OrderDetails";
+import { useNavigate } from 'react-router-dom'
+
 
 // Assets
 import { MdCheckCircle, MdCancel, MdOutlineError, MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
@@ -39,6 +41,7 @@ export default function ColumnsTable(props) {
   const [expandedRows, setExpandedRows] = useState({}); // Track expanded rows by their IDs
 
   const parsedTableData = JSON.parse(JSON.stringify(tableData, 2));
+  const navigate = useNavigate();  // Initialize the navigate function
 
 
   // Update pageSize based on container height and row height
@@ -95,6 +98,15 @@ export default function ColumnsTable(props) {
     }));
   };
 
+  const navToOrderDetails = (order) => {
+    // console.log("order: " + JSON.stringify(order, null, 2));
+    if (order){
+        navigate(`/market/orderdetails`, {
+        state: { prod: order },  // Pass the entire item (product) object here
+        });
+    }
+}
+
   return (
     <Card
       ref={tableContainerRef}
@@ -145,7 +157,7 @@ export default function ColumnsTable(props) {
                     let data = "";
                     if (cell.column.Header === "NAME") {
                       data = (
-                        <Text color={textColor} fontSize='sm' fontWeight='700'>
+                        <Text color={textColor} onClick={() => navToOrderDetails(JSON.parse(JSON.stringify(row.original, null, 2)))} fontSize='sm' fontWeight='700'>
                           {cell.value}
                         </Text>
                       );
