@@ -335,7 +335,7 @@ export default function UserReports() {
                 <SimpleGrid
                   columns={{ base: 1, md: 2, lg: 3, "2xl": 5 }}
                   gap="20px"
-                  mb="20px"
+                  mb="0px"
                   mt="60px"
                   p="20px"
                 >
@@ -375,7 +375,7 @@ export default function UserReports() {
                       />
                     }
                     name="Total Spend this month"
-                    value={"$" + totalSpent}
+                    value={"$" + 3454}
                   />
                   <MiniStatistics
                     growth="+23%"
@@ -450,7 +450,7 @@ export default function UserReports() {
                   mb="20px"
                   p="20px"
                 >
-                  <TotalSpent totalSaved={totalSaved}/>
+                  <TotalSpent totalSaved={34 + "," + 503.23}/>
                   <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
                     {/* <DailyTraffic /> */}
                     <MiniCalendar h="100%" minW="100%" selectRange={false} />

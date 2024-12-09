@@ -12,31 +12,34 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import DevicesRoundedIcon from '@mui/icons-material/DevicesRounded';
 import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded';
 import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
+import DashboardImage from '../Assets/Dashboard.png';
+import MarketPlaceImage from '../Assets/MarketPlace.png';
+import VendorSelectionImage from '../Assets/VendorSelection.png';
 
 const items = [
   {
     icon: <ViewQuiltRoundedIcon />,
     title: 'Dashboard',
     description:
-      'This item could provide a snapshot of the most important metrics or data points related to the product.',
-    imageLight: 'url("/static/images/templates/templates-images/dash-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
+      ' View your in-progress orders together on one screen. See your entire order history and reorder from multiple distributors in seconds',
+    imageLight: DashboardImage,
+    imageDark: DashboardImage,
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
-    title: 'Mobile integration',
+    title: 'Marketplace',
     description:
-      'This item could provide information about the mobile app version of the product.',
-    imageLight: 'url("/static/images/templates/templates-images/mobile-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
+      'Search a trusted database of 750,000+ ingredients, with robust search filters, pricing, product details and more direct from our distributor partners.',
+    imageLight: MarketPlaceImage,
+    imageDark: MarketPlaceImage,
   },
   {
     icon: <DevicesRoundedIcon />,
-    title: 'Available on all platforms',
+    title: 'VendorSelection',
     description:
-      'This item could let users know the product is available on all platforms, such as web, mobile, and desktop.',
-    imageLight: 'url("/static/images/templates/templates-images/devices-light.png")',
-    imageDark: 'url("/static/images/templates/templates-images/devices-dark.png")',
+      'Compare all distributors and purchase the cheapest package for all your ingredients. Manage your ordering across multiple distributors. See deals, submit orders, and much more.',
+    imageLight: VendorSelectionImage,
+    imageDark: VendorSelectionImage,
   },
 ];
 

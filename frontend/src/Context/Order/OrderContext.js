@@ -34,6 +34,19 @@ export const OrderProvider = ({ children }) => {
         }
     };
 
+    const uploadOrderInvoices = async (email, orderInvoices) => {
+        try {
+            console.log(` userId: ${email} invoices: ${neworderInvoicesOrder}`)
+            const response = await axios.post('http://localhost:5050/orders/addInvoices', { email, orderInvoices });
+
+            const parsedResponse = JSON.parse(JSON.stringify(response, null, 2));
+            const { data } = parsedResponse;
+            setOrder(data);
+        } catch (error) {
+            console.error('Error updating cart item:', error);
+        }
+    }
+
     // const getMostRecentOrder = async (email) => {
     //     try {
     //         const response = await axios.get('http://localhost:5050/orders/getRecent', { params: { email: email } });

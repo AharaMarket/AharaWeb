@@ -14,21 +14,9 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 
 const tiers = [
   {
-    title: 'Free',
-    price: '0',
-    description: [
-      '10 users included',
-      '2 GB of storage',
-      'Help center access',
-      'Email support',
-    ],
-    buttonText: 'Sign up for free',
-    buttonVariant: 'outlined',
-  },
-  {
-    title: 'Professional',
+    title: 'Monthly',
     subheader: 'Recommended',
-    price: '15',
+    price: '70',
     description: [
       '20 users included',
       '10 GB of storage',
@@ -41,8 +29,8 @@ const tiers = [
     buttonVariant: 'contained',
   },
   {
-    title: 'Enterprise',
-    price: '30',
+    title: 'Annually',
+    price: '50',
     description: [
       '50 users included',
       '30 GB of storage',

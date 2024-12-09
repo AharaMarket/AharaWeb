@@ -19,6 +19,8 @@ import { CartContext } from '../../Context/Cart/CartContext';
 import { UserContext } from '../../Context/User/UserContext';
 import { EmailContext } from '../../Context/Email/EmailContext';
 import axios from 'axios';
+import { loadStripe } from "@stripe/stripe-js";
+
 
 const CheckOuts = () => {
     const [activeTab, setActiveTab] = useState(false);
@@ -54,6 +56,8 @@ const CheckOuts = () => {
         // Check if all required fields are filled
         const allFieldsFilled = Object.values(formData).every(field => field !== '');
         setIsFormValid(allFieldsFilled);
+        // const stripePromise = loadStripe("pk_test_51QTr4XCvDfiAtSX2DE0OBCzpENlcxyjC7baCeWsZw5HuxLTdcohkoFlEfrnqCTPq2QlneeFn4bRIOOkssWxu4Gqc007zlz4J6c");
+        // console.log("promise" + JSON.stringify(stripePromise));
     }, [formData]);
 
     const createOrder = async () => {

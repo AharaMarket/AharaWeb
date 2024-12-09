@@ -140,7 +140,7 @@ export default function Conversion(props) {
         w="max-content"
         p="15px"
         px="20px"
-        mt="-100px"
+        mt="-150px"
         mx="auto"
       >
         {distributorsWithColors.map((distributor, index) => (

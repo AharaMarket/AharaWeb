@@ -28,6 +28,7 @@ function MarketNavbar() {
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <Button color="inherit" component={Link} to="/market">Dashboard</Button>
+                    <Button color="inherit" component={Link} to="/market/importorders">Upload Invoices</Button>
                     <Button color="inherit" component={Link} to="/market/ingredientmarketplace">Marketplace</Button>
                     <Button color="inherit" component={Link} to="/market/orders">Orders</Button>
                     {

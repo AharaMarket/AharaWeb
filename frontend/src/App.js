@@ -31,7 +31,7 @@ import {
 } from "react-router-dom";
 import Dashboard from "./Pages/RestaurantDashboard/RestaurantDashboard";
 import OrderConfirmation from "./Pages/OrderConfirmation/OrderConfirmation";
-import ImportOrder from "./Pages/ImportOrder/ImportOrder";
+import ImportOrders from "./Pages/ImportOrders/ImportOrders";
 import Header from "./Components/Vendor/Header/index.jsx";
 import ProtectedRoute from './Context/User/ProtectedRoute';
 import { VendorProvider } from "./Context/Vendor/VendorContext";
@@ -94,7 +94,7 @@ function MarketRoutes() {
       <Route path="productdetails" element={<ProtectedRoute element={ProductDetail} />} />
       <Route path="login" element={<Login />} />
       <Route path="account" element={<Account />} />
-      <Route path="importorder" element={<ProtectedRoute element={ImportOrder} />} />
+      <Route path="importorders" element={<ProtectedRoute element={ImportOrders} />} />
       <Route path="cart" element={<Cart />} />
       <Route path="register" element={<Register />} />
       <Route path="restaurant-registration" element={<RestaurantRegistration />} />

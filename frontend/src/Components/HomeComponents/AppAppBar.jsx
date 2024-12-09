@@ -12,6 +12,7 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
 import { Link } from 'react-router-dom';
+import { SpaceBar } from '@material-ui/icons';
 
 function AppAppBar({ mode, toggleColorMode }) {
   const [open, setOpen] = React.useState(false);
@@ -47,20 +48,73 @@ function AppAppBar({ mode, toggleColorMode }) {
               borderColor: 'divider',
             })}
           >
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, ml: 2 }}>
-              Ahara
-            </Typography>
-            <Box sx={{ display: { xs: 'none', md: 'flex' }, flexGrow: 1, justifyContent: 'flex-start' }}>
-              <MenuItem component={Link} to="/features" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Features</MenuItem>
-              <MenuItem component={Link} to="/testimonials" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Testimonials</MenuItem>
-              <MenuItem component={Link} to="/highlights" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Highlights</MenuItem>
-              <MenuItem component={Link} to="/pricing" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Pricing</MenuItem>
-              <MenuItem component={Link} to="/faq" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>FAQ</MenuItem>
+          <Box
+                sx={{
+                  width: '50%', // Middle 60% width
+                  mx: 'auto', // Centers the box horizontally
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+            <Box 
+              sx={{ 
+                display: { xs: 'none', md: 'flex' }, 
+                flexGrow: 1, 
+                justifyContent: 'flex-start', 
+                alignItems: 'center', // Centers items vertically
+                gap: '20px',
+                
+              }}
+            >
+              <Typography
+                component="span"
+                variant="h1"
+                sx={{
+                  fontSize: 'clamp(3rem, 10vw, 4rem)',
+                  color: theme => theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
+                  marginRight: '20px' // Adds space after the typography
+                }}
+              >
+                Ahara
+              </Typography>
+              <Box 
+                sx={{
+                  display: 'flex',
+                  marginLeft: '20px', // Adds consistent spacing between menu items
+                }}
+              >
+              <MenuItem 
+                component={Link} 
+                to="/features" 
+                sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}
+              >
+                Who We Serve
+              </MenuItem>
+              <MenuItem 
+                component={Link} 
+                to="/testimonials" 
+                sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}
+              >
+                Resources
+              </MenuItem>
+              <MenuItem 
+                component={Link} 
+                to="/highlights" 
+                sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}
+              >
+                Company
+              </MenuItem>
+              </Box>
             </Box>
+
             <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1 }}>
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-              <Button component={Link} to="/market" variant="contained" color="primary" sx={{ borderRadius: '20px' }}>
-                Market
+              <Button component={Link} to="/market/login" variant="contained" color="primary" sx={{ borderRadius: '20px' }}>
+                Log In
+              </Button>
+              <Button component={Link} to="/market/register" variant="contained" color="primary" sx={{ borderRadius: '20px' }}>
+                Register
               </Button>
             </Box>
             <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center' }}>
@@ -74,15 +128,14 @@ function AppAppBar({ mode, toggleColorMode }) {
                 <MenuIcon />
               </Button>
             </Box>
+            </Box>
           </Toolbar>
         </Container>
         <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
           <Box sx={{ minWidth: '60vw', p: 2, backgroundColor: 'background.paper' }}>
-            <MenuItem component={Link} to="/features" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Features</MenuItem>
-            <MenuItem component={Link} to="/testimonials" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Testimonials</MenuItem>
-            <MenuItem component={Link} to="/highlights" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Highlights</MenuItem>
-            <MenuItem component={Link} to="/pricing" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Pricing</MenuItem>
-            <MenuItem component={Link} to="/faq" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>FAQ</MenuItem>
+            <MenuItem component={Link} to="/features" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Who We Serve</MenuItem>
+            <MenuItem component={Link} to="/testimonials" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Resources</MenuItem>
+            <MenuItem component={Link} to="/highlights" sx={{ color: theme => theme.palette.mode === 'light' ? 'black' : 'white' }}>Company</MenuItem>
           </Box>
         </Drawer>
       </AppBar>

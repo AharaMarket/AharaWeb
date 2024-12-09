@@ -44,8 +44,8 @@ export default function LandingPage() {
         <Pricing />
         <Divider />
         <FAQ />
-        <Divider />
-        <Footer />
+        {/* <Divider />
+        <Footer /> */}
       </Box>
     </ThemeProvider>
     </div>

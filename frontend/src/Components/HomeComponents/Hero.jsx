@@ -39,28 +39,17 @@ export default function Hero() {
               flexDirection: { xs: 'column', md: 'row' },
               alignSelf: 'center',
               textAlign: 'center',
-              fontSize: 'clamp(3.5rem, 10vw, 4rem)',
+              fontSize: 'clamp(3.5rem, 2vw, 4rem)',
             }}
           >
-            Welcome to&nbsp;
-            <Typography
-              component="span"
-              variant="h1"
-              sx={{
-                fontSize: 'clamp(3rem, 10vw, 4rem)',
-                color: (theme) =>
-                  theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
-              }}
-            >
-              Ahara
-            </Typography>
+            Ingredient Ordering Made Easy
           </Typography>
           <Typography
             textAlign="center"
             color="text.secondary"
-            sx={{ alignSelf: 'center', width: { sm: '100%', md: '80%' } }}
+            sx={{ alignSelf: 'center', width: { sm: '100%', md: '90%' } }}
           >
-            Explore our one stop shop for restaurants and distributors to fulfill their sourcing needs.
+            Finally, a single marketplace where you can shop, discover, order and pay. All in one place.
           </Typography>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
@@ -75,14 +64,14 @@ export default function Hero() {
               size="small"
               variant="outlined"
               aria-label="Enter your email address"
-              placeholder="Your email address"
+              placeholder="Email address*"
               inputProps={{
                 autoComplete: 'off',
                 'aria-label': 'Enter your email address',
               }}
             />
             <Button variant="contained" color="primary">
-              Start now
+              Join for Free
             </Button>
           </Stack>
           <Typography variant="caption" textAlign="center" sx={{ opacity: 0.8 }}>
