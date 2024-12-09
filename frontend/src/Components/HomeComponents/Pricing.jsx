@@ -66,10 +66,7 @@ export default function Pricing() {
           Pricing
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Quickly build an effective pricing table for your potential customers with
-          this layout. <br />
-          It&apos;s built with default Material UI components with little
-          customization.
+          Choose either our monthly plan or our annual one
         </Typography>
       </Box>
       <Grid container spacing={3} alignItems="center" justifyContent="center">

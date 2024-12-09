@@ -108,9 +108,7 @@ export default function Features() {
             <Box
               sx={{
                 backgroundImage: (theme) =>
-                  theme.palette.mode === 'light'
-                    ? items[selectedItemIndex].imageLight
-                    : items[selectedItemIndex].imageDark,
+                  `url(${items[selectedItemIndex].imageLight})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 minHeight: 280,
@@ -255,18 +253,26 @@ export default function Features() {
               pointerEvents: 'none',
             }}
           >
-            <Box
-              sx={{
-                m: 'auto',
-                width: 420,
-                height: 500,
-                backgroundSize: 'contain',
-                backgroundImage: (theme) =>
-                  theme.palette.mode === 'light'
-                    ? items[selectedItemIndex].imageLight
-                    : items[selectedItemIndex].imageDark,
+           <Box
+            sx={{
+              m: 'auto',
+              width: 800,
+              height: 500,
+              overflow: 'hidden', // Ensures no overflow outside the box
+            }}
+          >
+            <img
+              src={items[selectedItemIndex].imageLight}
+              alt="Feature"
+              style={{
+                width: '100%', // Stretches horizontally
+                height: '100%', // Stretches vertically
+                objectFit: 'fill', // Fills the box by stretching
               }}
             />
+          </Box>
+
+
           </Card>
         </Grid>
       </Grid>
