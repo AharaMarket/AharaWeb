@@ -12,7 +12,7 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
 import { Link } from 'react-router-dom';
-import { SpaceBar } from '@material-ui/icons';
+// import { SpaceBar } from '@material-ui/icons';
 
 function AppAppBar({ mode, toggleColorMode }) {
   const [open, setOpen] = React.useState(false);

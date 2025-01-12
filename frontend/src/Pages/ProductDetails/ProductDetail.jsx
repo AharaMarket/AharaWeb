@@ -4,6 +4,12 @@ import styles from './ProductDetail.module.css'; // Import the CSS module
 import { CartContext } from '../../Context/Cart/CartContext';
 import { UserContext } from '../../Context/User/UserContext';
 import { IoIosArrowBack } from 'react-icons/io';
+import { Box, Button, Flex, Icon, Select, Text, Input, Image } from "@chakra-ui/react";
+import LineChart from "../../Components/Dashboard/charts/LineChart.js"; // Import a LineChart component
+import {
+    productLineChartDataPriceHistory,
+  lineChartOptionsPriceHistory,
+} from "../../Components/Dashboard/variables/charts"; // Import chart data and options
 
 const ProductDetail = () => {
     const location = useLocation();
@@ -63,7 +69,15 @@ const ProductDetail = () => {
                 <div className={styles.right}>
                     <h3>{product.Name}</h3>
                     <div className={styles.price}>
-                        <h4>{product.Price}</h4>
+                    <Box>
+            <Text fontSize="xl" fontWeight="bold" mb={3}>
+              Price History
+            </Text>
+            <LineChart
+              chartData={productLineChartDataPriceHistory}
+              chartOptions={lineChartOptionsPriceHistory}
+            />
+          </Box>
                     </div>
 
                     <div className={styles.add}>

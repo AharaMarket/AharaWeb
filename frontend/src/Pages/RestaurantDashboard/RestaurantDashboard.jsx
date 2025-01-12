@@ -72,6 +72,9 @@ import Footer from "../../Components/Footer/Footer.js";
 import { UserContext } from '../../Context/User/UserContext'; 
 import { OrderContext } from '../../Context/Order/OrderContext';
 import { CartContext } from '../../Context/Cart/CartContext';
+import { orderCosts,
+  orderlbs,
+} from "../../Components/Dashboard/variables/charts.js";
 
 export default function UserReports() {
   // Chakra Color Mode
@@ -95,10 +98,6 @@ export default function UserReports() {
   const [distributorData, setDistributorData] = useState([]);
   const distributors = new Set();
   const distributorQuantity = new Map();
-  const distributorPercentages = [
-    { name: "SJ Distributor", percentage: 63, color: "brand.500" },
-    { name: "Restaurant Depot", percentage: 25, color: "#6AD2FF" },
-  ];
 
   let totalPrice = 0.0;
 
@@ -111,8 +110,6 @@ export default function UserReports() {
           console.log(response);
           const data = response.data.data;
           setTotalSaved(data.monthSaved);
-          // setTotalSpent(data.monthSpent);
-          // setTotalOrders(data.orders);
           setCreditBalance(data.creditBalance);
           setTotalDishes(data.totalDishes);
         }
@@ -380,7 +377,7 @@ export default function UserReports() {
                   <MiniStatistics
                     growth="+23%"
                     name="Total Orders"
-                    value={totalOrders}
+                    value={orderCosts.length}
                   />
                   <MiniStatistics
                     endContent={
@@ -450,7 +447,7 @@ export default function UserReports() {
                   mb="20px"
                   p="20px"
                 >
-                  <TotalSpent totalSaved={34 + "," + 503.23}/>
+                  <TotalSpent totalSpent={103 + ",0" + 53.56}/>
                   <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap="20px">
                     {/* <DailyTraffic /> */}
                     <MiniCalendar h="100%" minW="100%" selectRange={false} />

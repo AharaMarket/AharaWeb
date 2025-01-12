@@ -16,12 +16,13 @@ import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
 import {
+  orderCosts, 
   lineChartDataTotalSpent,
   lineChartOptionsTotalSpent,
 } from "../variables/charts";
 
 export default function TotalSpent(props) {
-  const { totalSaved, ...rest } = props;
+  const { totalSpent, ...rest } = props;
 
   // Chakra Color Mode
 
@@ -86,7 +87,7 @@ export default function TotalSpent(props) {
             textAlign='start'
             fontWeight='700'
             lineHeight='100%'>
-            ${totalSaved}
+            ${orderCosts.reduce((total, num) => total + num, 0).toFixed(2)}
           </Text>
           <Flex align='center' mb='20px'>
             <Text
@@ -95,7 +96,7 @@ export default function TotalSpent(props) {
               fontWeight='500'
               mt='4px'
               me='12px'>
-              Total Saved
+              Total Spent
             </Text>
             <Flex align='center'>
               <Icon as={RiArrowUpSFill} color='green.500' me='2px' mt='2px' />
