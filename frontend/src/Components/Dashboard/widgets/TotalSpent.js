@@ -80,7 +80,7 @@ export default function TotalSpent(props) {
         </Flex>
       </Flex>
       <Flex w='100%' flexDirection={{ base: "column", lg: "row" }}>
-        <Flex flexDirection='column' me='20px' mt='28px'>
+        <Flex flexDirection='column' me='2px' mt='28px'>
           <Text
             color={textColor}
             fontSize='34px'
