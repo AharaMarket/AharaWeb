@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ahara Orders Dashboard</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <h1>Orders Dashboard</h1>
+      <p>Live view from Firestore: groups/{groupId}/orders</p>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Sign in</h2>
+        <div class="row">
+          <input id="email" type="email" placeholder="Email" />
+          <input id="password" type="password" placeholder="Password" />
+          <button id="signInBtn">Sign in</button>
+          <button id="signOutBtn" class="ghost">Sign out</button>
+        </div>
+        <p id="authState" class="muted">Not signed in</p>
+      </section>
+
+      <section class="card">
+        <h2>Restaurant group</h2>
+        <div class="row">
+          <input id="groupId" type="text" placeholder="Enter groupId" />
+          <button id="loadBtn">Load orders</button>
+        </div>
+      </section>
+
+      <section class="grid" id="summaryGrid"></section>
+
+      <section class="card">
+        <h2>Orders by status</h2>
+        <div id="statusBuckets"></div>
+      </section>
+
+      <section class="card">
+        <h2>Orders by type</h2>
+        <div id="typeBuckets"></div>
+      </section>
+    </main>
+
+    <script src="./config.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
