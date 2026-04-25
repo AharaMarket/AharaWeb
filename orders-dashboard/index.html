@@ -4,46 +4,201 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ahara Orders Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <header class="topbar">
-      <h1>Orders Dashboard</h1>
-      <p>Live view from Firestore: groups/{groupId}/orders</p>
-    </header>
+    <main id="authScreen" class="auth-screen">
+      <section class="auth-card">
+        <p class="auth-kicker">Ahara</p>
+        <h1>Welcome back</h1>
+        <p class="auth-sub">Sign in to view order history dashboard.</p>
 
-    <main class="container">
-      <section class="card">
-        <h2>Sign in</h2>
-        <div class="row">
-          <input id="email" type="email" placeholder="Email" />
-          <input id="password" type="password" placeholder="Password" />
-          <button id="signInBtn">Sign in</button>
-          <button id="signOutBtn" class="ghost">Sign out</button>
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-auth-view="signin" type="button">Sign in</button>
+          <button class="auth-tab" data-auth-view="signup" type="button">Sign up</button>
+          <button class="auth-tab" data-auth-view="forgot" type="button">Forgot password</button>
         </div>
-        <p id="authState" class="muted">Not signed in</p>
-      </section>
 
-      <section class="card">
-        <h2>Restaurant group</h2>
-        <div class="row">
-          <input id="groupId" type="text" placeholder="Enter groupId" />
-          <button id="loadBtn">Load orders</button>
-        </div>
-      </section>
+        <p id="authMessage" class="auth-message"></p>
 
-      <section class="grid" id="summaryGrid"></section>
+        <form id="signInForm" class="auth-form" novalidate>
+          <label>Email</label>
+          <input id="signInEmail" type="email" autocomplete="username" required />
+          <label>Password</label>
+          <input id="signInPassword" type="password" autocomplete="current-password" required />
+          <div class="auth-row-inline">
+            <label class="checkbox-inline">
+              <input id="rememberMe" type="checkbox" />
+              Remember me
+            </label>
+            <button class="text-link" data-open-view="forgot" type="button">Forgot password?</button>
+          </div>
+          <button class="primary-btn" type="submit">Sign in</button>
+          <p class="switch-text">
+            Don’t have an account?
+            <button class="text-link" data-open-view="signup" type="button">Sign up</button>
+          </p>
+        </form>
 
-      <section class="card">
-        <h2>Orders by status</h2>
-        <div id="statusBuckets"></div>
-      </section>
+        <form id="signUpForm" class="auth-form hidden" novalidate>
+          <label>Name</label>
+          <input id="signUpName" type="text" autocomplete="name" />
+          <label>Email</label>
+          <input id="signUpEmail" type="email" autocomplete="email" required />
+          <label>Password</label>
+          <input id="signUpPassword" type="password" autocomplete="new-password" required />
+          <label>Confirm password</label>
+          <input id="signUpConfirmPassword" type="password" autocomplete="new-password" required />
+          <button class="primary-btn" type="submit">Create account</button>
+          <p class="switch-text">
+            Already have an account?
+            <button class="text-link" data-open-view="signin" type="button">Sign in</button>
+          </p>
+        </form>
 
-      <section class="card">
-        <h2>Orders by type</h2>
-        <div id="typeBuckets"></div>
+        <form id="forgotForm" class="auth-form hidden" novalidate>
+          <label>Email</label>
+          <input id="forgotEmail" type="email" autocomplete="email" required />
+          <button class="primary-btn" type="submit">Send reset link</button>
+          <p class="switch-text">
+            Back to
+            <button class="text-link" data-open-view="signin" type="button">Sign in</button>
+          </p>
+        </form>
       </section>
     </main>
+
+    <div id="dashboardApp" class="app-shell hidden">
+      <aside class="sidebar">
+        <div>
+          <div class="brand">
+            <div class="brand-dot"></div>
+            <div>
+              <h1>Ahara</h1>
+              <p>Restaurant order history</p>
+            </div>
+          </div>
+          <nav class="nav-list">
+            <a class="active" href="#">Orders Overview</a>
+            <a href="#filtersSection">Filters</a>
+            <a href="#historySection">Past Orders</a>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <header class="page-header">
+          <div>
+            <p class="crumb">Pages / Dashboard</p>
+            <h2>Orders Dashboard</h2>
+            <p id="connectionHint" class="visually-hidden" aria-live="polite"></p>
+            <p id="collectionLabel" class="visually-hidden"></p>
+          </div>
+          <div class="header-right">
+            <p id="authState" class="auth-pill">Not signed in</p>
+            <button id="signOutBtn" class="ghost small" type="button">Sign out</button>
+          </div>
+        </header>
+
+        <section class="stats-grid" id="summaryGrid"></section>
+
+        <section class="insights-grid">
+          <article class="card">
+            <div class="section-head tight">
+              <h3>By status</h3>
+            </div>
+            <div id="statusBuckets"></div>
+          </article>
+
+          <article class="card">
+            <div class="section-head tight">
+              <h3>By type</h3>
+            </div>
+            <div id="typeBuckets"></div>
+          </article>
+
+          <article class="card">
+            <div class="section-head tight">
+              <h3>By month</h3>
+            </div>
+            <div id="monthBuckets"></div>
+          </article>
+        </section>
+
+        <section id="filtersSection" class="card filters-card">
+          <div class="section-head">
+            <div>
+              <h3>Filter past orders</h3>
+              <p class="muted">Slice the full order history by date range, type, status, or distributor.</p>
+            </div>
+            <button id="clearFiltersBtn" class="ghost small" type="button">Clear filters</button>
+          </div>
+
+          <div class="row filter-row">
+            <select id="datePreset">
+              <option value="all">All time</option>
+              <option value="7d">Last 7 days</option>
+              <option value="30d">Last 30 days</option>
+              <option value="90d">Last 90 days</option>
+              <option value="year">This year</option>
+              <option value="custom">Custom range</option>
+            </select>
+            <input id="startDate" type="date" />
+            <input id="endDate" type="date" />
+            <select id="typeFilter">
+              <option value="all">All types</option>
+              <option value="Manual">Manual</option>
+              <option value="Distributor">Distributor</option>
+              <option value="Receipt">Receipt</option>
+            </select>
+            <select id="statusFilter">
+              <option value="all">All statuses</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+            <input id="searchInput" type="search" placeholder="Search order, distributor, notes" />
+          </div>
+
+          <div class="filters-footer">
+            <div id="activeFilters" class="chips"></div>
+            <p id="resultsSummary" class="muted">0 orders match the current filters.</p>
+          </div>
+        </section>
+
+        <section id="historySection" class="card history-card">
+          <div class="section-head">
+            <div>
+              <h3>Past orders</h3>
+              <p class="muted">All matching orders are shown newest first and grouped by month.</p>
+            </div>
+            <span id="tableCount" class="table-count">0 orders</span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Distributor</th>
+                  <th>Date</th>
+                  <th>Items</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
 
     <script src="./config.js"></script>
     <script type="module" src="./app.js"></script>
