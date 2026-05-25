@@ -164,6 +164,9 @@ let stopGlobalCatalogRootWatch = null;
 const stopGlobalCatalogItemWatchByKey = new Map();
 const globalCatalogDistributorPriceMapByKey = new Map();
 const globalCatalogDistributorPriceNormMapByKey = new Map();
+const globalCatalogRootKeys = new Set();
+const globalCatalogOrderKeys = new Set();
+let globalCatalogRenderTimer = null;
 let globalCatalogPriceMap = new Map(); // lowerName -> { price, unit }
 let globalCatalogPriceNormalizedMap = new Map(); // normalizedName -> { price, unit }
 let currentUser = null;
@@ -521,6 +524,8 @@ function startWatch(path, options = {}) {
         .map((d) => ({ id: d.id, ...d.data() }))
         .sort((a, b) => toMs(bestDate(b)) - toMs(bestDate(a)));
 
+      syncGlobalCatalogWatchesFromOrders(allOrders);
+
       connectionHintEl.textContent = 'Live \u00b7 ' + allOrders.length + ' order' + (allOrders.length === 1 ? '' : 's');
       applyFiltersAndRender();
     },
@@ -552,6 +557,7 @@ async function loadOrdersFromBackend(user, previousError) {
   selectedOrderIds.clear();
   selectedItemRefs.clear();
   startCategoriesWatch('');
+  startGlobalCatalogWatch();
   const email = user?.email;
   if (!email) {
     connectionHintEl.textContent = 'No readable orders source found.';
@@ -573,6 +579,8 @@ async function loadOrdersFromBackend(user, previousError) {
     allOrders = rows
       .map((row, idx) => ({ id: row.id || row._id || String(idx), ...row }))
       .sort((a, b) => toMs(bestDate(b)) - toMs(bestDate(a)));
+
+    syncGlobalCatalogWatchesFromOrders(allOrders);
 
     connectionHintEl.textContent = 'API live · ' + allOrders.length + ' order' + (allOrders.length === 1 ? '' : 's');
     applyFiltersAndRender();
@@ -884,12 +892,18 @@ function startCatalogWatch(groupId) {
 }
 
 function stopAllGlobalCatalogItemWatches() {
+  if (globalCatalogRenderTimer) {
+    clearTimeout(globalCatalogRenderTimer);
+    globalCatalogRenderTimer = null;
+  }
   for (const unsub of stopGlobalCatalogItemWatchByKey.values()) {
     try { unsub(); } catch {}
   }
   stopGlobalCatalogItemWatchByKey.clear();
   globalCatalogDistributorPriceMapByKey.clear();
   globalCatalogDistributorPriceNormMapByKey.clear();
+  globalCatalogRootKeys.clear();
+  globalCatalogOrderKeys.clear();
 }
 
 function rebuildGlobalCatalogMergedMaps() {
@@ -911,6 +925,159 @@ function rebuildGlobalCatalogMergedMaps() {
   globalCatalogPriceNormalizedMap = mergedNorm;
 }
 
+function scheduleGlobalCatalogRender() {
+  if (!allOrders.length) return;
+  if (globalCatalogRenderTimer) clearTimeout(globalCatalogRenderTimer);
+  globalCatalogRenderTimer = setTimeout(() => {
+    globalCatalogRenderTimer = null;
+    applyFiltersAndRender();
+  }, 60);
+}
+
+function normalizeGlobalCatalogKey(value) {
+  return String(value || '').trim().replace(/^\/+|\/+$/g, '');
+}
+
+function addGlobalCatalogKeyCandidate(rawValue, outSet) {
+  const raw = normalizeGlobalCatalogKey(rawValue);
+  if (!raw) return;
+
+  const fromPath = raw.match(/global_distributor_catalog\/([^/]+)/i);
+  if (fromPath?.[1]) {
+    const keyFromPath = normalizeGlobalCatalogKey(fromPath[1]);
+    if (keyFromPath) outSet.add(keyFromPath);
+  }
+
+  if (raw.includes('/')) return;
+  if (raw.length < 2) return;
+
+  if (/^[A-Za-z0-9_-]+$/.test(raw)) outSet.add(raw);
+
+  const lower = raw.toLowerCase();
+  if (/^[a-z0-9_-]{2,}$/.test(lower)) outSet.add(lower);
+
+  const slug = raw
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '_')
+    .replace(/^_+|_+$/g, '');
+  if (slug.length >= 2) outSet.add(slug);
+}
+
+function extractGlobalCatalogKeysFromOrder(order) {
+  const found = new Set();
+  const orderCandidates = [
+    order?.distributorKey,
+    order?.globalDistributorKey,
+    order?.catalogKey,
+    order?.distributorId,
+    order?.distributorSlug,
+    order?.distributorName,
+    order?.vendorName,
+    order?.vendor,
+    order?.distributor,
+    order?.distributorPath,
+  ];
+  for (const value of orderCandidates) addGlobalCatalogKeyCandidate(value, found);
+
+  const items = extractOrderItems(order);
+  for (const item of items) {
+    addGlobalCatalogKeyCandidate(item?.distributorKey, found);
+    addGlobalCatalogKeyCandidate(item?.globalDistributorKey, found);
+    addGlobalCatalogKeyCandidate(item?.catalogKey, found);
+    addGlobalCatalogKeyCandidate(item?.distributorId, found);
+    addGlobalCatalogKeyCandidate(item?.vendorName, found);
+    addGlobalCatalogKeyCandidate(item?.distributorName, found);
+  }
+
+  return Array.from(found);
+}
+
+function createGlobalCatalogMapsFromDocs(docs) {
+  const byName = new Map();
+  const byNorm = new Map();
+
+  for (const d of docs) {
+    const data = d.data();
+    const name = String(data.name || data.itemName || data.productName || data.ingredient || d.id || '').toLowerCase().trim();
+    if (!name) continue;
+    const normalizedName = normalizeProductName(name);
+    const price = extractPriceFromAny(data);
+    const unit = data.unit || data.uom || '';
+    if (price == null || Number.isNaN(Number(price))) continue;
+    const entry = { price: Number(price), unit };
+    byName.set(name, entry);
+    if (normalizedName) byNorm.set(normalizedName, entry);
+  }
+
+  return { byName, byNorm };
+}
+
+function ensureGlobalCatalogItemsWatch(key) {
+  if (!key || stopGlobalCatalogItemWatchByKey.has(key)) return;
+  const itemsPath = 'global_distributor_catalog/' + key + '/items';
+
+  getDocs(query(collection(db, itemsPath), limit(1000)))
+    .then((snap) => {
+      const { byName, byNorm } = createGlobalCatalogMapsFromDocs(snap.docs);
+      globalCatalogDistributorPriceMapByKey.set(key, byName);
+      globalCatalogDistributorPriceNormMapByKey.set(key, byNorm);
+      rebuildGlobalCatalogMergedMaps();
+      scheduleGlobalCatalogRender();
+    })
+    .catch(() => {});
+
+  const unsub = onSnapshot(
+    collection(db, itemsPath),
+    (itemsSnap) => {
+      const { byName, byNorm } = createGlobalCatalogMapsFromDocs(itemsSnap.docs);
+      globalCatalogDistributorPriceMapByKey.set(key, byName);
+      globalCatalogDistributorPriceNormMapByKey.set(key, byNorm);
+      rebuildGlobalCatalogMergedMaps();
+      scheduleGlobalCatalogRender();
+    },
+    () => {
+      globalCatalogDistributorPriceMapByKey.delete(key);
+      globalCatalogDistributorPriceNormMapByKey.delete(key);
+      stopGlobalCatalogItemWatchByKey.delete(key);
+      rebuildGlobalCatalogMergedMaps();
+      scheduleGlobalCatalogRender();
+    },
+  );
+
+  stopGlobalCatalogItemWatchByKey.set(key, unsub);
+}
+
+function reconcileGlobalCatalogItemWatches() {
+  const desired = new Set([...globalCatalogRootKeys, ...globalCatalogOrderKeys]);
+
+  for (const key of Array.from(stopGlobalCatalogItemWatchByKey.keys())) {
+    if (desired.has(key)) continue;
+    const unsub = stopGlobalCatalogItemWatchByKey.get(key);
+    try { unsub?.(); } catch {}
+    stopGlobalCatalogItemWatchByKey.delete(key);
+    globalCatalogDistributorPriceMapByKey.delete(key);
+    globalCatalogDistributorPriceNormMapByKey.delete(key);
+  }
+
+  for (const key of desired) ensureGlobalCatalogItemsWatch(key);
+
+  rebuildGlobalCatalogMergedMaps();
+  scheduleGlobalCatalogRender();
+}
+
+function syncGlobalCatalogWatchesFromOrders(orders) {
+  globalCatalogOrderKeys.clear();
+  const maxKeys = 60;
+  for (const order of orders || []) {
+    for (const key of extractGlobalCatalogKeysFromOrder(order)) {
+      globalCatalogOrderKeys.add(key);
+      if (globalCatalogOrderKeys.size >= maxKeys) break;
+    }
+    if (globalCatalogOrderKeys.size >= maxKeys) break;
+  }
+  reconcileGlobalCatalogItemWatches();
+}
+
 function startGlobalCatalogWatch() {
   if (stopGlobalCatalogRootWatch) { stopGlobalCatalogRootWatch(); stopGlobalCatalogRootWatch = null; }
   stopAllGlobalCatalogItemWatches();
@@ -920,61 +1087,20 @@ function startGlobalCatalogWatch() {
   stopGlobalCatalogRootWatch = onSnapshot(
     collection(db, 'global_distributor_catalog'),
     (snap) => {
-      const keys = new Set(snap.docs.map((d) => d.id));
-
-      for (const key of Array.from(stopGlobalCatalogItemWatchByKey.keys())) {
-        if (keys.has(key)) continue;
-        const unsub = stopGlobalCatalogItemWatchByKey.get(key);
-        try { unsub?.(); } catch {}
-        stopGlobalCatalogItemWatchByKey.delete(key);
-        globalCatalogDistributorPriceMapByKey.delete(key);
-        globalCatalogDistributorPriceNormMapByKey.delete(key);
+      globalCatalogRootKeys.clear();
+      for (const d of snap.docs) {
+        const key = normalizeGlobalCatalogKey(d.id);
+        if (key) globalCatalogRootKeys.add(key);
       }
-
-      for (const key of keys) {
-        if (stopGlobalCatalogItemWatchByKey.has(key)) continue;
-        const itemsPath = 'global_distributor_catalog/' + key + '/items';
-        const unsub = onSnapshot(
-          collection(db, itemsPath),
-          (itemsSnap) => {
-            const byName = new Map();
-            const byNorm = new Map();
-            for (const d of itemsSnap.docs) {
-              const data = d.data();
-              const name = String(data.name || data.itemName || data.productName || data.ingredient || d.id || '').toLowerCase().trim();
-              if (!name) continue;
-              const normalizedName = normalizeProductName(name);
-              const price = extractPriceFromAny(data);
-              const unit = data.unit || data.uom || '';
-              if (price == null || Number.isNaN(Number(price))) continue;
-              const entry = { price: Number(price), unit };
-              byName.set(name, entry);
-              if (normalizedName) byNorm.set(normalizedName, entry);
-            }
-            globalCatalogDistributorPriceMapByKey.set(key, byName);
-            globalCatalogDistributorPriceNormMapByKey.set(key, byNorm);
-            rebuildGlobalCatalogMergedMaps();
-            if (allOrders.length) applyFiltersAndRender();
-          },
-          () => {
-            globalCatalogDistributorPriceMapByKey.delete(key);
-            globalCatalogDistributorPriceNormMapByKey.delete(key);
-            rebuildGlobalCatalogMergedMaps();
-            if (allOrders.length) applyFiltersAndRender();
-          },
-        );
-        stopGlobalCatalogItemWatchByKey.set(key, unsub);
-      }
-
-      rebuildGlobalCatalogMergedMaps();
-      if (allOrders.length) applyFiltersAndRender();
+      reconcileGlobalCatalogItemWatches();
     },
     () => {
-      stopAllGlobalCatalogItemWatches();
-      globalCatalogPriceMap = new Map();
-      globalCatalogPriceNormalizedMap = new Map();
+      globalCatalogRootKeys.clear();
+      reconcileGlobalCatalogItemWatches();
     },
   );
+
+  syncGlobalCatalogWatchesFromOrders(allOrders);
 }
 
 async function createCategoryFromInput() {
