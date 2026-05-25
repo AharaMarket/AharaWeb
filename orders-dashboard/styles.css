@@ -420,6 +420,48 @@ button.small {
   flex-wrap: wrap;
 }
 
+.category-toolbar {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.category-toolbar-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.category-toolbar-row #newCategoryName {
+  width: 220px;
+}
+
+.category-toolbar-row #bulkCategorySelect {
+  min-width: 200px;
+}
+
+#categoryToolbarHint.error {
+  color: var(--danger);
+}
+
+#categoryToolbarHint.success {
+  color: var(--success);
+}
+
+.chip-action {
+  min-width: 0;
+  width: auto;
+  height: 24px;
+  border-radius: 999px;
+  padding: 0 8px;
+  border: 1px solid #d0c2ff;
+  background: #fff;
+  color: #5a3ee3;
+  font-size: 11px;
+  font-weight: 700;
+}
+
 .chip {
   display: inline-flex;
   align-items: center;
@@ -533,16 +575,54 @@ button.small {
   gap: 12px;
 }
 
+.history-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mode-tabs {
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+
+.mode-tab {
+  min-width: 0;
+  width: auto;
+  height: 32px;
+  border-radius: 8px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: #707eae;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mode-tab.active {
+  color: #fff;
+  background: linear-gradient(135deg, #422afb, #7551ff);
+}
+
 .table-wrap {
   overflow: auto;
   border: 1px solid #eef2fb;
   border-radius: 18px;
 }
 
+#historySection.mode-view .edit-only,
+#historySection.mode-view .select-col {
+  display: none !important;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 860px;
+  min-width: 980px;
   background: #fff;
 }
 
@@ -559,6 +639,17 @@ td {
   padding: 14px 16px;
   border-bottom: 1px solid #eef2fb;
   font-size: 13px;
+}
+
+th:first-child,
+td:first-child {
+  width: 82px;
+}
+
+td input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
 }
 
 th {
@@ -657,6 +748,22 @@ tbody tr:hover {
   font-size: 12px;
 }
 
+.order-total-inline {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2b3674;
+}
+
+.detail-subtotal {
+  margin: 10px 0 4px;
+  font-size: 13px;
+  color: #2b3674;
+  text-align: right;
+  padding-right: 4px;
+}
+
 .tag {
   display: inline-flex;
   align-items: center;
@@ -729,7 +836,8 @@ tbody tr:hover {
   .row,
   .stats-grid,
   .insights-grid,
-  .filter-row {
+  .filter-row,
+  .category-toolbar-row {
     grid-template-columns: 1fr;
   }
 

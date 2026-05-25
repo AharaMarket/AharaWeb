@@ -14,10 +14,15 @@ import {
 import {
   getFirestore,
   collection,
+  addDoc,
+  doc,
   getDocs,
+  updateDoc,
   limit,
   onSnapshot,
   query,
+  serverTimestamp,
+  writeBatch,
   where,
 } from 'https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js';
 
@@ -133,13 +138,15 @@ const summaryGridEl     = document.getElementById('summaryGrid');
 const statusBucketsEl   = document.getElementById('statusBuckets');
 const typeBucketsEl     = document.getElementById('typeBuckets');
 const monthBucketsEl    = document.getElementById('monthBuckets');
+const historySectionEl  = document.getElementById('historySection');
+const ordersViewTabEl   = document.getElementById('ordersViewTab');
+const ordersEditTabEl   = document.getElementById('ordersEditTab');
 const ordersTableEl     = document.getElementById('ordersTableBody');
 const tableCountEl      = document.getElementById('tableCount');
 const resultsSummaryEl  = document.getElementById('resultsSummary');
 const activeFiltersEl   = document.getElementById('activeFilters');
 const datePresetEl      = document.getElementById('datePreset');
-const startDateEl       = document.getElementById('startDate');
-const endDateEl         = document.getElementById('endDate');
+const categoryFilterEl  = document.getElementById('categoryFilter');
 const typeFilterEl      = document.getElementById('typeFilter');
 const statusFilterEl    = document.getElementById('statusFilter');
 const searchEl          = document.getElementById('searchInput');
@@ -148,8 +155,29 @@ const clearFiltersBtn   = document.getElementById('clearFiltersBtn');
 // ── State ─────────────────────────────────────────────────────────────────────
 let allOrders    = [];
 let stopWatching = null;
+let stopCategoriesWatch = null;
+let allCategories = [];
+let stopCatalogWatch = null;
+let catalogPriceMap = new Map(); // lowerName -> { price, unit }
+let catalogPriceNormalizedMap = new Map(); // normalizedName -> { price, unit }
+let stopGlobalCatalogRootWatch = null;
+const stopGlobalCatalogItemWatchByKey = new Map();
+const globalCatalogDistributorPriceMapByKey = new Map();
+const globalCatalogDistributorPriceNormMapByKey = new Map();
+let globalCatalogPriceMap = new Map(); // lowerName -> { price, unit }
+let globalCatalogPriceNormalizedMap = new Map(); // normalizedName -> { price, unit }
+let currentUser = null;
+let currentCollectionPath = '';
+let currentGroupId = '';
+let currentCategoriesPath = '';
+let dataSourceMode = '';
+let lastRenderedOrders = [];
+let ordersMode = 'view';
+const selectedOrderIds = new Set();
+const selectedItemRefs = new Set();
 const SOURCE_PREF_KEY = 'AHARA_ORDER_DASH_SOURCE_PREF';
 const BACKEND_BASE_URL = window.AHARA_BACKEND_BASE_URL || 'http://localhost:5050';
+const ITEM_REF_SEPARATOR = '::';
 
 ordersTableEl.addEventListener('click', (event) => {
   const btn = event.target.closest('[data-detail-toggle]');
@@ -161,6 +189,106 @@ ordersTableEl.addEventListener('click', (event) => {
   detailRow.classList.toggle('hidden', isOpen);
   btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
   btn.querySelector('.arrow')?.classList.toggle('open', !isOpen);
+});
+
+ordersViewTabEl?.addEventListener('click', () => setOrdersMode('view'));
+ordersEditTabEl?.addEventListener('click', () => setOrdersMode('edit'));
+
+function setOrdersMode(mode) {
+  ordersMode = mode === 'edit' ? 'edit' : 'view';
+  const viewMode = ordersMode === 'view';
+  historySectionEl?.classList.toggle('mode-view', viewMode);
+  historySectionEl?.classList.toggle('mode-edit', !viewMode);
+  ordersViewTabEl?.classList.toggle('active', viewMode);
+  ordersEditTabEl?.classList.toggle('active', !viewMode);
+  ordersViewTabEl?.setAttribute('aria-selected', viewMode ? 'true' : 'false');
+  ordersEditTabEl?.setAttribute('aria-selected', viewMode ? 'false' : 'true');
+  if (!viewMode) {
+    // Reset all filters when entering edit mode
+    const datePresetEl   = document.getElementById('datePreset');
+    const typeFilterEl   = document.getElementById('typeFilter');
+    const statusFilterEl = document.getElementById('statusFilter');
+    const searchInputEl  = document.getElementById('searchInput');
+    if (datePresetEl)   datePresetEl.value   = datePresetEl.options[0]?.value ?? 'all';
+    if (categoryFilterEl) categoryFilterEl.value = 'all';
+    if (typeFilterEl)   typeFilterEl.value   = 'all';
+    if (statusFilterEl) statusFilterEl.value = 'all';
+    if (searchInputEl)  searchInputEl.value  = '';
+    applyFiltersAndRender();
+  }
+}
+
+setOrdersMode('view');
+
+function getItemRefsForOrder(orderId) {
+  const order = allOrders.find((o) => String(o.id) === String(orderId));
+  if (!order) return [];
+  const normalizedOrderId = String(order.id);
+  return extractOrderItems(order)
+    .filter((item) => item?.itemKey)
+    .map((item) => normalizedOrderId + ITEM_REF_SEPARATOR + item.itemKey);
+}
+
+function syncOrderCheckboxUi(orderId) {
+  const normalized = String(orderId);
+  const isChecked = selectedOrderIds.has(normalized);
+  const orderCheckboxes = ordersTableEl.querySelectorAll('input[data-order-select]');
+  for (const input of orderCheckboxes) {
+    if (String(input.getAttribute('data-order-select')) === normalized) {
+      input.checked = isChecked;
+    }
+  }
+}
+
+function syncItemCheckboxesUi(orderId) {
+  const prefix = String(orderId) + ITEM_REF_SEPARATOR;
+  const itemCheckboxes = ordersTableEl.querySelectorAll('input[data-item-select]');
+  for (const input of itemCheckboxes) {
+    const ref = String(input.getAttribute('data-item-select') || '');
+    if (!ref.startsWith(prefix)) continue;
+    input.checked = selectedItemRefs.has(ref);
+  }
+}
+
+ordersTableEl.addEventListener('change', (event) => {
+  const checkbox = event.target.closest('[data-order-select]');
+  if (checkbox) {
+    const orderId = checkbox.getAttribute('data-order-select');
+    if (!orderId) return;
+    const normalizedOrderId = String(orderId);
+    const itemRefs = getItemRefsForOrder(normalizedOrderId);
+    if (checkbox.checked) {
+      selectedOrderIds.add(normalizedOrderId);
+      for (const ref of itemRefs) selectedItemRefs.add(ref);
+    } else {
+      selectedOrderIds.delete(normalizedOrderId);
+      for (const ref of itemRefs) selectedItemRefs.delete(ref);
+    }
+    syncItemCheckboxesUi(normalizedOrderId);
+    refreshSelectionUI();
+    return;
+  }
+
+  const itemCheckbox = event.target.closest('[data-item-select]');
+  if (!itemCheckbox) return;
+  const itemRef = itemCheckbox.getAttribute('data-item-select');
+  if (!itemRef) return;
+  if (itemCheckbox.checked) selectedItemRefs.add(itemRef);
+  else selectedItemRefs.delete(itemRef);
+
+  const sep = itemRef.indexOf(ITEM_REF_SEPARATOR);
+  const orderId = sep >= 0 ? itemRef.slice(0, sep) : '';
+  if (orderId) {
+    const orderItemRefs = getItemRefsForOrder(orderId);
+    if (orderItemRefs.length && orderItemRefs.every((ref) => selectedItemRefs.has(ref))) {
+      selectedOrderIds.add(orderId);
+    } else {
+      selectedOrderIds.delete(orderId);
+    }
+    syncOrderCheckboxUi(orderId);
+  }
+
+  refreshSelectionUI();
 });
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
@@ -237,6 +365,7 @@ signOutBtn.addEventListener('click', async () => {
 });
 
 onAuthStateChanged(auth, (user) => {
+  currentUser = user || null;
   const isSignedIn = Boolean(user);
   authScreenEl.classList.toggle('hidden', isSignedIn);
   dashboardAppEl.classList.toggle('hidden', !isSignedIn);
@@ -246,7 +375,23 @@ onAuthStateChanged(auth, (user) => {
 
   if (!isSignedIn) {
     if (stopWatching) { stopWatching(); stopWatching = null; }
+    if (stopCategoriesWatch) { stopCategoriesWatch(); stopCategoriesWatch = null; }
+    if (stopCatalogWatch)    { stopCatalogWatch();    stopCatalogWatch    = null; }
+    if (stopGlobalCatalogRootWatch) { stopGlobalCatalogRootWatch(); stopGlobalCatalogRootWatch = null; }
+    stopAllGlobalCatalogItemWatches();
+    catalogPriceMap = new Map();
+    catalogPriceNormalizedMap = new Map();
+    globalCatalogPriceMap = new Map();
+    globalCatalogPriceNormalizedMap = new Map();
     allOrders = [];
+    allCategories = [];
+    selectedOrderIds.clear();
+    selectedItemRefs.clear();
+    currentCollectionPath = '';
+    currentGroupId = '';
+    currentCategoriesPath = '';
+    dataSourceMode = '';
+    renderCategoryUI();
     applyFiltersAndRender();
     collectionLabelEl.textContent = 'Collection: not configured.';
     connectionHintEl.textContent = 'Sign in to load order history.';
@@ -256,9 +401,6 @@ onAuthStateChanged(auth, (user) => {
 
   startDataFeed(user);
 });
-
-startDateEl.disabled = true;
-endDateEl.disabled   = true;
 
 function resolveCollectionPath(user) {
   const queryPath = new URLSearchParams(window.location.search).get('collection');
@@ -362,6 +504,13 @@ async function startDataFeed(user) {
 
 function startWatch(path, options = {}) {
   if (stopWatching) { stopWatching(); stopWatching = null; }
+  dataSourceMode = 'firestore';
+  currentCollectionPath = path;
+  currentGroupId = extractGroupIdFromOrdersPath(path);
+  currentCategoriesPath = getCategoriesPathFromOrdersPath(path);
+  startCategoriesWatch(currentCategoriesPath);
+  startCatalogWatch(currentGroupId);
+  startGlobalCatalogWatch();
   connectionHintEl.textContent  = 'Connecting\u2026';
   collectionLabelEl.textContent = 'Collection: ' + path;
 
@@ -389,6 +538,20 @@ function startWatch(path, options = {}) {
 
 async function loadOrdersFromBackend(user, previousError) {
   if (stopWatching) { stopWatching(); stopWatching = null; }
+  if (stopCatalogWatch) { stopCatalogWatch(); stopCatalogWatch = null; }
+  if (stopGlobalCatalogRootWatch) { stopGlobalCatalogRootWatch(); stopGlobalCatalogRootWatch = null; }
+  stopAllGlobalCatalogItemWatches();
+  catalogPriceMap = new Map();
+  catalogPriceNormalizedMap = new Map();
+  globalCatalogPriceMap = new Map();
+  globalCatalogPriceNormalizedMap = new Map();
+  dataSourceMode = 'backend';
+  currentCollectionPath = '';
+  currentGroupId = '';
+  currentCategoriesPath = '';
+  selectedOrderIds.clear();
+  selectedItemRefs.clear();
+  startCategoriesWatch('');
   const email = user?.email;
   if (!email) {
     connectionHintEl.textContent = 'No readable orders source found.';
@@ -459,34 +622,579 @@ function sanitizePath(path) {
   return String(path || '').trim().replace(/^\/+|\/+$/g, '');
 }
 
+function extractGroupIdFromOrdersPath(path) {
+  const match = String(path || '').match(/^groups\/([^/]+)\/orders$/);
+  return match ? match[1] : '';
+}
+
+function getCategoriesPathFromOrdersPath(path) {
+  const match = String(path || '').match(/^(.*)\/orders$/);
+  return match ? (match[1] + '/categories') : '';
+}
+
+function chunk(items, size = 450) {
+  const parts = [];
+  for (let i = 0; i < items.length; i += size) parts.push(items.slice(i, i + size));
+  return parts;
+}
+
+function ensureCategoryToolbar() {
+  if (document.getElementById('categoryToolbar')) return;
+  const tableWrap = ordersTableEl.closest('.table-wrap');
+  if (!tableWrap || !tableWrap.parentElement) return;
+
+  const toolbar = document.createElement('div');
+  toolbar.id = 'categoryToolbar';
+  toolbar.className = 'category-toolbar edit-only';
+  toolbar.innerHTML = ''
+    + '<div class="category-toolbar-row">'
+    + '<input id="newCategoryName" type="text" placeholder="Create category" />'
+    + '<button id="addCategoryBtn" type="button">Add</button>'
+    + '<select id="bulkCategorySelect">'
+    + '<option value="">Assign selected to…</option>'
+    + '</select>'
+    + '<button id="applySelectionCategoryBtn" type="button">Apply to selected</button>'
+    + '<button id="selectAllVisibleBtn" class="ghost" type="button">Select visible</button>'
+    + '<button id="clearSelectionBtn" class="ghost" type="button">Clear</button>'
+    + '<span id="selectedCountLabel" class="muted">0 selected</span>'
+    + '</div>'
+    + '<p id="categoryToolbarHint" class="muted">Categories are available when Firestore group orders are loaded.</p>'
+    + '<div id="categoryPills" class="chips"></div>';
+
+  tableWrap.parentElement.insertBefore(toolbar, tableWrap);
+
+  toolbar.addEventListener('click', async (event) => {
+    try {
+      const addBtn = event.target.closest('#addCategoryBtn');
+      const applySelectionBtn = event.target.closest('#applySelectionCategoryBtn');
+      const selectVisibleBtn = event.target.closest('#selectAllVisibleBtn');
+      const clearBtn = event.target.closest('#clearSelectionBtn');
+      const renameBtn = event.target.closest('[data-rename-cat-id]');
+      const archiveBtn = event.target.closest('[data-archive-cat-id]');
+
+      if (addBtn) {
+        await createCategoryFromInput();
+        return;
+      }
+
+      if (applySelectionBtn) {
+        await applyCategoryToSelection();
+        return;
+      }
+
+      if (selectVisibleBtn) {
+        for (const order of lastRenderedOrders) {
+          if (order?.id != null) selectedOrderIds.add(String(order.id));
+        }
+        refreshSelectionUI();
+        applyFiltersAndRender();
+        return;
+      }
+
+      if (clearBtn) {
+        selectedOrderIds.clear();
+        selectedItemRefs.clear();
+        refreshSelectionUI();
+        applyFiltersAndRender();
+        return;
+      }
+
+      if (renameBtn) {
+        const categoryId = renameBtn.getAttribute('data-rename-cat-id');
+        if (!categoryId || !currentCategoriesPath || !currentUser) return;
+        const category = allCategories.find((c) => c.id === categoryId);
+        const renamed = window.prompt('Rename category', category?.name || '');
+        if (!renamed || !renamed.trim()) return;
+
+        const clean = renamed.trim();
+        const duplicateQuery = query(
+          collection(db, currentCategoriesPath),
+          where('nameLower', '==', clean.toLowerCase()),
+          where('archived', '==', false),
+          limit(1),
+        );
+        const duplicate = await getDocs(duplicateQuery);
+        if (!duplicate.empty && duplicate.docs[0].id !== categoryId) {
+          setCategoryToolbarHint('Category name already exists.', 'error');
+          return;
+        }
+
+        await updateDoc(doc(db, currentCategoriesPath + '/' + categoryId), {
+          name: clean,
+          nameLower: clean.toLowerCase(),
+          updatedAt: serverTimestamp(),
+          updatedBy: currentUser.uid,
+        });
+        setCategoryToolbarHint('Category renamed.', 'success');
+        return;
+      }
+
+      if (archiveBtn) {
+        const categoryId = archiveBtn.getAttribute('data-archive-cat-id');
+        if (!categoryId || !currentCategoriesPath || !currentUser) return;
+        await updateDoc(doc(db, currentCategoriesPath + '/' + categoryId), {
+          archived: true,
+          updatedAt: serverTimestamp(),
+          updatedBy: currentUser.uid,
+        });
+        setCategoryToolbarHint('Category archived.', 'success');
+      }
+    } catch (err) {
+      setCategoryToolbarHint(getFirebaseActionErrorMessage(err), 'error');
+      console.error(err);
+    }
+  });
+
+  const categoryInput = toolbar.querySelector('#newCategoryName');
+  categoryInput?.addEventListener('keydown', async (event) => {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    await createCategoryFromInput();
+  });
+}
+
+function setCategoryToolbarHint(message, tone = '') {
+  const hintEl = document.getElementById('categoryToolbarHint');
+  if (!hintEl) return;
+  hintEl.textContent = message;
+  hintEl.classList.remove('error', 'success');
+  if (tone) hintEl.classList.add(tone);
+}
+
+function refreshSelectionUI() {
+  const selectedCountLabel = document.getElementById('selectedCountLabel');
+  if (selectedCountLabel) {
+    selectedCountLabel.textContent = selectedOrderIds.size + ' orders, ' + selectedItemRefs.size + ' items selected';
+  }
+}
+
+function renderCategoryUI() {
+  ensureCategoryToolbar();
+
+  const addBtn = document.getElementById('addCategoryBtn');
+  const applySelectionBtn = document.getElementById('applySelectionCategoryBtn');
+  const selectVisibleBtn = document.getElementById('selectAllVisibleBtn');
+  const clearSelectionBtn = document.getElementById('clearSelectionBtn');
+  const bulkCategorySelect = document.getElementById('bulkCategorySelect');
+  const newCategoryName = document.getElementById('newCategoryName');
+  const categoryPills = document.getElementById('categoryPills');
+
+  const categoriesEnabled = Boolean(currentCategoriesPath && currentUser && dataSourceMode === 'firestore');
+  if (addBtn) addBtn.disabled = !categoriesEnabled;
+  if (applySelectionBtn) applySelectionBtn.disabled = !categoriesEnabled;
+  if (selectVisibleBtn) selectVisibleBtn.disabled = !categoriesEnabled;
+  if (clearSelectionBtn) clearSelectionBtn.disabled = !categoriesEnabled;
+  if (bulkCategorySelect) bulkCategorySelect.disabled = !categoriesEnabled;
+  if (newCategoryName) newCategoryName.disabled = !categoriesEnabled;
+
+  if (!currentUser) {
+    setCategoryToolbarHint('Sign in to manage categories and assign them.');
+  } else if (dataSourceMode !== 'firestore') {
+    setCategoryToolbarHint('Category updates are disabled in backend mode. Use Firestore source.', 'error');
+  } else if (!currentCategoriesPath) {
+    setCategoryToolbarHint('Collection must end with /orders to enable categories.', 'error');
+  } else {
+    setCategoryToolbarHint('Create categories, then apply to selected orders/items with one button.');
+  }
+
+  if (bulkCategorySelect) {
+    bulkCategorySelect.innerHTML = '<option value="">Assign selected to…</option>'
+      + allCategories.map((c) => '<option value="' + esc(c.id) + '">' + esc(c.name || 'Unnamed') + '</option>').join('');
+  }
+
+  if (categoryFilterEl) {
+    const prior = categoryFilterEl.value;
+    categoryFilterEl.innerHTML = '<option value="all">All categories</option>'
+      + '<option value="uncategorized">Uncategorized</option>'
+      + allCategories.map((c) => '<option value="' + esc(c.id) + '">' + esc(c.name || 'Unnamed') + '</option>').join('');
+    const hasPrior = Array.from(categoryFilterEl.options).some((opt) => opt.value === prior);
+    categoryFilterEl.value = hasPrior ? prior : 'all';
+  }
+
+  if (categoryPills) {
+    categoryPills.innerHTML = allCategories.map((c) => ''
+      + '<span class="chip">'
+      + esc(c.name || 'Unnamed')
+      + '<button type="button" class="chip-action" data-rename-cat-id="' + esc(c.id) + '">Rename</button>'
+      + '<button type="button" class="chip-action" data-archive-cat-id="' + esc(c.id) + '">Archive</button>'
+      + '</span>'
+    ).join('');
+  }
+
+  refreshSelectionUI();
+}
+
+function startCategoriesWatch(categoriesPath) {
+  if (stopCategoriesWatch) { stopCategoriesWatch(); stopCategoriesWatch = null; }
+  allCategories = [];
+  renderCategoryUI();
+
+  if (!categoriesPath) return;
+
+  stopCategoriesWatch = onSnapshot(
+    query(
+      collection(db, categoriesPath),
+      where('archived', '==', false),
+    ),
+    (snap) => {
+      allCategories = snap.docs
+        .map((d) => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => String(a.name || '').localeCompare(String(b.name || '')));
+      renderCategoryUI();
+    },
+    () => {
+      allCategories = [];
+      renderCategoryUI();
+    },
+  );
+}
+
+function startCatalogWatch(groupId) {
+  if (stopCatalogWatch) { stopCatalogWatch(); stopCatalogWatch = null; }
+  catalogPriceMap = new Map();
+  catalogPriceNormalizedMap = new Map();
+  if (!groupId) return;
+  const catalogPath = 'groups/' + groupId + '/catalog';
+  stopCatalogWatch = onSnapshot(
+    collection(db, catalogPath),
+    (snap) => {
+      catalogPriceMap = new Map();
+      catalogPriceNormalizedMap = new Map();
+      for (const d of snap.docs) {
+        const data = d.data();
+        const name = String(data.name || data.itemName || data.productName || data.ingredient || d.id || '').toLowerCase().trim();
+        const normalizedName = normalizeProductName(name);
+        if (!name) continue;
+        const price = extractPriceFromAny(data);
+        const unit  = data.unit || data.uom || '';
+        if (price != null && !Number.isNaN(Number(price))) {
+          const entry = { price: Number(price), unit };
+          catalogPriceMap.set(name, entry);
+          if (normalizedName) catalogPriceNormalizedMap.set(normalizedName, entry);
+        }
+      }
+      // Re-render with updated prices (if orders are loaded)
+      if (allOrders.length) applyFiltersAndRender();
+    },
+    () => {
+      catalogPriceMap = new Map();
+      catalogPriceNormalizedMap = new Map();
+    },
+  );
+}
+
+function stopAllGlobalCatalogItemWatches() {
+  for (const unsub of stopGlobalCatalogItemWatchByKey.values()) {
+    try { unsub(); } catch {}
+  }
+  stopGlobalCatalogItemWatchByKey.clear();
+  globalCatalogDistributorPriceMapByKey.clear();
+  globalCatalogDistributorPriceNormMapByKey.clear();
+}
+
+function rebuildGlobalCatalogMergedMaps() {
+  const merged = new Map();
+  const mergedNorm = new Map();
+
+  for (const byName of globalCatalogDistributorPriceMapByKey.values()) {
+    for (const [name, entry] of byName.entries()) {
+      merged.set(name, entry);
+    }
+  }
+  for (const byNorm of globalCatalogDistributorPriceNormMapByKey.values()) {
+    for (const [name, entry] of byNorm.entries()) {
+      mergedNorm.set(name, entry);
+    }
+  }
+
+  globalCatalogPriceMap = merged;
+  globalCatalogPriceNormalizedMap = mergedNorm;
+}
+
+function startGlobalCatalogWatch() {
+  if (stopGlobalCatalogRootWatch) { stopGlobalCatalogRootWatch(); stopGlobalCatalogRootWatch = null; }
+  stopAllGlobalCatalogItemWatches();
+  globalCatalogPriceMap = new Map();
+  globalCatalogPriceNormalizedMap = new Map();
+
+  stopGlobalCatalogRootWatch = onSnapshot(
+    collection(db, 'global_distributor_catalog'),
+    (snap) => {
+      const keys = new Set(snap.docs.map((d) => d.id));
+
+      for (const key of Array.from(stopGlobalCatalogItemWatchByKey.keys())) {
+        if (keys.has(key)) continue;
+        const unsub = stopGlobalCatalogItemWatchByKey.get(key);
+        try { unsub?.(); } catch {}
+        stopGlobalCatalogItemWatchByKey.delete(key);
+        globalCatalogDistributorPriceMapByKey.delete(key);
+        globalCatalogDistributorPriceNormMapByKey.delete(key);
+      }
+
+      for (const key of keys) {
+        if (stopGlobalCatalogItemWatchByKey.has(key)) continue;
+        const itemsPath = 'global_distributor_catalog/' + key + '/items';
+        const unsub = onSnapshot(
+          collection(db, itemsPath),
+          (itemsSnap) => {
+            const byName = new Map();
+            const byNorm = new Map();
+            for (const d of itemsSnap.docs) {
+              const data = d.data();
+              const name = String(data.name || data.itemName || data.productName || data.ingredient || d.id || '').toLowerCase().trim();
+              if (!name) continue;
+              const normalizedName = normalizeProductName(name);
+              const price = extractPriceFromAny(data);
+              const unit = data.unit || data.uom || '';
+              if (price == null || Number.isNaN(Number(price))) continue;
+              const entry = { price: Number(price), unit };
+              byName.set(name, entry);
+              if (normalizedName) byNorm.set(normalizedName, entry);
+            }
+            globalCatalogDistributorPriceMapByKey.set(key, byName);
+            globalCatalogDistributorPriceNormMapByKey.set(key, byNorm);
+            rebuildGlobalCatalogMergedMaps();
+            if (allOrders.length) applyFiltersAndRender();
+          },
+          () => {
+            globalCatalogDistributorPriceMapByKey.delete(key);
+            globalCatalogDistributorPriceNormMapByKey.delete(key);
+            rebuildGlobalCatalogMergedMaps();
+            if (allOrders.length) applyFiltersAndRender();
+          },
+        );
+        stopGlobalCatalogItemWatchByKey.set(key, unsub);
+      }
+
+      rebuildGlobalCatalogMergedMaps();
+      if (allOrders.length) applyFiltersAndRender();
+    },
+    () => {
+      stopAllGlobalCatalogItemWatches();
+      globalCatalogPriceMap = new Map();
+      globalCatalogPriceNormalizedMap = new Map();
+    },
+  );
+}
+
+async function createCategoryFromInput() {
+  if (!currentCategoriesPath || !currentUser || dataSourceMode !== 'firestore') {
+    setCategoryToolbarHint('Category management is available only for Firestore group orders.', 'error');
+    return;
+  }
+
+  const input = document.getElementById('newCategoryName');
+  const name = (input?.value || '').trim();
+  if (!name) {
+    setCategoryToolbarHint('Enter a category name first.', 'error');
+    return;
+  }
+
+  try {
+    const duplicateQuery = query(
+      collection(db, currentCategoriesPath),
+      where('nameLower', '==', name.toLowerCase()),
+      where('archived', '==', false),
+      limit(1),
+    );
+    const duplicate = await getDocs(duplicateQuery);
+    if (!duplicate.empty) {
+      setCategoryToolbarHint('Category already exists.', 'error');
+      return;
+    }
+
+    await addDoc(collection(db, currentCategoriesPath), {
+      name,
+      nameLower: name.toLowerCase(),
+      archived: false,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp(),
+      createdBy: currentUser.uid,
+      updatedBy: currentUser.uid,
+    });
+
+    input.value = '';
+    setCategoryToolbarHint('Category added.', 'success');
+  } catch (err) {
+    setCategoryToolbarHint(getFirebaseActionErrorMessage(err), 'error');
+    console.error(err);
+  }
+}
+
+async function applyCategoryToSelection() {
+  if (!selectedOrderIds.size && !selectedItemRefs.size) {
+    setCategoryToolbarHint('Select at least one order or item.', 'error');
+    return;
+  }
+  if (!currentCollectionPath || !currentCategoriesPath || !currentUser || dataSourceMode !== 'firestore') {
+    setCategoryToolbarHint('Categorization works only on Firestore group orders.', 'error');
+    return;
+  }
+
+  const select = document.getElementById('bulkCategorySelect');
+  const categoryId = String(select?.value || '');
+  if (!categoryId) {
+    setCategoryToolbarHint('Pick a category first.', 'error');
+    return;
+  }
+
+  try {
+    const updatesByOrder = new Map();
+
+    for (const orderId of selectedOrderIds) {
+      const normalizedOrderId = String(orderId);
+      if (!updatesByOrder.has(normalizedOrderId)) updatesByOrder.set(normalizedOrderId, {});
+      const patch = updatesByOrder.get(normalizedOrderId);
+      patch.categoryId = categoryId;
+      patch.categorizedAt = serverTimestamp();
+      patch.categorizedBy = currentUser.uid;
+    }
+
+    for (const ref of selectedItemRefs) {
+      const sep = ref.indexOf(ITEM_REF_SEPARATOR);
+      if (sep < 0) continue;
+      const orderId = ref.slice(0, sep);
+      const itemKey = ref.slice(sep + ITEM_REF_SEPARATOR.length);
+      if (!orderId || !itemKey) continue;
+
+      if (!updatesByOrder.has(orderId)) updatesByOrder.set(orderId, {});
+      const patch = updatesByOrder.get(orderId);
+      const order = allOrders.find((o) => String(o.id) === String(orderId));
+      const existingMap = patch.itemCategories
+        || (order && typeof order.itemCategories === 'object' && order.itemCategories ? { ...order.itemCategories } : {});
+      existingMap[itemKey] = categoryId;
+      patch.itemCategories = existingMap;
+    }
+
+    const orderIds = Array.from(updatesByOrder.keys());
+    for (const idsChunk of chunk(orderIds, 450)) {
+      const batch = writeBatch(db);
+      for (const orderId of idsChunk) {
+        const payload = {
+          ...updatesByOrder.get(orderId),
+          updatedAt: serverTimestamp(),
+        };
+        batch.update(doc(db, currentCollectionPath + '/' + orderId), payload);
+      }
+      await batch.commit();
+    }
+
+    const orderCount = selectedOrderIds.size;
+    const itemCount = selectedItemRefs.size;
+    selectedOrderIds.clear();
+    selectedItemRefs.clear();
+    refreshSelectionUI();
+    setCategoryToolbarHint('Category applied to ' + orderCount + ' order' + (orderCount === 1 ? '' : 's') + ' and ' + itemCount + ' item' + (itemCount === 1 ? '' : 's') + '.', 'success');
+  } catch (err) {
+    setCategoryToolbarHint(getFirebaseActionErrorMessage(err), 'error');
+    console.error(err);
+  }
+}
+
 // ── Filters ───────────────────────────────────────────────────────────────────
-datePresetEl.addEventListener('change', () => {
-  const custom = datePresetEl.value === 'custom';
-  startDateEl.disabled = !custom;
-  endDateEl.disabled   = !custom;
-  if (!custom) { startDateEl.value = ''; endDateEl.value = ''; }
-  applyFiltersAndRender();
-});
-startDateEl.addEventListener('change',    applyFiltersAndRender);
-endDateEl.addEventListener('change',      applyFiltersAndRender);
+datePresetEl.addEventListener('change', applyFiltersAndRender);
+categoryFilterEl.addEventListener('change', applyFiltersAndRender);
 typeFilterEl.addEventListener('change',   applyFiltersAndRender);
 statusFilterEl.addEventListener('change', applyFiltersAndRender);
 searchEl.addEventListener('input',        applyFiltersAndRender);
 
 clearFiltersBtn.addEventListener('click', () => {
   datePresetEl.value   = 'all';
-  startDateEl.value    = '';
-  endDateEl.value      = '';
+  categoryFilterEl.value = 'all';
   typeFilterEl.value   = 'all';
   statusFilterEl.value = 'all';
   searchEl.value       = '';
-  startDateEl.disabled = true;
-  endDateEl.disabled   = true;
   applyFiltersAndRender();
 });
 
+function normalizeCategoryToken(value) {
+  return String(value || '').trim().toLowerCase();
+}
+
+function resolveCategoryName(categoryToken) {
+  const token = String(categoryToken || '').trim();
+  if (!token) return 'Uncategorized';
+  const byId = allCategories.find((c) => String(c.id) === token);
+  if (byId) return byId.name || 'Uncategorized';
+  const norm = normalizeCategoryToken(token);
+  const byName = allCategories.find((c) => normalizeCategoryToken(c.name) === norm);
+  if (byName) return byName.name || token;
+  return token;
+}
+
+function categoryTokenMatchesFilter(categoryToken, selectedCategoryId, selectedCategoryNameNorm) {
+  const token = String(categoryToken || '').trim();
+  if (!token) return false;
+  if (token === selectedCategoryId) return true;
+  if (selectedCategoryId && (token.endsWith('/' + selectedCategoryId) || token.includes('/categories/' + selectedCategoryId))) return true;
+  const tokenNorm = normalizeCategoryToken(token);
+  if (selectedCategoryNameNorm && tokenNorm === selectedCategoryNameNorm) return true;
+  if (selectedCategoryNameNorm && tokenNorm.includes(selectedCategoryNameNorm)) return true;
+  const byId = allCategories.find((c) => String(c.id) === token);
+  return Boolean(byId && normalizeCategoryToken(byId.name) === selectedCategoryNameNorm);
+}
+
+function collectCategoryTokens(value, outSet) {
+  if (value == null) return;
+  if (typeof value === 'string' || typeof value === 'number') {
+    const token = String(value).trim();
+    if (token) outSet.add(token);
+    return;
+  }
+  if (Array.isArray(value)) {
+    for (const entry of value) collectCategoryTokens(entry, outSet);
+    return;
+  }
+  if (typeof value !== 'object') return;
+
+  // Common shapes: { categoryId }, { category }, { id, name }, etc.
+  const directKeys = ['categoryId', 'category', 'categoryName', 'category_id', 'id', 'name', 'label', 'path', 'ref', 'value'];
+  for (const key of directKeys) {
+    if (!(key in value)) continue;
+    const token = String(value[key] ?? '').trim();
+    if (token) outSet.add(token);
+  }
+}
+
+function orderTextMatchesCategory(order, selectedCategoryId, selectedCategoryNameNorm) {
+  const blob = JSON.stringify(order || {}).toLowerCase();
+  if (!blob) return false;
+  if (selectedCategoryId && (blob.includes(selectedCategoryId.toLowerCase()) || blob.includes('/categories/' + selectedCategoryId.toLowerCase()))) {
+    return true;
+  }
+  if (selectedCategoryNameNorm && blob.includes(selectedCategoryNameNorm)) {
+    return true;
+  }
+  return false;
+}
+
+function getOrderCategoryTokens(order) {
+  const tokens = new Set();
+
+  // Order-level category fields
+  collectCategoryTokens(order?.categoryId, tokens);
+  collectCategoryTokens(order?.category, tokens);
+  collectCategoryTokens(order?.categoryName, tokens);
+
+  // Item-level category map (can be string values or object values)
+  const map = order?.itemCategories;
+  if (map && typeof map === 'object') {
+    for (const val of Object.values(map)) collectCategoryTokens(val, tokens);
+  }
+
+  // Item-level embedded category fields
+  for (const item of extractOrderItems(order)) {
+    collectCategoryTokens(item?.categoryId, tokens);
+    collectCategoryTokens(item?.category, tokens);
+    collectCategoryTokens(item?.categoryName, tokens);
+  }
+
+  return tokens;
+}
+
 function applyFiltersAndRender() {
   const preset       = datePresetEl.value;
+  const categoryFilter = categoryFilterEl.value;
   const typeFilter   = typeFilterEl.value;
   const statusFilter = statusFilterEl.value;
   const query        = searchEl.value.toLowerCase().trim();
@@ -497,27 +1205,30 @@ function applyFiltersAndRender() {
     if (preset === '30d')  { const d = new Date(now); d.setDate(d.getDate() - 30); return d; }
     if (preset === '90d')  { const d = new Date(now); d.setDate(d.getDate() - 90); return d; }
     if (preset === 'year') return new Date(now.getFullYear(), 0, 1);
-    if (preset === 'custom' && startDateEl.value) return new Date(startDateEl.value);
-    return null;
-  }
-  function dateTo() {
-    if (preset === 'custom' && endDateEl.value) {
-      const d = new Date(endDateEl.value); d.setHours(23, 59, 59, 999); return d;
-    }
     return null;
   }
 
   const from = dateFrom();
-  const to   = dateTo();
+  const selectedCategory = allCategories.find((c) => c.id === categoryFilter);
+  const selectedCategoryNameNorm = normalizeCategoryToken(selectedCategory?.name || '');
 
   const filtered = allOrders.filter((o) => {
     const d = asDate(bestDate(o));
     if (from && d && d < from) return false;
-    if (to   && d && d > to)   return false;
+    const categoryTokens = getOrderCategoryTokens(o);
+    const hasAnyCategoryId = categoryTokens.size > 0;
+    if (categoryFilter === 'uncategorized' && hasAnyCategoryId) return false;
+    if (categoryFilter !== 'all' && categoryFilter !== 'uncategorized') {
+      const matchesByTokens = Array.from(categoryTokens)
+        .some((token) => categoryTokenMatchesFilter(token, categoryFilter, selectedCategoryNameNorm));
+      const matchesByText = orderTextMatchesCategory(o, categoryFilter, selectedCategoryNameNorm);
+      if (!matchesByTokens && !matchesByText) return false;
+    }
     if (typeFilter   !== 'all' && inferType(o)              !== typeFilter)   return false;
     if (statusFilter !== 'all' && normalizeStatus(o.status) !== statusFilter) return false;
     if (query) {
-      const blob = [o.title, o.orderId, o.id, o.distributorName, o.vendorName, o.note, o.status]
+      const categoryName = resolveCategoryName(o.categoryId ?? o.category ?? '');
+      const blob = [o.title, o.orderId, o.id, o.distributorName, o.vendorName, o.note, o.status, categoryName]
         .join(' ').toLowerCase();
       if (!blob.includes(query)) return false;
     }
@@ -526,6 +1237,11 @@ function applyFiltersAndRender() {
 
   const chips = [];
   if (preset !== 'all')       chips.push(datePresetEl.options[datePresetEl.selectedIndex].text);
+  if (categoryFilter === 'uncategorized') chips.push('Category: Uncategorized');
+  if (categoryFilter !== 'all' && categoryFilter !== 'uncategorized') {
+    const cat = allCategories.find((c) => c.id === categoryFilter);
+    chips.push('Category: ' + (cat?.name || 'Unknown'));
+  }
   if (typeFilter !== 'all')   chips.push('Type: ' + typeFilter);
   if (statusFilter !== 'all') chips.push('Status: ' + statusFilter);
   if (query)                  chips.push('Search: "' + query + '"');
@@ -540,10 +1256,32 @@ function applyFiltersAndRender() {
 
 // ── Render ────────────────────────────────────────────────────────────────────
 function renderDashboard(orders) {
+  renderCategoryUI();
+  lastRenderedOrders = orders;
+
+  const validIds = new Set(allOrders.map((o) => String(o.id)));
+  for (const selectedId of Array.from(selectedOrderIds)) {
+    if (!validIds.has(selectedId)) selectedOrderIds.delete(selectedId);
+  }
+  const validItemRefs = new Set();
+  for (const order of allOrders) {
+    const orderId = String(order.id);
+    const items = extractOrderItems(order);
+    for (const item of items) {
+      if (!item?.itemKey) continue;
+      validItemRefs.add(orderId + ITEM_REF_SEPARATOR + item.itemKey);
+    }
+  }
+  for (const selectedRef of Array.from(selectedItemRefs)) {
+    if (!validItemRefs.has(selectedRef)) selectedItemRefs.delete(selectedRef);
+  }
+  refreshSelectionUI();
+
+  // Use filtered orders for all widget stats so category filters are reflected
   const byStatus = { pending: [], approved: [], rejected: [] };
   const byType   = { Manual: [], Distributor: [], Receipt: [] };
   let   totalItems = 0;
-
+  let   totalSpend  = 0;
   for (const o of orders) {
     const st = normalizeStatus(o.status);
     if (!byStatus[st]) byStatus[st] = [];
@@ -552,20 +1290,31 @@ function renderDashboard(orders) {
     if (!byType[ty]) byType[ty] = [];
     byType[ty].push(o);
     totalItems += countItems(o);
+    // sum order-level total; fall back to summing item prices
+    const orderTotal = Number(o.total ?? o.orderTotal ?? o.subtotal ?? NaN);
+    if (!Number.isNaN(orderTotal)) {
+      totalSpend += orderTotal;
+    } else {
+      for (const item of extractOrderItems(o)) {
+        const ip = Number(item.price ?? NaN);
+        const qty = Number(item.quantity ?? 1);
+        if (!Number.isNaN(ip)) totalSpend += ip * qty;
+      }
+    }
   }
-
   const today = new Date();
   const todayCount = orders.filter((o) => {
     const d = asDate(bestDate(o));
     return d && d.toDateString() === today.toDateString();
   }).length;
-
+  const isFiltered = orders.length !== allOrders.length;
+  const fmtMoney = (n) => '$' + n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   summaryGridEl.innerHTML = [
-    statCard('Total',    orders.length,               'matching orders'),
+    statCard('Orders',   orders.length,   isFiltered ? 'of ' + allOrders.length + ' total' : 'total orders'),
+    statCard('Spend',    fmtMoney(totalSpend), isFiltered ? 'filtered total' : 'total spend'),
     statCard('Pending',  byStatus.pending.length,     pct(byStatus.pending.length,  orders.length) + '%'),
     statCard('Approved', byStatus.approved.length,    pct(byStatus.approved.length, orders.length) + '%'),
-    statCard('Rejected', byStatus.rejected.length,    pct(byStatus.rejected.length, orders.length) + '%'),
-    statCard('Items',    totalItems,                  'across filtered orders'),
+    statCard('Items',    totalItems,                  isFiltered ? 'in filtered orders' : 'across all orders'),
     statCard('Today',    todayCount,                  'orders placed today'),
   ].join('');
 
@@ -609,7 +1358,7 @@ function renderDashboard(orders) {
   tableCountEl.textContent = orders.length + ' order' + (orders.length === 1 ? '' : 's');
 
   if (!orders.length) {
-    ordersTableEl.innerHTML = '<tr><td colspan="6"><div class="empty-state">No orders match the current filters.</div></td></tr>';
+    ordersTableEl.innerHTML = '<tr><td colspan="7"><div class="empty-state">No orders match the current filters.</div></td></tr>';
     return;
   }
 
@@ -627,7 +1376,7 @@ function renderDashboard(orders) {
   Object.keys(groups).sort().reverse().forEach((key) => {
     const label = key === 'Unknown' ? 'Unknown date' : fmtMonthKey(key);
     const g = groups[key];
-    rows += '<tr class="group-row"><td colspan="6">' + esc(label) + ' \u2013 ' + g.length + ' order' + (g.length === 1 ? '' : 's') + '</td></tr>';
+    rows += '<tr class="group-row"><td colspan="7">' + esc(label) + ' \u2013 ' + g.length + ' order' + (g.length === 1 ? '' : 's') + '</td></tr>';
     rows += g.map((o, idx) => orderRow(o, key + '-' + idx)).join('');
   });
   ordersTableEl.innerHTML = rows;
@@ -661,20 +1410,38 @@ function orderRow(o, key) {
   const items      = countItems(o);
   const status     = normalizeStatus(o.status);
   const type       = inferType(o);
+  const categoryId = String(o.categoryId ?? o.category ?? '');
+  const categoryName = resolveCategoryName(categoryId);
   const name       = o.title || ('Order #' + (o.orderId || o.id));
   const detailId   = detailRowId(o, key);
+  const selected   = selectedOrderIds.has(String(o.id)) ? ' checked' : '';
   const note       = o.note
     ? '<span class="order-meta">' + esc(o.note.slice(0, 60)) + (o.note.length > 60 ? '\u2026' : '') + '</span>'
     : '';
+  // compute order total: prefer stored field, fall back to summing item prices
+  let orderTotal = Number(o.total ?? o.orderTotal ?? o.subtotal ?? NaN);
+  if (Number.isNaN(orderTotal)) {
+    let sum = 0, hasPrice = false;
+    for (const item of extractOrderItems(o)) {
+      const ip = Number(item.price ?? NaN);
+      const qty = Number(item.quantity ?? 1);
+      if (!Number.isNaN(ip)) { sum += ip * qty; hasPrice = true; }
+    }
+    orderTotal = hasPrice ? sum : NaN;
+  }
+  const totalLabel = !Number.isNaN(orderTotal)
+    ? '$' + orderTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : '—';
   const mainRow = '<tr>'
+    + '<td class="select-col"><input type="checkbox" data-order-select="' + esc(String(o.id)) + '"' + selected + ' /></td>'
     + '<td><div class="order-title"><div class="order-title-row"><button class="expand-btn" type="button" data-detail-toggle="' + esc(detailId) + '" aria-expanded="false"><span class="arrow">▸</span></button><strong>' + esc(name) + '</strong></div>' + note + '</div></td>'
     + '<td>' + esc(distributor) + '</td>'
     + '<td>' + esc(dateLabel) + '</td>'
-    + '<td>' + items + '</td>'
+    + '<td>' + items + ' <span class="order-total-inline">' + esc(totalLabel) + '</span></td>'
     + '<td><span class="tag">' + esc(type) + '</span></td>'
-    + '<td><span class="tag ' + esc(status) + '">' + esc(status) + '</span></td>'
+    + '<td><span class="tag">' + esc(categoryName) + '</span> <span class="tag ' + esc(status) + '">' + esc(status) + '</span></td>'
     + '</tr>';
-  const detailRow = '<tr id="' + esc(detailId) + '" class="order-details-row hidden"><td colspan="6">' + renderOrderDetails(o) + '</td></tr>';
+  const detailRow = '<tr id="' + esc(detailId) + '" class="order-details-row hidden"><td colspan="7">' + renderOrderDetails(o) + '</td></tr>';
   return mainRow + detailRow;
 }
 
@@ -689,23 +1456,80 @@ function renderOrderDetails(order) {
     return '<div class="details-panel"><p class="muted">No item details available for this order.</p></div>';
   }
 
-  const rows = items.map((item) => {
+  const itemCategoryMap = order && typeof order.itemCategories === 'object' && order.itemCategories
+    ? order.itemCategories
+    : {};
+
+  const activeCategoryFilter = categoryFilterEl?.value || 'all';
+  const selectedCategory = allCategories.find((c) => c.id === activeCategoryFilter);
+  const selectedCategoryNameNorm = normalizeCategoryToken(selectedCategory?.name || '');
+
+  const visibleItems = items.filter((item) => {
+    if (activeCategoryFilter === 'all') return true;
+
+    const itemTokens = new Set();
+    const mappedCategoryId = String(itemCategoryMap[item.itemKey] || '');
+    collectCategoryTokens(mappedCategoryId, itemTokens);
+    collectCategoryTokens(item?.categoryId, itemTokens);
+    collectCategoryTokens(item?.category, itemTokens);
+    collectCategoryTokens(item?.categoryName, itemTokens);
+
+    if (activeCategoryFilter === 'uncategorized') {
+      return itemTokens.size === 0;
+    }
+
+    return Array.from(itemTokens)
+      .some((token) => categoryTokenMatchesFilter(token, activeCategoryFilter, selectedCategoryNameNorm));
+  });
+
+  if (!visibleItems.length) {
+    return '<div class="details-panel"><p class="muted">No items in this order match the selected category filter.</p></div>';
+  }
+
+  const rows = visibleItems.map((item, idx) => {
     const itemName = item.name || 'Item';
     const qty = item.quantity ?? '—';
     const unit = item.unit || '';
     const price = item.price != null ? ('$' + Number(item.price).toFixed(2)) : '—';
+    const itemRef = String(order.id) + ITEM_REF_SEPARATOR + item.itemKey;
+    const checked = selectedItemRefs.has(itemRef) ? ' checked' : '';
+    const itemCategoryId = String(itemCategoryMap[item.itemKey] || '');
+    const itemDirectCategory = String(item.categoryId ?? item.category ?? '');
+    const fallbackCategoryId = String(order.categoryId ?? order.category ?? '');
+    const resolvedCategoryId = itemCategoryId || itemDirectCategory || fallbackCategoryId;
+    const categoryName = resolveCategoryName(resolvedCategoryId);
     return '<tr>'
+      + '<td class="select-col"><input type="checkbox" data-item-select="' + esc(itemRef) + '"' + checked + ' /></td>'
       + '<td>' + esc(itemName) + '</td>'
       + '<td>' + esc(String(qty) + (unit ? ' ' + unit : '')) + '</td>'
       + '<td>' + esc(price) + '</td>'
+      + '<td><span class="tag">' + esc(categoryName) + '</span></td>'
       + '</tr>';
   }).join('');
 
+  // compute subtotal from visible item prices
+  let subtotal = 0, hasItemPrices = false;
+  for (const item of visibleItems) {
+    const ip = Number(item.price ?? NaN);
+    const qty = Number(item.quantity ?? 1);
+    if (!Number.isNaN(ip)) { subtotal += ip * qty; hasItemPrices = true; }
+  }
+  // fall back to order-level total only when showing all items
+  if (!hasItemPrices && activeCategoryFilter === 'all') {
+    const ot = Number(order.total ?? order.orderTotal ?? order.subtotal ?? NaN);
+    if (!Number.isNaN(ot)) { subtotal = ot; hasItemPrices = true; }
+  }
+  const subtotalLine = hasItemPrices
+    ? '<div class="detail-subtotal">' + (activeCategoryFilter === 'all' ? 'Order total' : 'Filtered total') + ': <strong>$' + subtotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '</strong></div>'
+    : '';
+
   return '<div class="details-panel">'
     + '<table class="details-table">'
-    + '<thead><tr><th>Item</th><th>Quantity</th><th>Price</th></tr></thead>'
+    + '<thead><tr><th class="select-col">Select</th><th>Item</th><th>Quantity</th><th>Price</th><th>Category</th></tr></thead>'
     + '<tbody>' + rows + '</tbody>'
     + '</table>'
+    + subtotalLine
+    + '<p class="muted">Select specific items above, then use "Apply to selected".</p>'
     + '</div>';
 }
 
@@ -730,28 +1554,146 @@ function extractOrderItems(order) {
     list = vals.length ? vals : [source];
   }
 
-  return list.map(normalizeOrderItem).filter(Boolean);
+  return list.map((item, index) => normalizeOrderItem(item, index)).filter(Boolean);
 }
 
-function normalizeOrderItem(item) {
+function normalizeProductName(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function toNumberOrNull(value) {
+  if (value == null) return null;
+  if (typeof value === 'number') return Number.isFinite(value) ? value : null;
+  const cleaned = String(value).replace(/[^0-9.-]+/g, '');
+  if (!cleaned || cleaned === '-' || cleaned === '.' || cleaned === '-.') return null;
+  const num = Number(cleaned);
+  return Number.isFinite(num) ? num : null;
+}
+
+function extractPriceFromAny(source) {
+  if (!source || typeof source !== 'object') return null;
+
+  const directKeys = [
+    'price', 'unitPrice', 'cost', 'marketPrice', 'lastPrice',
+    'extendedPrice', 'lineTotal', 'amount', 'avgPrice', 'latestPrice',
+  ];
+  for (const key of directKeys) {
+    const num = toNumberOrNull(source[key]);
+    if (num != null) return num;
+  }
+
+  const stack = [source];
+  const seen = new Set();
+  while (stack.length) {
+    const current = stack.pop();
+    if (!current || typeof current !== 'object' || seen.has(current)) continue;
+    seen.add(current);
+    for (const [key, value] of Object.entries(current)) {
+      if (value == null) continue;
+      if (typeof value === 'object') {
+        stack.push(value);
+        continue;
+      }
+      if (typeof value !== 'string' && typeof value !== 'number') continue;
+      if (!/(price|cost|amount|total)/i.test(key)) continue;
+      if (/(qty|quantity|count|stock|tax|fee|discount|id)/i.test(key)) continue;
+      const num = toNumberOrNull(value);
+      if (num != null) return num;
+    }
+  }
+  return null;
+}
+
+function lookupCatalogPriceByName(name) {
+  const lowerName = String(name || '').toLowerCase().trim();
+  if (!lowerName) return null;
+
+  const exact = catalogPriceMap.get(lowerName);
+  if (exact) return exact;
+  const globalExact = globalCatalogPriceMap.get(lowerName);
+  if (globalExact) return globalExact;
+
+  const normalized = normalizeProductName(lowerName);
+  if (!normalized) return null;
+
+  const normalizedExact = catalogPriceNormalizedMap.get(normalized);
+  if (normalizedExact) return normalizedExact;
+  const globalNormalizedExact = globalCatalogPriceNormalizedMap.get(normalized);
+  if (globalNormalizedExact) return globalNormalizedExact;
+
+  // Fuzzy fallback for OCR abbreviations: token-overlap against normalized catalog names.
+  const tokens = normalized.split(' ').filter(Boolean);
+  if (!tokens.length) return null;
+  let best = null;
+  let bestScore = 0;
+  const mergedEntries = [
+    ...catalogPriceNormalizedMap.entries(),
+    ...globalCatalogPriceNormalizedMap.entries(),
+  ];
+  for (const [catalogName, entry] of mergedEntries) {
+    let score = 0;
+    for (const token of tokens) {
+      if (token.length < 2) continue;
+      if (catalogName.includes(token)) score += token.length;
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      best = entry;
+    }
+  }
+  // Guard against weak false positives.
+  return bestScore >= 8 ? best : null;
+}
+
+function normalizeOrderItem(item, index = 0) {
   if (item == null) return null;
   if (typeof item === 'string') {
-    return { name: item, quantity: null, price: null };
+    return { name: item, quantity: null, price: null, itemKey: 'idx-' + index };
   }
-  if (typeof item !== 'object') return { name: String(item), quantity: null, price: null };
+  if (typeof item !== 'object') return { name: String(item), quantity: null, price: null, itemKey: 'idx-' + index };
 
   const name = item.name || item.itemName || item.productName || item.title || item.item || item.ingredient || item.id;
   const quantity = item.quantity ?? item.qty ?? item.count ?? item.amount ?? null;
   const unit = item.unit || item.measurement || item.uom || '';
-  const rawPrice = item.price ?? item.unitPrice ?? item.cost ?? null;
-  const price = rawPrice == null || rawPrice === '' || Number.isNaN(Number(rawPrice)) ? null : Number(rawPrice);
+  let price = extractPriceFromAny(item);
+  // Fall back to catalog price if item has no stored price
+  if (price == null && (catalogPriceMap.size > 0 || catalogPriceNormalizedMap.size > 0 || globalCatalogPriceMap.size > 0 || globalCatalogPriceNormalizedMap.size > 0)) {
+    const catalogEntry = lookupCatalogPriceByName(name);
+    if (catalogEntry) price = catalogEntry.price;
+  }
+  const rawKey = item.id ?? item.itemId ?? item.sku ?? item.productId ?? name;
+  const itemKey = String(rawKey || ('idx-' + index)).replace(/[^a-zA-Z0-9_-]/g, '_') + '__' + index;
 
   return {
     name: name ? String(name) : 'Item',
     quantity,
     unit,
     price,
+    categoryId: item.categoryId ?? item.category ?? null,
+    category: item.category ?? item.categoryName ?? null,
+    categoryName: item.categoryName ?? null,
+    itemKey,
   };
+}
+
+function getFirebaseActionErrorMessage(err) {
+  const code = String(err?.code || '');
+  if (code.includes('permission-denied')) {
+    return 'Missing permissions. Ensure Firestore rules are deployed and your user is an admin in this group.';
+  }
+  if (code.includes('failed-precondition')) {
+    return 'Firestore index missing. Deploy firestore.indexes.json, then retry.';
+  }
+  if (code.includes('unavailable')) {
+    return 'Network is temporarily unavailable. Please retry.';
+  }
+  if (code.includes('not-found')) {
+    return 'Collection path not found for this user/group.';
+  }
+  return err?.message || 'Action failed. Check Firestore rules and indexes.';
 }
 
 // ── Utilities ─────────────────────────────────────────────────────────────────

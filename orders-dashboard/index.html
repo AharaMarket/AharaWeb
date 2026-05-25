@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ahara Orders Dashboard</title>
+    <link rel="icon" href="data:," />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -147,10 +148,11 @@
               <option value="30d">Last 30 days</option>
               <option value="90d">Last 90 days</option>
               <option value="year">This year</option>
-              <option value="custom">Custom range</option>
             </select>
-            <input id="startDate" type="date" />
-            <input id="endDate" type="date" />
+            <select id="categoryFilter">
+              <option value="all">All categories</option>
+              <option value="uncategorized">Uncategorized</option>
+            </select>
             <select id="typeFilter">
               <option value="all">All types</option>
               <option value="Manual">Manual</option>
@@ -178,19 +180,26 @@
               <h3>Past orders</h3>
               <p class="muted">All matching orders are shown newest first and grouped by month.</p>
             </div>
-            <span id="tableCount" class="table-count">0 orders</span>
+            <div class="history-actions">
+              <div class="mode-tabs" role="tablist" aria-label="Past orders mode">
+                <button id="ordersViewTab" class="mode-tab active" type="button" role="tab" aria-selected="true">View</button>
+                <button id="ordersEditTab" class="mode-tab" type="button" role="tab" aria-selected="false">Edit</button>
+              </div>
+              <span id="tableCount" class="table-count">0 orders</span>
+            </div>
           </div>
 
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
+                  <th class="select-col">Select</th>
                   <th>Order</th>
                   <th>Distributor</th>
                   <th>Date</th>
                   <th>Items</th>
                   <th>Type</th>
-                  <th>Status</th>
+                  <th>Category / Status</th>
                 </tr>
               </thead>
               <tbody id="ordersTableBody"></tbody>
